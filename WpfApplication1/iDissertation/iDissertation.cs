@@ -139,17 +139,24 @@ namespace WpfApplication1
            //Directory.CreateDirectory(newtitle.href);
        }
        public void TreeViewItems4_delete(iDissertation newtitle)
-       {   
-           
-           foreach(XmlNode xm in root.ChildNodes)
+       {
+
+           try
            {
-               if (((XmlElement)xm).GetAttribute("name") == newtitle.Name)
-                   root.RemoveChild(xm);
+               foreach (XmlNode xm in root.ChildNodes)
+               {
+                   if (((XmlElement)xm).GetAttribute("name") == newtitle.Name)
+                       root.RemoveChild(xm);
+               }
+               doc.Save("iDissertation.xml");
+               //TreeViewItems4.Remove(newtitle);
+               idisser_data.idisser.TreeViewItems4.Remove(newtitle);
+               copy_files.DeleteDir(newtitle.href);
            }
-           doc.Save("iDissertation.xml");
-           //TreeViewItems4.Remove(newtitle);
-           idisser_data.idisser.TreeViewItems4.Remove(newtitle);
-           copy_files.DeleteDir(newtitle.href);
+           catch
+           {
+               ;
+           }
            
        }
        public void TreeViewItems4_modify(iDissertation newtitle,string newname)

@@ -6,7 +6,7 @@ using System.Xml;
 using System.Threading;
 using System.Text.RegularExpressions;
 
-
+//)#@paper_title@#)表示章节标题,)#@paper_id@#)表示章节的序列号，初始化的时候得替换。
 namespace WpfApplication1
 {
    
@@ -30,7 +30,7 @@ namespace WpfApplication1
             type = _type;
             context_html = _html;
             _id = id;
-            xml_context = MainWindow.idd_href + "/idis.xml"; 
+            xml_context = MainWindow.idd_href + "\\idis.xml"; 
             doc_context = new XmlDocument();
             doc_context.Load(xml_context);
             root_context = doc_context.DocumentElement;
@@ -38,14 +38,13 @@ namespace WpfApplication1
             doc_tem = new XmlDocument();
             doc_tem.Load(xml_tem);
             root_tem = doc_tem.DocumentElement;
-           
             //chilnodes = root_context.ChildNodes;
 
         }
         public Savexml(string path)
         {
-            xml_context = path + "/idis.xml"; 
-            xml_style= path + "/webTemplateStyle.xml";
+            xml_context = path + "\\idis.xml"; 
+            xml_style= path + "\\webTemplateStyle.xml";
             doc_style = new XmlDocument();
             doc_style.Load(xml_style);
             root_style = doc_style.DocumentElement;
@@ -81,14 +80,12 @@ namespace WpfApplication1
                 XmlElement img = doc_tem.CreateElement("richmedia");
                 if (paragraph.Name == "img")
                 {
-                    
                     img.SetAttribute("type", "img");
                     img.SetAttribute("src", ((XmlElement)paragraph).GetAttribute("src").Replace(MainWindow.idd_href + "\\", ""));
                     img.SetAttribute("style", ((XmlElement)paragraph).GetAttribute("style"));
                     img.InnerXml = "img";
                     // return img;
                     //break;
-
                 }
                 else
                 {
@@ -124,7 +121,6 @@ namespace WpfApplication1
                    // XmlElement richmedia = doc_tem.CreateElement("richmedia");
                     ccd.AppendChild(getrichmedia(xm));
                 }
-
             }
 
         }
@@ -155,24 +151,32 @@ namespace WpfApplication1
         public void init_idis()  //创建的时候初始化idis
         {
             XmlNodeList styles = root_style.ChildNodes;
+            string context;
             foreach (XmlNode xm in styles)
             {
                 if (xm.Name.Contains("Chapter") == true || xm.Name.Contains("Section") == true)
                 {
                     if (xm.Name == "Chapter")
                     {
-                        (root_context.SelectSingleNode("Papersection/Chapter")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)","1");
+                        context = context.Replace(")#@paper_title@#)","一级标题");
+                        (root_context.SelectSingleNode("Papersection/Chapter")).InnerXml = context;
+
                        // doc_context.Save(@xml_context);
                        // xm.Name
                     }
                     else if (xm.Name == "Section1")
                     {
-                        (root_context.SelectSingleNode("Papersection/Section1")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1");
+                        context = context.Replace(")#@paper_title@#)", "二级标题");
+                        (root_context.SelectSingleNode("Papersection/Section1")).InnerXml = context;
                        // doc_context.Save(@xml_context);
                     }
                     else
                     {
-                        (root_context.SelectSingleNode("Papersection/Section2")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1.1");
+                        context = context.Replace(")#@paper_title@#)", "三级标题");
+                        (root_context.SelectSingleNode("Papersection/Section2")).InnerXml = context;
                        // doc_context.Save(@xml_context);
                     }
                 }

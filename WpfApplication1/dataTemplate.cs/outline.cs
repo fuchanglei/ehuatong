@@ -119,11 +119,8 @@ namespace WpfApplication1
        private string outline_xml;
        private string idis_xml;
        private string tem_xml;
-       private static outline_Data mInstance = new outline_Data();
-       public static outline_Data Instance
-       {
-           get { return mInstance; }
-       }
+      // private static outline_Data mInstance;
+       public static outline_Data Instance { get; set; }
        private outline getnodes(XmlNode parent, outline parentnode) //parent 是xml节点的父节点parentnode是父节点在tree中的父节点
        {
            //
@@ -255,12 +252,17 @@ namespace WpfApplication1
            return cc;
        }
        public ObservableCollection<outline> TreeViewItems1
-       {
+       {   
            get
            {
                if (mTreeViewItems1 == null)
                    mTreeViewItems1 = GenerateTreeViewItems1();
                return mTreeViewItems1;
+           }
+           set
+           {
+               if (mTreeViewItems1 != value)
+                   mTreeViewItems1 = value;
            }
           
        }
@@ -321,7 +323,7 @@ namespace WpfApplication1
                //return get_contexnode(select.children[select.children.Count - 1].nodename, select.children[select.children.Count - 1].secid);
            }
        }
-       public XmlNode getlasnode_tem(outline select)  //获取outline选中节点的最后一个子节点
+       public XmlNode getlasnode_tem(outline select)  //获取tem中节点的最后一个子节点
        {
            if (select.children.Count == 0)
            {
@@ -371,7 +373,8 @@ namespace WpfApplication1
            XmlNode style= doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
-           xe2.InnerXml = style.InnerXml;
+           xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)", id);
+           xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)", newname);
            root_contex.InsertAfter(xe2,b);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
@@ -408,7 +411,7 @@ namespace WpfApplication1
            }
        }
        
-       private void updateid_context(string name,string id,string newid)
+       private void updateid_context(string name,string id,string newid) //更新idis和tem
        { 
            XmlNodeList context = root_contex.SelectNodes(name);
            foreach (XmlNode xm in context)
@@ -424,7 +427,7 @@ namespace WpfApplication1
            foreach (XmlNode xm in tem)
            {
                if (((XmlElement)xm).GetAttribute("id") == id)
-               {
+               {   
                    ((XmlElement)xm).SetAttribute("id", newid);
                    doc_tem.Save(tem_xml);
                    break;
@@ -432,7 +435,7 @@ namespace WpfApplication1
            }
 
        }
-       private void updateid(XmlNode ss,string oldid,string newid)
+       private void updateid(XmlNode ss,string oldid,string newid)  //更新id
        {
            
            Regex r = new Regex(oldid);
@@ -499,31 +502,22 @@ namespace WpfApplication1
            string oldid = ((XmlElement)b).GetAttribute("id");
            delet_outline(b);
            //root_outline.RemoveChild(b);
-           delete_contex(b.Name, oldid);
-           if(b_next!=null)
+          //delete_contex(b.Name, oldid);
+           if (b_next != null && ((XmlElement)b_next).GetAttribute("nodetype")!="common")
            {
                upadatexml(b_next, oldid);
            }
            doc_outline.Save(outline_xml);
-           
-          
-
        }
        public void outline_node_modify(outline select, string newname)  //修改outline的接点名称
        {
-          // doc_contex = new XmlDocument();
-           //doc_contex.Load(idis_xml);
-          // root_contex = doc_contex.DocumentElement.SelectSingleNode("Papersection");
-           //string cc = getparent(select);
            XmlNode a = getselectnode(select);
-           //root_outline = doc.DocumentElement;
-           //XmlNodeList xmllist = root_outline.SelectSingleNode(cc).ChildNodes;
            string id = select.secid;
-           //string newname_add = id + " " + newname;
-          // string href = select.href + "/" + id;
-           string nodename = "Section" + id;
-          // string type = ((outlinetype)((int)select.type + 1)).ToString();
-           //XmlElement xe1 =(XmlElement)root_outline.SelectSingleNode(cc);
+           XmlNode contex_node = get_contexnode(select.nodename,select.secid);
+           contex_node = contex_node.SelectSingleNode("papersectiontitle");
+           string context = contex_node.InnerText;
+           ((XmlElement)contex_node).InnerXml = contex_node.InnerXml.Replace(context," "+newname);
+            doc_contex.Save(idis_xml);
            ((XmlElement)a).SetAttribute("sec-title",newname);
            doc_outline.Save(outline_xml);
            
@@ -564,9 +558,21 @@ namespace WpfApplication1
            XmlNode style = doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
-           xe2.InnerXml = style.InnerXml;
+           xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)",id);
+           xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
+          // xe2.SelectSingleNode("papersectionid").InnerText = id;
+          // xe2.SelectSingleNode("papersectiontitle").InnerText = " " + newname;
            //root_contex.InsertAfter(xe2);
+           root_contex.AppendChild(xe2);
            doc_contex.Save(idis_xml);
+           XmlElement xe3 = doc_tem.CreateElement(nodename);
+           XmlElement xe3_title = doc_tem.CreateElement("papersectiontitle");
+           XmlElement xe3_text = doc_tem.CreateElement("papersectiontext");
+           xe3.SetAttribute("id", id);
+           xe3.AppendChild(xe3_title);
+           xe3.AppendChild(xe3_text);
+           root_tem.AppendChild(xe3);
+           doc_tem.Save(tem_xml);
            return newone;
 
        }

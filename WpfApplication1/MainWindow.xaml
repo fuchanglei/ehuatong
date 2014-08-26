@@ -142,7 +142,7 @@
                             </TreeView.ItemContainerStyle>
                         </TreeView>
                         <TextBlock Text="iDissertation" FontWeight="Bold" Margin="15,0,0,0"  FontSize="12"></TextBlock>
-                        <TreeView Name="tree5" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6"  ItemTemplate="{StaticResource treeViewTemplate4}"  ItemsSource="{Binding Source={x:Static local:idisser_data.idisser}, Path=TreeViewItems4}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" SelectedItemChanged="tree5_SelectedItemChanged_1" LostFocus="tree5_LostFocus">
+                        <TreeView Name="tree5" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6"  ItemTemplate="{StaticResource treeViewTemplate4}"  ItemsSource="{Binding Source={x:Static local:idisser_data.idisser}, Path=TreeViewItems4}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" SelectedItemChanged="tree5_SelectedItemChanged_1">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
                                     <Setter Property="IsSelected" Value="False"></Setter>
@@ -199,7 +199,7 @@
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}"  Height="auto" SelectedItemChanged="tree6_SelectedItemChanged">
+                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}" Height="auto" SelectedItemChanged="tree6_SelectedItemChanged">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="True"></Setter>
@@ -216,7 +216,7 @@
                 </Grid.RowDefinitions> 
                 <Grid Margin="0,0,0,0">
                 <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,-10,0">
-                <TextBox Height="32" Name="textBox2"  BorderThickness="0" Background="#FFE2D6D6" Text="2231123123" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" />
+                        <TextBox Height="32" Name="textBox2"  BorderThickness="0" Background="#FFEBDFDF" Text="2231123123" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="789" HorizontalContentAlignment="Left" />
             </StackPanel>
                 </Grid>
                 <Grid Margin="0,29,0,6" Grid.RowSpan="2">

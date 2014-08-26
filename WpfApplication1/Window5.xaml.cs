@@ -57,17 +57,7 @@ namespace WpfApplication1
         
            // name = textBlock1.Text.Trim();
             textEventArgs E = new textEventArgs(textBox1.Text.Trim());
-            //close_window();
-
-            
-                    // textEventArgs E = new textEventArgs(textBox1.Text.Trim());
-                    getdata(this, E);
-                
-            
-            
-                    //textEventArgs E = new textEventArgs(textBox1.Text.Trim());
-                   // getnote(this, E);
-
+            getdata(this, E);
             this.Close();
         }
 

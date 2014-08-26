@@ -81,12 +81,11 @@ namespace WpfApplication1
                 Directory.CreateDirectory(item_Directory);
             }
             WebBrowserSecurity.setIEInternetSecurity();
-            
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             //this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(PrintDocument);
            // invoker.InvokeScript("setContent","sadfasdfasfaf");
-            
+           // outline_Data.Instance.TreeViewItems1 = null;
         }
         private ContextMenu cireateMenu1()
        {
@@ -223,10 +222,9 @@ namespace WpfApplication1
             //tree6_sel.Name1 = newname;
            // this.tree6.ItemsSource = outline_Data.Instance.TreeViewItems1;
            outline_Data modify_outline = new outline_Data();
-           modify_outline.outline_node_modify(tree6_sel,newname);
+            modify_outline.outline_node_modify(tree6_sel,newname);
            // select_tree5.outline_node_modify
            this.tree6.ItemsSource = modify_outline.TreeViewItems1;
-
             
         }
         private int getindex(outline cc)
@@ -247,7 +245,6 @@ namespace WpfApplication1
             outline_Data add_section = new outline_Data();
             outline sel = (outline)tree6.SelectedItem;
             int c = getindex(sel);
-            //outline_Data.Instance.TreeViewItems1.Insert(c,);
             outline aa=add_section.outline_chapter_add(sel, newname);
             //outline_Data.Instance.TreeViewItems1.Insert(c, aa);
             ObservableCollection<outline> cc = tree6.ItemsSource as ObservableCollection<outline>;
@@ -263,8 +260,6 @@ namespace WpfApplication1
             add_section.outline_node_add(sel, newname);
            
         }
-       
-        //public 
         private void AttachEvent()
         {
             listView1.PreviewMouseMove +=OnPreviewMouseMove;
@@ -414,7 +409,6 @@ namespace WpfApplication1
         {
             
         }
-
         private void tree2_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
              web_show = true;
@@ -425,7 +419,7 @@ namespace WpfApplication1
             PropertyNodeItem cc = (PropertyNodeItem)tree2.SelectedItem;
             if (cc.node_lev ==Nodeetype.one)
             {
-                //  MessageBox.Show(tree2.SelectedItem.ToString());
+                //MessageBox.Show(tree2.SelectedItem.ToString());
                 //MessageBox.Show(cc.DisplayName);
                 this.tree2.ContextMenu = c1;
             }
@@ -491,7 +485,6 @@ namespace WpfApplication1
 
                     obj = VisualTreeHelper.GetParent(obj);
                 }
-
                 return null;
             }
         }
@@ -604,14 +597,14 @@ namespace WpfApplication1
         private void delete_idd_title(object sender, RoutedEventArgs e)
         {
                isselect = false;
+               issave = false;
                idisser_data delete = new idisser_data();
                 iDissertation dd = (iDissertation)tree5.SelectedItem;
-                //idisser_data.idisser.TreeViewItems4.Remove(dd);
-                // Directory.Delete(dd.href);
-               
                delete.TreeViewItems4_delete(dd);
                this.tree6.ItemsSource = null;
                isselect = true;
+               
+               //this.tree6.Style
                
             
         }
@@ -689,8 +682,6 @@ namespace WpfApplication1
         private void add_tag(object sender,Form1.ListviewText e)
         {
             Data dd = new Data();
-            //int last = dd.TreeViewItems2[0].Children.Count;
-            //PropertyNodeItem bq = dd.TreeViewItems3;
             PropertyNodeItem cc = tree2.Items[0] as PropertyNodeItem;
            
             PropertyNodeItem newbq = new PropertyNodeItem()
@@ -787,24 +778,21 @@ namespace WpfApplication1
 
         private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            //MessageBox.Show("sadasd");
             //ThreadPool.QueueUserWorkItem(status=>savexml(tree6_sel));
             if (issave == true)
-            {   
-               // if(savecontext!=null)
+            {
                 if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
                 {
-                       savecontext=invoker.InvokeScript("getContent").ToString();
-                        savexml(tree6_sel, savecontext);
-                    
+                    savecontext = invoker.InvokeScript("getContent").ToString();
+                    savexml(tree6_sel, savecontext);
+
                 }
             }
                 try
                 {
                     tree6_sel = this.tree6.SelectedItem as outline;
                     textBox2.Text = tree6_sel.Name1;
-                    //tree6_sel.Name1 = "1111";
-                    //tree6_sel = tree6.SelectedItem as outline;
                     if (tree6_sel.type != outlinetype.common)
                     {
                         this.tree6.ContextMenu = c5;
@@ -819,13 +807,11 @@ namespace WpfApplication1
                         // cd = "../../" + filepath + "/article_xml/";
                         //string cccc = ccc.href;
                         string cd = idd_href + "/" + tree6_sel.href;
-                        //cd = cd + cc.href.Replace("..", "");
                         this.webBrowser1.Navigate(@cd);
                         web_show = true;
                     }
                     else
                     {
-
                         if (web_show)
                         {
                             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
@@ -851,7 +837,6 @@ namespace WpfApplication1
                             }
                         }
                     }
-                    issave = true;
                 }
                 catch
                 {
@@ -860,8 +845,7 @@ namespace WpfApplication1
                         invoker.InvokeScript("setContent", "");
                     }
                 }
-
-            
+            issave = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -895,35 +879,23 @@ namespace WpfApplication1
 
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            //this.tree6.ItemsSource = null;
+           
             if (isselect)
             { 
                 issave = false;
-              // if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
-              //{
-                //  savexml(tree6_sel, savecontext);
-             //  }
                 web_show = true;
                 listView1.Visibility = Visibility.Hidden;
                 this.tree6.Visibility = Visibility.Visible;
                 tree5_sel = (iDissertation)tree5.SelectedItem;
-               // newname = tree5_sel.Name;
+                //newname = tree5_sel.Name;
                 idd_href = tree5_sel.href;
                 select_tree5 = new outline_Data(true);
-                // MessageBox.Show(idd_href);
-                this.tree6.ItemsSource = select_tree5.TreeViewItems1;
-               
-
+                //outline_Data.Instance = select_tree5;
+                this.tree6.ItemsSource =select_tree5.TreeViewItems1;
             }
-            //this.webBrowser1.Navigate("d:\\muban\\index_Paper.html");
+           
         }
 
-        private void tree5_LostFocus(object sender, RoutedEventArgs e)
-        {
-           // tree5.LostMouseCapture
-            //tree5.Style=
-            
-        }
 
 
 
