@@ -1,0 +1,13 @@
+﻿<Window x:Class="WpfApplication1.Window4"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="新建iDissertation" Height="200" Width="515" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Height="167" Width="488">
+        <TextBox Height="26" HorizontalAlignment="Left" Margin="12,74,0,0" Name="textBox2" VerticalAlignment="Top" Width="470" FontSize="13" VerticalContentAlignment="Center" TextChanged="textBox2_TextChanged" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,56,0,0" Name="textBlock1" Text="标题名：" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Name="textBlock2" Text="选择模板" VerticalAlignment="Top" Margin="11,2,0,0" />
+        <ComboBox Height="26" HorizontalAlignment="Left" Margin="12,21,0,0" Name="comboBox1" VerticalAlignment="Top" Width="470" ItemsSource="{Binding}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontWeight="Bold" Background="White" BorderBrush="Black" />
+        <Button Content="确定" Height="23" HorizontalAlignment="Left" Margin="301,138,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="取消" Height="23" HorizontalAlignment="Left" Margin="401,138,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+    </Grid>
+</Window>

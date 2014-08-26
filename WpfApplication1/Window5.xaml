@@ -1,0 +1,11 @@
+﻿<Window x:Class="WpfApplication1.Window5"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="新建章节" Height="170" Width="482" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Grid Height="126" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,36,0,0" Name="textBox1" VerticalAlignment="Top" Width="436" TextChanged="textBox1_TextChanged" VerticalContentAlignment="Center" />
+        <Button Content="确定" Height="23" HorizontalAlignment="Left" Margin="279,76,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="取消" Height="23" HorizontalAlignment="Right" Margin="0,76,10,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,19,0,0" Name="textBlock1" Text="章节名:" VerticalAlignment="Top" />
+    </Grid>
+</Window>

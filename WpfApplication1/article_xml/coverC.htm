@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<html xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+<script language="javascript" type="text/javascript">
+	  var Classification;
+      var Secret;
+	  var Colleage;
+	  var ArticleType;
+	  var ArticleTitle;
+	  var ArticleAuthor;
+	  var GraduateTeacher;
+	  var GraduateTeacherCompany;
+	  var DegreeType;
+	  var Major;
+	  var ArticleTime;
+	  var ArticleTimeDefence;
+	  var CultivateCollege;
+
+      var xmlDoc;
+	  var type=1;
+
+// 加载xml文档
+       var loadXML = function (xmlFile) {
+            if (window.ActiveXObject) {
+                xmlDoc = new ActiveXObject('Microsoft.XMLDOM');//IE浏览器
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else if (isFirefox=navigator.userAgent.indexOf("Firefox")>0) { //火狐浏览器
+				type=2;
+                xmlDoc = document.implementation.createDocument('', '', null);
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else{ //谷歌浏览器
+			/*	var xmlhttp = new window.XMLHttpRequest();
+        xmlhttp.open("GET", xmlFile, false);
+        xmlhttp.send(null);
+        xmlDom = xmlhttp.responseXML;
+		*/ window.alert('暂不识别该浏览器!');
+                return;
+            }
+           return xmlDoc;
+        }
+
+        // 首先对xml对象进行判断
+      var  checkXMLDocObj = function (xmlFile) {
+            var xmlDoc = loadXML(xmlFile);
+            if (xmlDoc == null) {
+                alert('您的浏览器不支持xml文件读取,于是本页面禁止您的操作,推荐使用IE或FireFox浏览器可以解决此问题!');
+                window.location.href = '../err.html';
+
+            }
+            return xmlDoc;
+        }
+
+	  var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+	  var gNo = xmlDom.getElementsByTagName("cover");
+	  if(type==1){
+      Classification = gNo[0].childNodes[0].text;
+      Secret = gNo[0].childNodes[1].text;
+      Colleage = gNo[0].childNodes[2].text;
+      ArticleType = gNo[0].childNodes[3].text;
+      ArticleTitle = gNo[0].childNodes[4].text;
+      ArticleAuthor = gNo[0].childNodes[5].text;
+      GraduateTeacher = gNo[0].childNodes[6].text;
+      GraduateTeacherCompany = gNo[0].childNodes[7].text;
+	  DegreeType = gNo[0].childNodes[8].text;
+	  Major = gNo[0].childNodes[9].text;
+	  ArticleTime = gNo[0].childNodes[10].text;
+	  ArticleTimeDefence = gNo[0].childNodes[11].text;
+	  CultivateCollege = gNo[0].childNodes[12].text;
+}
+else{
+	  Classification = gNo[0].childNodes[1].textContent;
+      Secret = gNo[0].childNodes[3].textContent;
+      Colleage = gNo[0].childNodes[5].textContent;
+      ArticleType = gNo[0].childNodes[7].textContent;
+      ArticleTitle = gNo[0].childNodes[9].textContent;
+      ArticleAuthor = gNo[0].childNodes[11].textContent;
+      GraduateTeacher = gNo[0].childNodes[13].textContent;
+      GraduateTeacherCompany = gNo[0].childNodes[15].textContent;
+	  DegreeType = gNo[0].childNodes[17].textContent;
+	  Major = gNo[0].childNodes[19].textContent;
+	  ArticleTime = gNo[0].childNodes[21].textContent;
+	  ArticleTimeDefence = gNo[0].childNodes[23].textContent;
+	  CultivateCollege = gNo[0].childNodes[25].textContent;
+
+}
+
+function ShowElement(element,thisInput)
+{
+var oldhtml = element.innerHTML;   //获得元素之前的内容
+var newobj = document.createElement('input');   //创建一个input元素
+newobj.type = 'text';   //为newobj元素添加类型
+newobj.setAttribute("style","width:200px;height:32px;");
+//设置newobj失去焦点的事件
+newobj.onblur = function(){
+element.innerHTML = this.value ? this.value : oldhtml;   //当触发时判断newobj的值是否为空，为空则不修改，并返回oldhtml。
+if(this.value.length==0){
+}
+else{
+var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+var nxml = xmlDom.xml;
+var reText = "";
+var oldText = "";
+if(thisInput==0) {reText = "<Classification>"+this.value+"</Classification>";
+oldText = nxml.substring(nxml.indexOf("<Classification>"),nxml.indexOf("</Classification>")+17);}
+if(thisInput==1) {reText = "<Secret>"+this.value+"</Secret>";
+oldText = nxml.substring(nxml.indexOf("<Secret>"),nxml.indexOf("</Secret>")+9);}
+if(thisInput==2) {reText = "<Colleage>"+this.value+"</Colleage>";
+oldText = nxml.substring(nxml.indexOf("<Colleage>"),nxml.indexOf("</Colleage>")+11);}
+if(thisInput==3) {reText = "<ArticleType>"+this.value+"</ArticleType>";
+oldText = nxml.substring(nxml.indexOf("<ArticleType>"),nxml.indexOf("</ArticleType>")+14);}
+if(thisInput==4) {reText = "<ArticleTitle>"+this.value+"</ArticleTitle>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTitle>"),nxml.indexOf("</ArticleTitle>")+15);}
+if(thisInput==5) {reText = "<ArticleAuthor>"+this.value+"</ArticleAuthor>";
+oldText = nxml.substring(nxml.indexOf("<ArticleAuthor>"),nxml.indexOf("</ArticleAuthor>")+16);}
+if(thisInput==6) {reText = "<GraduateTeacher>"+this.value+"</GraduateTeacher>";
+oldText = nxml.substring(nxml.indexOf("<GraduateTeacher>"),nxml.indexOf("</GraduateTeacher>")+18);}
+if(thisInput==7) {reText = "<GraduateTeacherCompany>"+this.value+"</GraduateTeacherCompany>";
+oldText = nxml.substring(nxml.indexOf("<GraduateTeacherCompany>"),nxml.indexOf("</GraduateTeacherCompany>")+25);}
+if(thisInput==8) {reText = "<DegreeType>"+this.value+"</DegreeType>";
+oldText = nxml.substring(nxml.indexOf("<DegreeType>"),nxml.indexOf("</DegreeType>")+13);}
+if(thisInput==9) {reText = "<Major>"+this.value+"</Major>";
+oldText = nxml.substring(nxml.indexOf("<Major>"),nxml.indexOf("</Major>")+8);}
+if(thisInput==10) {reText = "<ArticleTime>"+this.value+"</ArticleTime>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTime>"),nxml.indexOf("</ArticleTime>")+14);}
+if(thisInput==11) {reText = "<ArticleTimeDefence>"+this.value+"</ArticleTimeDefence>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTimeDefence>"),nxml.indexOf("</ArticleTimeDefence>")+21);}
+if(thisInput==12) {reText = "<CultivateCollege>"+this.value+"</CultivateCollege>";
+oldText = nxml.substring(nxml.indexOf("<CultivateCollege>"),nxml.indexOf("</CultivateCollege>")+19);}
+var fso=new ActiveXObject("Scripting.FileSystemObject"); 
+var pathF = location.pathname.substring(1,location.pathname.length-10)+"\webTemplate.xml";
+rFile=fso.CreateTextFile(pathF,1,true);
+nxml = nxml.replace(oldText,reText);
+rFile.WriteLine(nxml);
+rFile.Close();
+//window.location.replace(window.location.href);
+}
+}
+element.innerHTML = '';   //设置元素内容为空
+element.appendChild(newobj);   //添加子元素
+newobj.focus();   //获得焦点
+}
+
+</script>
+    <title>1</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!--<script type="text/javascript">
+nint();
+</script>
+-->
+<center>
+<body onload="loadxml()">
+
+<p class=MsoNormal style='text-align:center;line-height:24.0pt'><b><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></b><b><span style='font-family:宋体'>分类号</span><u><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<Classification>
+<script type="text/javascript">
+document.write(Classification);
+</script>
+</Classification></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u><span
+lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></b><b><span
+style='font-family:宋体' align="right">密级</span><u><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,1)"><Secret>
+<script type="text/javascript">
+document.write(Secret);
+</script>
+</Secret></span> &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:24.0pt'><b><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+UDC <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></b><b><span
+style='font-family:宋体'>编号</span><u><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span style='font-size:24.0pt;font-family:黑体'><span style="text-decoration:underline;cursor:hand" onclick="ShowElement(this,2)">
+<Colleage>
+<script type="text/javascript">
+document.write(Colleage);
+</script>
+</Colleage></span></span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span
+lang=EN-US style='font-size:24.0pt'>&nbsp;</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span
+style='font-size:24.0pt;font-family:黑体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,3)"><ArticleType><script type="text/javascript">
+document.write(ArticleType);
+</script>
+</ArticleType></span>
+</span></b></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US><span
+ style='text-decoration:none'>&nbsp;</span></span></p>
+
+<p class=MsoNormal align=center style='text-align:center;margin-top:15.6pt;margin-right:0cm;margin-bottom:15.6pt;margin-left:0cm'><span
+style='font-family:黑体'><span style="text-decoration:underline;cursor:hand" onclick="ShowElement(this,4)">
+<ArticleTitle>
+<script type="text/javascript">
+document.write(ArticleTitle);
+</script>
+</ArticleTitle></span></span></p>
+
+
+<p class=MsoNormal align=center style='margin-right:2.5pt;text-align:center;
+line-height:24.0pt'><b><u><span style='font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,5)"><ArticleAuthor>
+<script type="text/javascript">
+document.write(ArticleAuthor);
+</script>
+</ArticleAuthor></span></span></u></b></p>
+
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span
+lang=EN-US style='font-size:14.0pt'>&nbsp; </span></b></p>
+
+<p class=MsoNormal  align=center style='text-align:center;line-height:32.0pt'><b><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; </span></b><b><span style='font-size:
+14.0pt;font-family:宋体'>指导教师</span></b><b><u><span lang=EN-US style='font-size:
+14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u></b><b><u><span
+style='font-size:14.0pt;font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,6)"><GraduateTeacher>
+<script type="text/javascript">
+document.write(GraduateTeacher);
+</script></GraduateTeacher></span></span></u></b><b><u><span
+lang=EN-US style='font-size:14.0pt'>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:32.0pt'><b><span lang=EN-US
+style='font-size:14.0pt'>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span></b><b><u><span
+style='font-size:14.0pt;font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,7)"><GraduateTeacherCompany>
+<script type="text/javascript">
+document.write(GraduateTeacherCompany);
+</script></GraduateTeacherCompany></span></span></u></b><b><u><span
+lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:32.0pt'><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; </span><b><span style='font-size:14.0pt;
+font-family:宋体'>申请学位级别</span></b><b><u><span lang=EN-US style='font-size:14.0pt'>&nbsp;
+&nbsp;</span></u></b><b><u><span style='font-size:14.0pt;font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,8)"><DegreeType >
+<script type="text/javascript">
+document.write(DegreeType);
+</script></DegreeType></span></span></u></b><b><u><span
+style='font-size:14.0pt'> &nbsp;</span></u></b><b><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp;</span></b><b><span style='font-size:14.0pt;
+font-family:宋体'>学科专业名称</span></b><b><u><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;
+</span></u></b><b><u><span style='font-size:14.0pt;font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,9)"><Major>
+<script type="text/javascript">
+document.write(Major);
+</script></Major></span></span></u></b><b><u><span
+lang=EN-US style='font-size:14.0pt'>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:32.0pt'><b><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; </span></b><b><span style='font-size:
+14.0pt;font-family:宋体'>论文提交日期</span></b><b><u><span style='font-size:14.0pt'> <span
+lang=EN-US><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,10)"><ArticleTime>
+<script type="text/javascript">
+document.write(ArticleTime);
+</script></ArticleTime></span></u></b><b><u><span
+style='font-size:14.0pt'> </span></u></b><b><span lang=EN-US style='font-size:
+14.0pt'>&nbsp;&nbsp;</span></b><b><span style='font-size:14.0pt;font-family:
+宋体'>论文答辩日期</span></b><b><u><span style='font-size:14.0pt'> &nbsp;&nbsp;<span
+lang=EN-US><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,11)"><ArticleTimeDefence>
+<script type="text/javascript">
+document.write(ArticleTimeDefence);
+</script></ArticleTimeDefence></span></u></b><b><u><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:32.0pt'><b><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; </span></b><b><span style='font-size:
+14.0pt;font-family:宋体'>培养单位</span></b><b><u><span lang=EN-US style='font-size:
+14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b><b><u><span
+style='font-size:14.0pt;font-family:宋体'><span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,12)"><CultivateCollege>
+<script type="text/javascript">
+document.write(CultivateCollege);
+</script></CultivateCollege></span></span></u></b><b><u><span
+lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='text-align:center;line-height:32.0pt'><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; </span><b><span style='font-size:14.0pt;
+font-family:宋体'>学位授予单位</span></b><b><u><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u></b><b><u><span style='font-size:14.0pt;
+font-family:宋体'>中国科学院研究生院</span></u></b><b><u><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></u></b></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:center;line-height:24.0pt'><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b><span
+lang=EN-US style='font-size:14.0pt'>&nbsp;</span></b><b><span style='font-size:
+14.0pt;font-family:宋体'>答辩委员会主席</span></b><b><u><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></u></b></p>
+
+</div>
+</body>
+</center>
+</html>

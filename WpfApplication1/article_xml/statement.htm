@@ -1,0 +1,242 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>国科大学位论文模板</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript">
+	  var CollegeS;
+      var AuthorS;
+	  var TeacherS;
+	  var TimeS;
+
+      var xmlDoc;
+	  var type=1;
+
+// 加载xml文档
+       var loadXML = function (xmlFile) {
+            if (window.ActiveXObject) {
+                xmlDoc = new ActiveXObject('Microsoft.XMLDOM');//IE浏览器
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else if (isFirefox=navigator.userAgent.indexOf("Firefox")>0) { //火狐浏览器
+				type=2;
+                xmlDoc = document.implementation.createDocument('', '', null);
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else{ //谷歌浏览器
+			/*	var xmlhttp = new window.XMLHttpRequest();
+        xmlhttp.open("GET", xmlFile, false);
+        xmlhttp.send(null);
+        xmlDom = xmlhttp.responseXML;
+		*/ window.alert('暂不识别该浏览器!');
+                return;
+            }
+           return xmlDoc;
+        }
+
+        // 首先对xml对象进行判断
+      var  checkXMLDocObj = function (xmlFile) {
+            var xmlDoc = loadXML(xmlFile);
+            if (xmlDoc == null) {
+                alert('您的浏览器不支持xml文件读取,于是本页面禁止您的操作,推荐使用IE或FireFox浏览器可以解决此问题!');
+                window.location.href = '../err.html';
+
+            }
+            return xmlDoc;
+        }
+
+	  var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+	  var gNo = xmlDom.getElementsByTagName("Statement");
+	  if(type==1){
+      CollegeS = gNo[0].childNodes[0].text;
+      AuthorS = gNo[0].childNodes[1].text;
+      TeacherS = gNo[0].childNodes[2].text;
+      TimeS = gNo[0].childNodes[3].text;
+}
+else{
+	  CollegeS = gNo[0].childNodes[1].textContent;
+      AuthorS = gNo[0].childNodes[3].textContent;
+      TeacherS = gNo[0].childNodes[5].textContent;
+      TimeS = gNo[0].childNodes[7].textContent;
+}
+
+function ShowElement(element,thisInput)
+{
+var oldhtml = element.innerHTML;   //获得元素之前的内容
+var newobj = document.createElement('input');   //创建一个input元素
+newobj.type = 'text';   //为newobj元素添加类型
+newobj.setAttribute("style","width:200px;height:32px;");
+//设置newobj失去焦点的事件
+newobj.onblur = function(){
+element.innerHTML = this.value ? this.value : oldhtml;   //当触发时判断newobj的值是否为空，为空则不修改，并返回oldhtml。
+if(this.value.length==0){}
+else{
+var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+var nxml = xmlDom.xml;
+var reText = "";
+var oldText = "";
+if(thisInput==0) {reText = "<CollegeS>"+this.value+"</CollegeS>";
+oldText = nxml.substring(nxml.indexOf("<CollegeS>"),nxml.indexOf("</CollegeS>")+11);}
+if(thisInput==1) {reText = "<AuthorS>"+this.value+"</AuthorS>";
+oldText = nxml.substring(nxml.indexOf("<AuthorS>"),nxml.indexOf("</AuthorS>")+10);}
+if(thisInput==2) {reText = "<TeacherS>"+this.value+"</TeacherS>";
+oldText = nxml.substring(nxml.indexOf("<TeacherS>"),nxml.indexOf("</TeacherS>")+11);}
+if(thisInput==3) {reText = "<TimeS>"+this.value+"</TimeS>";
+oldText = nxml.substring(nxml.indexOf("<TimeS>"),nxml.indexOf("</TimeS>")+8);}
+
+var fso=new ActiveXObject("Scripting.FileSystemObject"); 
+var pathF = location.pathname.substring(1,location.pathname.length-13)+"\webTemplate.xml";
+rFile=fso.CreateTextFile(pathF,1,true);
+nxml = nxml.replace(oldText,reText);
+rFile.WriteLine(nxml);
+rFile.Close();
+//window.location.replace(window.location.href);
+}
+}
+element.innerHTML = '';   //设置元素内容为空
+element.appendChild(newobj);   //添加子元素
+newobj.focus();   //获得焦点
+}
+
+</script>
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:center;line-height:21.0pt'><span
+style='font-size:15.0pt;font-family:黑体;letter-spacing:.5pt'>关于学位论文使用权声明</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:40pt;margin-bottom:
+7.8pt;margin-left:1cm;text-indent:28.0pt;line-height:21.0pt'><span
+style='font-size:14.0pt;font-family:宋体'>任何收存和保管本论文各种版本的单位和个人，未经著作权人授权，不得将本论文转借他人并复印、抄录、拍照、或以任何方式传播。否则，引起有碍著作权人著作权益之问题，将可能承担法律责任。</span></p>
+
+<br clear=ALL>
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:center;line-height:21.0pt'><span
+style='font-size:15.0pt;font-family:黑体;letter-spacing:.5pt'>关于学位论文使用授权的说明</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:40pt;margin-bottom:
+7.8pt;margin-left:1cm;text-indent:28.0pt;line-height:21.0pt'><span
+style='font-size:14.0pt;font-family:宋体'>本人完全了解中国科学院</span><span lang=EN-US
+style='font-size:14.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<CollegeS>
+<script type="text/javascript">
+document.write(CollegeS);
+</script>
+</CollegeS></span>
+</span><span style='font-size:14.0pt;font-family:
+宋体'>有关保存、使用学位论文的规定，即：中国科学院</span><span lang=EN-US style='font-size:14.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<CollegeS>
+<script type="text/javascript">
+document.write(CollegeS);
+</script>
+</CollegeS></span>
+</span><span
+style='font-size:14.0pt;font-family:宋体'>所有权保留学位论文的副本，允许该论文被查阅；中国科学院</span><span
+lang=EN-US style='font-size:14.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<CollegeS>
+<script type="text/javascript">
+document.write(CollegeS);
+</script>
+</CollegeS></span>
+</span><span style='font-size:14.0pt;
+font-family:宋体'>可以公布该论文的全部或部分内容，可以采用影印、缩印或其他复制手段保存该论文。</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+7.8pt;margin-left:0cm;text-indent:28.0pt;line-height:21.0pt'><span
+style='font-size:14.0pt;font-family:宋体'>（涉密的学位论文在解密后应遵守此规定）</span></p>
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:7.8pt;margin-left:0cm;text-align:center;line-height:21.0pt'><span
+lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:center;text-indent:27.0pt;line-height:18.0pt'><span
+style='font-family:宋体'>签</span><span lang=EN-US>&nbsp; </span><span
+style='font-family:宋体'>名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<AuthorS>
+<script type="text/javascript">
+document.write(AuthorS);
+</script>
+</AuthorS></span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style='font-family:
+宋体'>导师签名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<TeacherS>
+<script type="text/javascript">
+document.write(TeacherS);
+</script>
+</TeacherS></span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style='font-family:宋体'>日</span><span lang=EN-US>&nbsp; </span><span
+style='font-family:宋体'>期：</span>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<TimeS>
+<script type="text/javascript">
+document.write(TimeS);
+</script>
+</TimeS></span>
+</p>
+<p class=MsoNormal style='text-indent:27.0pt;line-height:18.0pt'><span
+lang=EN-US>&nbsp;</span></p>
+
+<br clear=ALL>
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:center;line-height:21.0pt'><span
+style='font-size:15.0pt;font-family:黑体;letter-spacing:.5pt'>关于学位论文原创性声明</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:40pt;margin-bottom:
+7.8pt;margin-left:1cm;text-indent:28.0pt;line-height:21.0pt'><span
+style='font-size:14.0pt;font-family:宋体'>本人郑重声明：所呈交的学位论文是本人在导师指导下，独立进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容外，本学位论文的研究成果不包含任何他人享有著作权的内容。对本论文所涉及的研究工作做出贡献的其他个人和集体，均已在文中以明确方式标明。</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+7.8pt;margin-left:0cm;line-height:21.0pt'><span lang=EN-US style='font-size:
+14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:center;text-indent:24.0pt'><span style='font-family:宋体'>签</span><span
+lang=EN-US>&nbsp; </span><span style='font-family:宋体'>名：</span><span
+lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<AuthorS>
+<script type="text/javascript">
+document.write(AuthorS);
+</script>
+</AuthorS></span>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span
+style='font-family:宋体'>导师签名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<TeacherS>
+<script type="text/javascript">
+document.write(TeacherS);
+</script>
+</TeacherS></span>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style='font-family:宋体'>日</span><span lang=EN-US>&nbsp; </span><span
+style='font-family:宋体'>期：</span>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<TimeS>
+<script type="text/javascript">
+document.write(TimeS);
+</script>
+</TimeS></span>
+</p>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<html xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+<script language="javascript" type="text/javascript">
+	  var ArticleTitleE;
+      var ArticleTypeE;
+	  var ArticleType2E;
+	  var ArticleAuthorE;
+	  var GraduateTeacherE;
+	  var ArticleTimeE;
+	  var MajorE;
+
+      var xmlDoc;
+	  var type=1;
+
+// 加载xml文档
+       var loadXML = function (xmlFile) {
+            if (window.ActiveXObject) {
+                xmlDoc = new ActiveXObject('Microsoft.XMLDOM');//IE浏览器
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else if (isFirefox=navigator.userAgent.indexOf("Firefox")>0) { //火狐浏览器
+				type=2;
+                xmlDoc = document.implementation.createDocument('', '', null);
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else{ //谷歌浏览器
+			/*	var xmlhttp = new window.XMLHttpRequest();
+        xmlhttp.open("GET", xmlFile, false);
+        xmlhttp.send(null);
+        xmlDom = xmlhttp.responseXML;
+		*/ window.alert('暂不识别该浏览器!');
+                return;
+            }
+           return xmlDoc;
+        }
+
+        // 首先对xml对象进行判断
+      var  checkXMLDocObj = function (xmlFile) {
+            var xmlDoc = loadXML(xmlFile);
+            if (xmlDoc == null) {
+                alert('您的浏览器不支持xml文件读取,于是本页面禁止您的操作,推荐使用IE或FireFox浏览器可以解决此问题!');
+                window.location.href = '../err.html';
+
+            }
+            return xmlDoc;
+        }
+
+	  var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+	  var gNo = xmlDom.getElementsByTagName("coverE");
+	  if(type==1){
+      ArticleTitleE = gNo[0].childNodes[0].text;
+      ArticleTypeE = gNo[0].childNodes[1].text;
+      ArticleType2E = gNo[0].childNodes[2].text;
+      MajorE = gNo[0].childNodes[3].text;
+      ArticleAuthorE = gNo[0].childNodes[4].text;
+      GraduateTeacherE = gNo[0].childNodes[5].text;
+      ArticleTimeE = gNo[0].childNodes[6].text;
+}
+else{
+	  ArticleTitleE = gNo[0].childNodes[1].textContent;
+      ArticleTypeE = gNo[0].childNodes[3].textContent;
+      ArticleType2E = gNo[0].childNodes[5].textContent;
+      MajorE = gNo[0].childNodes[7].textContent;
+      ArticleAuthorE = gNo[0].childNodes[9].textContent;
+      GraduateTeacherE = gNo[0].childNodes[11].textContent;
+      ArticleTimeE = gNo[0].childNodes[13].textContent;
+}
+
+function ShowElement(element,thisInput)
+{
+var oldhtml = element.innerHTML;   //获得元素之前的内容
+var newobj = document.createElement('input');   //创建一个input元素
+newobj.type = 'text';   //为newobj元素添加类型
+newobj.setAttribute("style","width:200px;height:32px;");
+//设置newobj失去焦点的事件
+newobj.onblur = function(){
+element.innerHTML = this.value ? this.value : oldhtml;   //当触发时判断newobj的值是否为空，为空则不修改，并返回oldhtml。
+if(this.value.length==0){}
+else{
+var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+var nxml = xmlDom.xml;
+var reText = "";
+var oldText = "";
+if(thisInput==0) {reText = "<ArticleTitleE>"+this.value+"</ArticleTitleE>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTitleE>"),nxml.indexOf("</ArticleTitleE>")+16);}
+if(thisInput==1) {reText = "<ArticleTypeE>"+this.value+"</ArticleTypeE>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTypeE>"),nxml.indexOf("</ArticleTypeE>")+15);}
+if(thisInput==2) {reText = "<ArticleType2E>"+this.value+"</ArticleType2E>";
+oldText = nxml.substring(nxml.indexOf("<ArticleType2E>"),nxml.indexOf("</ArticleType2E>")+16);}
+if(thisInput==3) {reText = "<MajorE>"+this.value+"</MajorE>";
+oldText = nxml.substring(nxml.indexOf("<MajorE>"),nxml.indexOf("</MajorE>")+9);}
+if(thisInput==4) {reText = "<ArticleAuthorE>"+this.value+"</ArticleAuthorE>";
+oldText = nxml.substring(nxml.indexOf("<ArticleAuthorE>"),nxml.indexOf("</ArticleAuthorE>")+17);}
+if(thisInput==5) {reText = "<GraduateTeacherE>"+this.value+"</GraduateTeacherE>";
+oldText = nxml.substring(nxml.indexOf("<GraduateTeacherE>"),nxml.indexOf("</GraduateTeacherE>")+19);}
+if(thisInput==6) {reText = "<ArticleTimeE>"+this.value+"</ArticleTimeE>";
+oldText = nxml.substring(nxml.indexOf("<ArticleTimeE>"),nxml.indexOf("</ArticleTimeE>")+15);}
+var fso=new ActiveXObject("Scripting.FileSystemObject"); 
+var pathF = location.pathname.substring(1,location.pathname.length-9)+"\webTemplate.xml";
+rFile=fso.CreateTextFile(pathF,1,true);
+nxml = nxml.replace(oldText,reText);
+rFile.WriteLine(nxml);
+rFile.close();
+//window.location.replace(window.location.href);
+}
+}
+element.innerHTML = '';   //设置元素内容为空
+element.appendChild(newobj);   //添加子元素
+newobj.focus();   //获得焦点
+}
+</script>
+    <title>1</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!--<script type="text/javascript">
+nint();
+</script>
+-->
+<center>
+<body>
+<span lang=EN-US style='font-size:12.0pt;font-family:"Times New Roman","serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p id = "Article-title" class=MsoNormal align=center style='text-align:center;line-height:18.0pt'><b><span
+lang=EN-US style='font-size:15.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<ArticleTitleE>
+<script type="text/javascript">
+document.write(ArticleTitleE);
+</script>
+</ArticleTitleE></span>
+</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center;text-indent:10.0pt;
+line-height:18.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p id = "Article-title_En" class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+style='font-size:15.0pt'>A 
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,1)">
+<ArticleTypeE>
+<script type="text/javascript">
+document.write(ArticleTypeE);
+</script>
+</ArticleTypeE>
+</span>
+for the 
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,2)">
+<ArticleType2E>
+<script type="text/javascript">
+document.write(ArticleType2E);
+</script>
+</ArticleType2E>
+</span>
+Degree of 
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,3)">
+<MajorE>
+<script type="text/javascript">
+document.write(MajorE);
+</script>
+</MajorE>
+</span>
+<br>in the Graduate School of Chinese Academy of Sciences</span></p>
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+style='font-size:15.0pt'>&nbsp;</span></p>
+<p class=MsoNormal align=center style='text-align:center;text-indent:10.0pt;
+line-height:18.0pt'><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal align=center style='text-align:center;text-indent:10.0pt;
+line-height:18.0pt'><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>By</span></b></p>
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,4)">
+<ArticleAuthorE>
+<script type="text/javascript">
+document.write(ArticleAuthorE);
+</script>
+</ArticleAuthorE>
+</span></span></b></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoToc1><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>Directed By </span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,5)">
+<GraduateTeacherE>
+<script type="text/javascript">
+document.write(GraduateTeacherE);
+</script>
+</GraduateTeacherE>
+</span></span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:15.0pt'>&nbsp;</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+  style='font-size:15.0pt'>Chinese</span></b><b><span lang=EN-US
+ style='font-size:15.0pt'> Academy</span></b><b><span lang=EN-US
+style='font-size:15.0pt'> of Sciences</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,6)">
+<ArticleTimeE>
+<script type="text/javascript">
+document.write(ArticleTimeE);
+</script>
+</ArticleTimeE>
+</span></span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:15.0pt'>&nbsp;</span></b></p>
+
+</div>
+
+</body>
+
+</html>

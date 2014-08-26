@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<script language="javascript" type="text/javascript">
+	  var TextC;
+	  var TextCTemp;
+      var KeywordC;
+	  var TextCList = new Array();
+      var TextCListLength;
+
+	  var xmlDoc;
+	  var type=1;
+
+// 加载xml文档
+       var loadXML = function (xmlFile) {
+            if (window.ActiveXObject) {
+                xmlDoc = new ActiveXObject('Microsoft.XMLDOM');//IE浏览器
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else if (isFirefox=navigator.userAgent.indexOf("Firefox")>0) { //火狐浏览器
+				type=2;
+                xmlDoc = document.implementation.createDocument('', '', null);
+                xmlDoc.async = false;//关闭异步加载   
+                xmlDoc.load(xmlFile);
+            }
+            else{ //谷歌浏览器
+			/*	var xmlhttp = new window.XMLHttpRequest();
+        xmlhttp.open("GET", xmlFile, false);
+        xmlhttp.send(null);
+        xmlDom = xmlhttp.responseXML;
+		*/ window.alert('暂不识别该浏览器!');
+                return;
+            }
+           return xmlDoc;
+        }
+
+        // 首先对xml对象进行判断
+      var  checkXMLDocObj = function (xmlFile) {
+            var xmlDoc = loadXML(xmlFile);
+            if (xmlDoc == null) {
+                alert('您的浏览器不支持xml文件读取,于是本页面禁止您的操作,推荐使用IE或FireFox浏览器可以解决此问题!');
+                window.location.href = '../err.html';
+
+            }
+            return xmlDoc;
+        }
+
+	  var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
+	  var gNo = xmlDom.getElementsByTagName("Abstract");
+	  if(type==1){
+      TextC = gNo[0].childNodes[0].text;
+      KeywordC = gNo[0].childNodes[1].text;
+}
+else{
+	  TextC = gNo[0].childNodes[1].textContent;
+      KeywordC = gNo[0].childNodes[3].textContent;
+}
+
+	  TextCTemp = TextC.substring(0,TextC.indexOf("\n"));
+	  TextCList = TextC.split("\n");
+	  TextCListLength = TextCList.length;
+</script>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>国科大学位论文模板</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+<p class=MsoTitle><span class=zhaiyao>摘　要</span></p>
+
+<script type="text/javascript">
+for(var i=0;i<TextCListLength;i++){
+	var TextDis = TextCList[i];
+    document.write("<p class=MsoBodyTextFirstIndent><span class=zhaiyaoText><TextC id="+i+">"+TextDis+"</TextC></span></p>");
+   }
+</script>
+
+
+<p class=MsoBodyTextFirstIndent style='text-indent:28.1pt'><b><span
+style='font-size:14.0pt;font-family:黑体'>关键词：</span></b><span style='font-family:
+宋体'>
+<keywordC>
+<script type="text/javascript">
+document.write(KeywordC);
+</script>
+</keywordC></span></p>
+
+
+</body>
+
+</html>

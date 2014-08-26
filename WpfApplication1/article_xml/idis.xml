@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<iDisseration>
+  <cover>
+    <Classification>G250</Classification>
+    <Secret>XXX</Secret>
+    <Colleage>中国科学院</Colleage>
+    <ArticleType>硕士学位论文</ArticleType>
+    <ArticleTitle>学术型网络数据库功能发展趋势与评价体系研究</ArticleTitle>
+    <ArticleAuthor>丁艳君</ArticleAuthor>
+    <GraduateTeacher>郑建程研究馆员</GraduateTeacher>
+    <GraduateTeacherCompany>中国科学院文献情报中心</GraduateTeacherCompany>
+    <DegreeType>硕士学位</DegreeType>
+    <Major>图书馆学</Major>
+    <ArticleTime>2009年12月</ArticleTime>
+    <ArticleTimeDefence>2010年1月</ArticleTimeDefence>
+    <CultivateCollege>中国科学院文献情报中心</CultivateCollege>
+  </cover>
+  <coverE>
+    <ArticleTitleE>The Study on Trend and Evaluation System of Resources Database Functions</ArticleTitleE>
+    <ArticleTypeE>Doctoral/Master</ArticleTypeE>
+    <ArticleType2E>Dissertation/Thesis</ArticleType2E>
+    <MajorE>Management in the Library</MajorE>
+    <ArticleAuthorE>Ding YanJun</ArticleAuthorE>
+    <GraduateTeacherE>Zheng JianCheng</GraduateTeacherE>
+    <ArticleTimeE>January,2010</ArticleTimeE>
+  </coverE>
+  <Statement>
+    <CollegeS>中国科学院文献情报中心</CollegeS>
+    <AuthorS>丁艳君</AuthorS>
+    <TeacherS>郑建程</TeacherS>
+    <TimeS>2010.1</TimeS>
+  </Statement>
+  <Abstract id="1">
+    <abstracttitle>
+      <p style="margin: 5pt 0cm; text-align: center; line-height: 20pt; font-weight: bold;">
+        <span style="font-family: 黑体; font-size: 14pt; font-weight: bold;">摘 要</span>
+      </p>
+    </abstracttitle>
+    <textc>
+      <p style="margin: 5.6pt 1cm; text-align: justify; line-height: 20pt; text-indent: 24pt; font-size: 12pt; -ms-text-justify: inter-ideograph;">
+        <span style="font-family: 宋体;">.......</span>瑞特儿童而而而儿童而特而</p>
+      <p style="margin: 5.6pt 1cm; text-align: justify; line-height: 20pt; text-indent: 24pt; font-size: 12pt; -ms-text-justify: inter-ideograph;">
+        <img width="640" height="461" style="width: 304px; height: 309px;" src="http://img2.zol.com.cn/product/135/298/ce9sImr9NNUEc.jpg" />
+      </p>
+    </textc>
+    <keywordc>
+      <p style="margin: 5.6pt 1cm; text-align: justify; line-height: 20pt; text-indent: 24pt; font-size: 12pt; -ms-text-justify: inter-ideograph;">
+        <span style="font-family: 黑体; font-size: 14pt; font-weight: bold;">关键词：</span>
+        <span style="font-family: 宋体;">XXX</span>
+      </p>
+    </keywordc>
+  </Abstract>
+  <AbstractE id="2">
+  </AbstractE>
+  <PaperSection>
+    <Chapter>
+      <p style="margin: 10pt 0cm; text-align: center; line-height: 20pt; text-indent: 0cm; font-family: Times New Roman; font-size: 14pt; font-weight: normal; page-break-after: avoid;">
+        <span style="font-family: Times New Roman;">1 </span>
+        <papersectiontitle>
+          <span style="font-family: 黑体;">第一章</span>
+        </papersectiontitle>
+      </p>
+      <papersectiontext>
+        <p style="margin: 8pt 1cm; line-height: 125%; text-indent: 24pt;">
+          <span style="font-family: 宋体;">
+            <span style="font-family: Times New Roman;">科学技术的发展离不开......发生地佛山市三发发三三撒上的三三<img src="http://jilin.sinaimg.cn/2014/0622/U9616P1387DT20140622130511.jpg" _src="http://jilin.sinaimg.cn/2014/0622/U9616P1387DT20140622130511.jpg" /></span>
+          </span>
+        </p>
+      </papersectiontext>
+    </Chapter>
+  </PaperSection>
+  <Refer>
+  </Refer>
+  <Thanks>
+    <thankstitle>
+      <h1 style="text-align: center;">
+        <span style="font-family: 黑体;">感 谢</span>
+      </h1>
+    </thankstitle>
+    <thankstext>
+      <p style="margin: 8pt 1cm; line-height: 125%; text-indent: 24pt;">
+        <span style="font-family: 宋体;">在我研究生生涯的结束之际，我谨代表我个人向多年来在我最困难和最迷茫的时候给予我关怀、帮助和鼓励的老师<span style="font-family: Times New Roman;">......</span></span>
+      </p>
+    </thankstext>
+    <thanksauthor>
+      <p align="right" style="margin: 8pt 1cm; text-align: right; line-height: 18pt; text-indent: 21pt; mso-line-height-rule: exactly;">
+        <span style="font-family: 楷体_GB2312; font-size: 14pt; font-weight: bold;">XXX</span>
+      </p>
+    </thanksauthor>
+    <thanksdate>
+      <p align="right" style="margin: 8pt 1cm; text-align: right; text-indent: -12pt;">
+        <span style="line-height: 125%; font-family: 宋体; font-size: 12pt;">XXX-chinese</span>
+        <span style="line-height: 125%; font-family: &quot;Times New Roman&quot;; font-size: 12pt;">XXX-other</span>
+      </p>
+    </thanksdate>
+  </Thanks>
+</iDisseration>

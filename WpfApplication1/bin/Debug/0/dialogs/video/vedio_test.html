@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<script type="text/javascript">
+    function getParam(name) {
+        return location.href.match(new RegExp('[?#&]' + name + '=([^?#&]+)', 'i')) ? RegExp.$1 : '';
+    }
+    var srcParam;
+    var srcParam = getParam('videoSrc');
+    var srcWidth= getParam('width');
+    var srcHeight= getParam('height');
+
+    function initVedio() {
+        var vContent = document.getElementById('preview');
+        vContent.innerHTML = '<div style="z-index:-1"> <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+        ' src="' + srcParam + '"' +
+        ' width="' + srcWidth  + '"' +
+        ' height="' + srcHeight  + '"' +
+        ' play="true" loop="false" menu="false" allowscriptaccess="never" wmode="Opaque" allowfullscreen="true" ></embed></div> ';
+    }
+
+ </script>
+<body onload="initVedio();">
+<div id="preview">
+    
+</div>
+</body>
+</html>

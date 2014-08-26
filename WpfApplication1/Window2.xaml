@@ -1,0 +1,34 @@
+﻿<Window x:Class="WpfApplication1.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window2" Height="377" Width="483" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="21,16,0,0" Name="textBlock1" Text="专题名称：" VerticalAlignment="Top" FontSize="13" FlowDirection="LeftToRight" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="20,36,0,0" Name="textBox1" VerticalAlignment="Top" Width="429" TextChanged="textBox1_TextChanged" />
+        <TextBlock FlowDirection="LeftToRight" FontSize="13" Height="23" HorizontalAlignment="Left" Margin="21,68,0,0" Name="textBlock2" Text="文件夹路劲(p)：" VerticalAlignment="Top" />
+        <TextBox Height="28" HorizontalAlignment="Left" Margin="20,93,0,0" Name="textBox2" VerticalAlignment="Top" Width="429" VerticalContentAlignment="Center" AutoWordSelection="True" AllowDrop="False" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="21,127,0,0" Name="textBlock3" Text="图标：" VerticalAlignment="Top" FontSize="13" />
+        <ListView Height="143" HorizontalAlignment="Left" Margin="21,149,0,0" Name="listView1" VerticalAlignment="Top" Width="428" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Pic}"/>
+                        <TextBlock Text="{Binding Name}" Grid.Column="1"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Content="确定" Height="23" HorizontalAlignment="Left" Margin="286,306,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="取消" Height="23" HorizontalAlignment="Right" Margin="0,306,14,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+    
+    </Grid>
+</Window>

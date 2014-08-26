@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<iDisseration>
+  <cover>
+    <Classification>G250</Classification>
+    <Secret>XXX</Secret>
+    <Colleage>中国科学院</Colleage>
+    <ArticleType>硕士学位论文</ArticleType>
+    <ArticleTitle>学术型网络数据库功能发展趋势与评价体系研究</ArticleTitle>
+    <ArticleAuthor>丁艳君</ArticleAuthor>
+    <GraduateTeacher>郑建程研究馆员</GraduateTeacher>
+    <GraduateTeacherCompany>中国科学院文献情报中心</GraduateTeacherCompany>
+    <DegreeType>硕士学位</DegreeType>
+    <Major>图书馆学</Major>
+    <ArticleTime>2009年12月</ArticleTime>
+    <ArticleTimeDefence>2010年1月</ArticleTimeDefence>
+    <CultivateCollege>中国科学院文献情报中心</CultivateCollege>
+  </cover>
+  <coverE>
+    <ArticleTitleE>The Study on Trend and Evaluation System of Resources Database Functions</ArticleTitleE>
+    <ArticleTypeE>Doctoral/Master</ArticleTypeE>
+    <ArticleType2E>Dissertation/Thesis</ArticleType2E>
+    <MajorE>Management in the Library</MajorE>
+    <ArticleAuthorE>Ding YanJun</ArticleAuthorE>
+    <GraduateTeacherE>Zheng JianCheng</GraduateTeacherE>
+    <ArticleTimeE>January,2010</ArticleTimeE>
+  </coverE>
+  <Statement>
+    <CollegeS>中国科学院文献情报中心</CollegeS>
+    <AuthorS>丁艳君</AuthorS>
+    <TeacherS>郑建程</TeacherS>
+    <TimeS>2010.1</TimeS>
+  </Statement>
+  <Abstract>
+    <abstracttitle>
+      <p style="margin: 5pt 0cm; text-align: center; line-height: 20pt; font-weight: bold;">
+        <span style="font-family: 黑体; font-size: 14pt; font-weight: bold;">摘 要</span>
+      </p>
+    </abstracttitle>
+    <textc>
+      <p style="margin: 5.6pt 1cm; text-align: justify; line-height: 20pt; text-indent: 24pt; font-size: 12pt; -ms-text-justify: inter-ideograph;">
+        <span style="font-family: 宋体;">qwe rew rwe we </span>
+      </p>
+    </textc>
+    <keywordc>
+      <p style="margin: 5.6pt 1cm; text-align: justify; line-height: 20pt; text-indent: 24pt; font-size: 12pt; -ms-text-justify: inter-ideograph;">
+        <span style="font-family: 黑体; font-size: 14pt; font-weight: bold;">关键词：asdaas a aas as as </span>
+      </p>
+    </keywordc>
+  </Abstract>
+  <AbstractE>
+  </AbstractE>
+  <PaperSection>
+  </PaperSection>
+  <Refer>
+  </Refer>
+  <Thanks>
+  </Thanks>
+</iDisseration>
