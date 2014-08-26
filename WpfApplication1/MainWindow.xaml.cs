@@ -651,11 +651,22 @@ namespace WpfApplication1
                 itemlist.Remove(cc);
                 label4.Content = count.ToString() + "条";
                 de.Children.Add(cs);
-
-              
             }
         }  //删除个人主题
-
+        private void MenuItem_deletePS(object sender, RoutedEventArgs e) //删除附件
+        {
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            ss.Remove(selectone);
+            if (this.listView2.Items.Count == 0)
+            {
+                this.windowsFormsHost1.Margin = new Thickness(0, 0, 0, 0);
+            }
+        }
+        private void MenuItem_openPS(object sender, RoutedEventArgs e) //打开附件
+        {
+            string path = ((sidefiles)this.listView2.SelectedItem).path;
+            System.Diagnostics.Process.Start(path); //打开此文件。
+        }
         private void note_add_Click(object sender, RoutedEventArgs e)   //增加新笔记触发的事件
         {
             int id = listView1.Items.Count;
@@ -742,7 +753,7 @@ namespace WpfApplication1
                 //image4.Source = sd;
                //string ccc=sd.;
                 sidefiles sos = new sidefiles() { 
-                 ID="1",
+                 path=op.FileName,
                  file_name=filename+"("+file_size+")",
                  image=sd,
                 // tool_name=filename
@@ -894,6 +905,14 @@ namespace WpfApplication1
             }
            
         }
+
+        private void listView2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string path = ((sidefiles)this.listView2.SelectedItem).path;
+            System.Diagnostics.Process.Start(path); //打开此文件。
+        }
+
+        
 
 
 

@@ -229,7 +229,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </Menu>
-                <ListView Height="28"  Name="listView2" Width="auto" Background="#FFE5E5E5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView Height="28"  Name="listView2" Width="auto" Background="#FFE5E5E5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="listView2_MouseDoubleClick">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel>
@@ -248,7 +248,17 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="打开" Click="MenuItem_openPS">
+                                    </MenuItem>
+                                    <MenuItem Header="重命名" Click="MenuItem_modify">
+                                    </MenuItem>
+                                    <MenuItem Header="删除" Click="MenuItem_deletePS">
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                        </ListView>
             </WrapPanel>
                     <WindowsFormsHost Name="windowsFormsHost1">
                         <WinFormControls:WebBrowser x:Name="webBrowser1"></WinFormControls:WebBrowser>
