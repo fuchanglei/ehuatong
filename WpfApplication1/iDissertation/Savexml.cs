@@ -52,19 +52,36 @@ namespace WpfApplication1
             doc_context.Load(xml_context);
             root_context = doc_context.DocumentElement;
         }
-        public void savexml()  //保存更改后的信息
+        public void savexml(bool a)  //保存更改后的信息
         {
-            XmlNodeList ccwww = root_context.SelectNodes(type);
-            foreach (XmlNode ccd in ccwww)
+            if (a == false)
             {
-                if (((XmlElement)ccd).GetAttribute("id") == _id)
+                XmlNodeList ccwww = root_context.SelectNodes(type);
+                foreach (XmlNode ccd in ccwww)
                 {
-                    ccd.InnerXml = context_html.Replace("&", "&amp;");
-                    doc_context.Save(@xml_context);
-                    ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
-                    break;
-                }     
-            }   
+                    if (((XmlElement)ccd).GetAttribute("id") == _id)
+                    {
+                        ccd.InnerXml = context_html.Replace("&", "&amp;");
+                        doc_context.Save(@xml_context);
+                        //ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                XmlNodeList ccwww = root_context.SelectNodes(type);
+                foreach (XmlNode ccd in ccwww)
+                {
+                    if (((XmlElement)ccd).GetAttribute("id") == _id)
+                    {
+                        ccd.InnerXml = context_html.Replace("&", "&amp;");
+                        doc_context.Save(@xml_context);
+                        ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
+                        break;
+                    }
+                }
+            }
         }
         private bool ishasRichmedie(XmlNode paragraph)
         {

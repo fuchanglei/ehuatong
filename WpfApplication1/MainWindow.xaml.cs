@@ -330,13 +330,13 @@ namespace WpfApplication1
                 if (sel.type == outlinetype.common)
                 {
                     Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
-                    cxml.savexml();
+                    cxml.savexml(false);
                     //ThreadPool.QueueUserWorkItem(status => cxml.savetem());
                 }
                 else
                 {
                     Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
-                    sxml.savexml();
+                    sxml.savexml(false);
                   // ThreadPool.QueueUserWorkItem(status => sxml.savetem());
                 }
             }
@@ -824,7 +824,6 @@ namespace WpfApplication1
                             if (invoker.WaitWebPageLoad() == true)
                             {
                                 invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;", "&"));
-
                             }
                         }
                         else
@@ -867,12 +866,12 @@ namespace WpfApplication1
                 if (sel.type == outlinetype.common)
                 {
                     Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
-                    cxml.savexml();
+                    cxml.savexml(true);
                 }
                 else
                 {
                     Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
-                    sxml.savexml();
+                    sxml.savexml(true);
                 }
             }
         }

@@ -97,7 +97,21 @@ newobj.setAttribute("style","width:200px;height:32px;");
 //设置newobj失去焦点的事件
 newobj.onblur = function(){
 element.innerHTML = this.value ? this.value : oldhtml;   //当触发时判断newobj的值是否为空，为空则不修改，并返回oldhtml。
+
 if(this.value.length==0){
+	if(thisInput==0) { element.innerHTML = Classification;}
+if(thisInput==1) { element.innerHTML = Secret;}
+if(thisInput==2) { element.innerHTML = Colleage;}
+if(thisInput==3) { element.innerHTML = ArticleType;}
+if(thisInput==4) { element.innerHTML = ArticleTitle;}
+if(thisInput==5) { element.innerHTML = ArticleAuthor;}
+if(thisInput==6) { element.innerHTML = GraduateTeacher;}
+if(thisInput==7) { element.innerHTML = GraduateTeacherCompany;}
+if(thisInput==8) { element.innerHTML = DegreeType;}
+if(thisInput==9) { element.innerHTML = Major;}
+if(thisInput==10) { element.innerHTML = ArticleTime;}
+if(thisInput==11) { element.innerHTML = ArticleTimeDefence;}
+if(thisInput==12) { element.innerHTML = CultivateCollege;}
 }
 else{
 var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
@@ -155,7 +169,7 @@ nint();
 </script>
 -->
 <center>
-<body onload="loadxml()">
+<body>
 
 <p class=MsoNormal style='text-align:center;line-height:24.0pt'><b><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></b><b><span style='font-family:宋体'>分类号</span><u><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
@@ -183,8 +197,8 @@ style='font-family:宋体'>编号</span><u><span lang=EN-US>&nbsp;&nbsp;&nbsp;&n
 
 <p class=MsoNormal style='line-height:24.0pt'><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span style='font-size:24.0pt;font-family:黑体'><span style="text-decoration:underline;cursor:hand" onclick="ShowElement(this,2)">
-<Colleage>
+<p class=MsoNormal align=center style='text-align:center;line-height:24.0pt'><b><span
+style='font-size:24.0pt;font-family:黑体'><span style="text-decoration:underline;cursor:hand" onclick="ShowElement(this,2)"><Colleage>
 <script type="text/javascript">
 document.write(Colleage);
 </script>

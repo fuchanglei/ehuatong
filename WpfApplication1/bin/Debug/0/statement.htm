@@ -73,7 +73,12 @@ newobj.setAttribute("style","width:200px;height:32px;");
 //设置newobj失去焦点的事件
 newobj.onblur = function(){
 element.innerHTML = this.value ? this.value : oldhtml;   //当触发时判断newobj的值是否为空，为空则不修改，并返回oldhtml。
-if(this.value.length==0){}
+if(this.value.length==0){
+if(thisInput==0) { element.innerHTML = CollegeS;}
+if(thisInput==1) { element.innerHTML = AuthorS;}
+if(thisInput==2) { element.innerHTML = TeacherS;}
+if(thisInput==3) { element.innerHTML = TimeS;}
+}
 else{
 var xmlDom = checkXMLDocObj("webTemplate.xml");//读取到xml文件中的数据
 var nxml = xmlDom.xml;
@@ -163,7 +168,7 @@ lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 <p class=MsoNormal style='text-align:center;text-indent:27.0pt;line-height:18.0pt'><span
 style='font-family:宋体'>签</span><span lang=EN-US>&nbsp; </span><span
 style='font-family:宋体'>名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,1)">
 <AuthorS>
 <script type="text/javascript">
 document.write(AuthorS);
@@ -171,7 +176,7 @@ document.write(AuthorS);
 </AuthorS></span>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style='font-family:
 宋体'>导师签名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,2)">
 <TeacherS>
 <script type="text/javascript">
 document.write(TeacherS);
@@ -180,7 +185,7 @@ document.write(TeacherS);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
 style='font-family:宋体'>日</span><span lang=EN-US>&nbsp; </span><span
 style='font-family:宋体'>期：</span>
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,3)">
 <TimeS>
 <script type="text/javascript">
 document.write(TimeS);
@@ -207,7 +212,7 @@ style='font-size:14.0pt;font-family:宋体'>本人郑重声明：所呈交的学位论文是本人在
 <p class=MsoNormal style='text-align:center;text-indent:24.0pt'><span style='font-family:宋体'>签</span><span
 lang=EN-US>&nbsp; </span><span style='font-family:宋体'>名：</span><span
 lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,1)">
 <AuthorS>
 <script type="text/javascript">
 document.write(AuthorS);
@@ -215,7 +220,7 @@ document.write(AuthorS);
 </AuthorS></span>
 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span
 style='font-family:宋体'>导师签名：</span><span lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,2)">
 <TeacherS>
 <script type="text/javascript">
 document.write(TeacherS);
@@ -225,7 +230,7 @@ document.write(TeacherS);
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
 style='font-family:宋体'>日</span><span lang=EN-US>&nbsp; </span><span
 style='font-family:宋体'>期：</span>
-<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,0)">
+<span style="text-decoration:underline;cursor:hand" onMouseUp="ShowElement(this,3)">
 <TimeS>
 <script type="text/javascript">
 document.write(TimeS);
