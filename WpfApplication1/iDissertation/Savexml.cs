@@ -92,31 +92,45 @@ namespace WpfApplication1
         }
         private XmlElement getrichmedia(XmlNode paragraph) //获取富文本对象
         {
-            if (paragraph.Name == "img" || paragraph.Name == "iframe")
+            try
+            {
+                if (paragraph.Name == "img" || paragraph.Name == "iframe")
+                {
+                    XmlElement img = doc_tem.CreateElement("richmedia");
+                    if (paragraph.Name == "img")
+                    {
+                        img.SetAttribute("type", "img");
+                        img.SetAttribute("src", ((XmlElement)paragraph).GetAttribute("src").Replace(MainWindow.idd_href + "\\", ""));
+                        img.SetAttribute("style", ((XmlElement)paragraph).GetAttribute("style"));
+                        img.InnerXml = "img";
+                        // return img;
+                        //break;
+                    }
+                    else
+                    {
+                        //XmlElement img = doc_tem.CreateElement("richmedia");
+                        img.SetAttribute("type", "media");
+                        string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"), MainWindow.tree5_sel.Name, RegexOptions.IgnoreCase);
+                        string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
+                        img.SetAttribute("src", path[0].Substring(0));
+                        img.InnerXml = "media";
+                    }
+                    return img;
+                }
+
+                else
+                    return getrichmedia(paragraph.FirstChild);
+              
+            }
+            catch
             {
                 XmlElement img = doc_tem.CreateElement("richmedia");
-                if (paragraph.Name == "img")
-                {
-                    img.SetAttribute("type", "img");
-                    img.SetAttribute("src", ((XmlElement)paragraph).GetAttribute("src").Replace(MainWindow.idd_href + "\\", ""));
-                    img.SetAttribute("style", ((XmlElement)paragraph).GetAttribute("style"));
-                    img.InnerXml = "img";
-                    // return img;
-                    //break;
-                }
-                else
-                {
-                    //XmlElement img = doc_tem.CreateElement("richmedia");
-                    img.SetAttribute("type","media");
-                    string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"),MainWindow.tree5_sel.Name,RegexOptions.IgnoreCase);
-                    string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
-                    img.SetAttribute("src",path[0].Substring(0));
-                    img.InnerXml = "media";
-                }
+                img.SetAttribute("type", "chart");
+                img.SetAttribute("src", "F:\\3.Echarts\\3.Echarts\\eg1.html");
+                img.InnerText = "chart";
                 return img;
             }
-            else
-               return getrichmedia(paragraph.FirstChild);
+            
         }
         private void analysis_text(XmlNodeList cc,XmlNode ccd)
         { 

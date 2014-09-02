@@ -252,7 +252,9 @@
                                 <ContextMenu>
                                     <MenuItem Header="打开" Click="MenuItem_openPS">
                                     </MenuItem>
-                                    <MenuItem Header="重命名" Click="MenuItem_modify">
+                                    <MenuItem Header="重命名" Click="MenuItem_modifyPSname">
+                                    </MenuItem>
+                                    <MenuItem Header="另存为" Click="MenuItem_Saveas">
                                     </MenuItem>
                                     <MenuItem Header="删除" Click="MenuItem_deletePS">
                                     </MenuItem>

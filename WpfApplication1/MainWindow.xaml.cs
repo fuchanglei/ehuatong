@@ -180,22 +180,6 @@ namespace WpfApplication1
         }  //增加小节
         private void add_charpt(object sender, RoutedEventArgs e)
         {
-
-            /*int c = getindex(tree6_sel);
-            outline cs = new outline()
-            {
-                Name1 = "3 发生啊gf我的",
-                toollip = "3 发生啊师傅打法",
-                parent = null,
-                type = outlinetype.Chapter
-            };
-
-            // cd.TreeViewItems1.Insert(c,cs);
-            //cd.TreeViewItems1[0].children.Insert(c, cs);
-            Data.Instance.TreeViewItems1.Insert(c, cs);
-            //this.treeView1.ItemsSource = cd.TreeViewItems1;
-            // label2.Content = cd.TreeViewItems1[0].children.Count.ToString();
-             * */
             Window5 w5 = new Window5();
             w5.getname(newname, 4);
             w5.getdata += new Window5.myevent(m_window5_outline_addchapter);
@@ -662,8 +646,45 @@ namespace WpfApplication1
                 this.windowsFormsHost1.Margin = new Thickness(0, 0, 0, 0);
             }
         }
+        private void MenuItem_modifyPSname(object sender, RoutedEventArgs e) //附件重命名
+        {
+            MessageBox.Show("MenuItem_modifyPSname(object sender, RoutedEventArgs e");
+            
+            Window6 w6 = new Window6();
+            w6.Show();
+            w6.getdata += new Window6.myevent(MenuItem_modifyPSname_event);
+
+
+        }
+        private void MenuItem_modifyPSname_event(object sender, Window5.textEventArgs e)
+        {
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            string filename = System.IO.Path.GetFileNameWithoutExtension(selectone.path);
+            string Extension = System.IO.Path.GetExtension(selectone.path);
+            FileInfo fi = new FileInfo(selectone.path);
+            int c = selectone.path.LastIndexOf(filename);
+            string path = selectone.path.Substring(0, c);
+            fi.MoveTo(path+e.textbox+Extension);
+            selectone.file_name = selectone.file_name.Replace(filename,e.textbox);
+
+        }
+        private void MenuItem_Saveas(object sender, RoutedEventArgs e) //附件另存为
+        {
+            MessageBox.Show("MenuItem_Saveas(object sender, RoutedEventArgs e");
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            string exfile = System.IO.Path.GetExtension(selectone.path);
+            System.Windows.Forms.SaveFileDialog sf = new System.Windows.Forms.SaveFileDialog();
+            sf.Title = "附件另存为";
+            sf.Filter = exfile + "文件|" + exfile + "|所有文件(*.*)|*.*";
+            if (sf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                File.Copy(selectone.path,sf.FileName);
+            }
+            
+        }
         private void MenuItem_openPS(object sender, RoutedEventArgs e) //打开附件
         {
+            MessageBox.Show("MenuItem_openPS(object sender, RoutedEventArgs e)");
             string path = ((sidefiles)this.listView2.SelectedItem).path;
             System.Diagnostics.Process.Start(path); //打开此文件。
         }
@@ -891,17 +912,24 @@ namespace WpfApplication1
         {
            
             if (isselect)
-            { 
-                issave = false;
-                web_show = true;
-                listView1.Visibility = Visibility.Hidden;
-                this.tree6.Visibility = Visibility.Visible;
+            {
                 tree5_sel = (iDissertation)tree5.SelectedItem;
-                //newname = tree5_sel.Name;
-                idd_href = tree5_sel.href;
-                select_tree5 = new outline_Data(true);
-                //outline_Data.Instance = select_tree5;
-                this.tree6.ItemsSource =select_tree5.TreeViewItems1;
+                if (tree5_sel.nodetype != iDissType.nonode)
+                {
+                    issave = false;
+                    web_show = true;
+                    listView1.Visibility = Visibility.Hidden;
+                    this.tree6.Visibility = Visibility.Visible;
+                    idd_href = tree5_sel.href;
+                    select_tree5 = new outline_Data(true);
+                    //outline_Data.Instance = select_tree5;
+                    this.tree6.ItemsSource = select_tree5.TreeViewItems1;
+                }
+                else
+                {
+                    listView1.Visibility = Visibility.Visible;
+                    this.tree6.Visibility = Visibility.Hidden;
+                }
             }
            
         }

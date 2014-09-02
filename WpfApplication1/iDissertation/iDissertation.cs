@@ -21,7 +21,8 @@ namespace WpfApplication1
         yanjiuzongsu=4,
         zikeshenqing=5,
         shekeshenqing=6,
-        yanjiubaogao=7
+        yanjiubaogao=7,
+        nonode=8
     }
    public class iDissertation:INotifyPropertyChanged
     {
@@ -93,10 +94,31 @@ namespace WpfApplication1
                    icon = Window4.icons[int.Parse(((XmlElement)xm).GetAttribute("type"))],
                    Name = (((XmlElement)xm).GetAttribute("name")),
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
-                   nodetype = (iDissType)(int.Parse(((XmlElement)xm).GetAttribute("type"))),
                    href = (((XmlElement)xm).GetAttribute("href"))
                    // parent=null
                };
+               iDissertation node_Article = new iDissertation()
+               {
+
+                   icon = @"images/address book.ico",
+                   Name = "文献",
+                   //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+                   nodetype = iDissType.nonode,
+                  
+                   // parent=null
+               };
+               iDissertation node_Data= new iDissertation()
+               {
+
+                   icon = @"images/finder.ico",
+                   Name = "数据",
+                   //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+                   nodetype = iDissType.nonode,
+
+                   // parent=null
+               };
+               node.Children.Add(node_Article);
+               node.Children.Add(node_Data);
                item.Add(node);
            }
            return item;
