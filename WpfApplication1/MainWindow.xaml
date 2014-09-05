@@ -50,13 +50,11 @@
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Grid  x:Name="mTopLevelGrid" Height="auto" Width="Auto"  Background="Red" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="36" />
             <RowDefinition Height="32" />
             <RowDefinition Height="525*" />
         </Grid.RowDefinitions>
-        
         <Grid Name="grid_0_0" Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <StackPanel Height="40"  Margin="0,-4,0,0" Name="stackPanel1" VerticalAlignment="Top" Background="#FFF8ECEC" Orientation="Horizontal">
                 <Image Height="Auto" Name="image1" Stretch="Fill" Width="44" Source="/WpfApplication1;component/Images/a044ad345982b2b7485dd9cd33adcbef77099bfd.jpg" VerticalAlignment="Center" />
@@ -207,20 +205,26 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
+                
             </Grid>
             <GridSplitter Width="1" Grid.Column="1" Grid.Row="1" Background="White"></GridSplitter>
             <Grid Name="grid_lef3" Grid.Column="2" Background="WhiteSmoke" Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="179*" />
+                    <ColumnDefinition Width="600*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28*"></RowDefinition>
                     <RowDefinition Height="642*"></RowDefinition>
                 </Grid.RowDefinitions> 
-                <Grid Margin="0,0,0,0">
+                <Grid Grid.ColumnSpan="2">
                 <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,-10,0">
                         <TextBox Height="32" Name="textBox2"  BorderThickness="0" Background="#FFEBDFDF" Text="2231123123" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="789" HorizontalContentAlignment="Left" />
             </StackPanel>
                 </Grid>
-                <Grid Margin="0,29,0,6" Grid.RowSpan="2">
-                <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel1" VerticalAlignment="Top" Background="#FFE5E5E5" Orientation="Vertical" Grid.ColumnSpan="2">
+                <Grid Margin="0,29,0,6" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel1" VerticalAlignment="Top" Background="#FFE5E5E5" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
                 <TextBox Margin="10,0,0,0" Background="#FFE5E5E5" BorderThickness="0" FontSize="15" FontWeight="Normal" Foreground="#FF564E53" Height="32" Name="textBox4" Text="附件" VerticalContentAlignment="Center" />
                 <Menu Height="28" Name="menu4" Width="28">
                     <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
@@ -243,8 +247,8 @@
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Image Width="25" Margin="0,-3,0,0" Height="25" Source="{Binding image}"/>
-                                <TextBlock Margin="0,2,0,0" Text="{Binding file_name}" Grid.Column="1"/>
+                                        <Image Width="25" Margin="0,-3,0,0" Height="25" Source="{Binding image}"></Image>
+                                        <TextBlock Margin="0,2,0,0" Text="{Binding file_name}" Grid.Column="1"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -261,10 +265,42 @@
                                 </ContextMenu>
                             </ListView.ContextMenu>
                         </ListView>
-            </WrapPanel>
-                    <WindowsFormsHost Name="windowsFormsHost1">
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel3" VerticalAlignment="Top" Background="White" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
+                        <TextBlock Margin="12,4,0,0" Background="#FFE5E5E5"  FontSize="15" FontWeight="Bold" Foreground="#FF564E53" Height="20">标签：</TextBlock>
+                        <ListView Height="28" HorizontalAlignment="Center" Margin="0,0,0,0" Name="listViewTag" VerticalAlignment="Center" Width="auto"  BorderThickness="0" SelectionChanged="listViewTag_SelectionChanged">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Margin="0,2,0,0">
+                                    </WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="0,0,0,0" Text="{Binding name}" Grid.Column="0"/>
+                                        <MenuItem Height="15" Width="15" BorderThickness="0.5" Grid.Column="1" Margin="-1,0,0,0" Visibility="{Binding isvisibli}" Click="MenuItem_Click_delete">
+                                            <MenuItem.Icon>
+                                                <Image Width="15" Height="15" Source="Images/delete.png"  Margin="-2,0,0,0" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <Grid.ToolTip>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding name}" TextWrapping="Wrap"></TextBlock>
+                                        </Grid.ToolTip>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            </ListView>
+                    </WrapPanel>
+                    </StackPanel>
+                    <WindowsFormsHost Name="windowsFormsHost1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <WinFormControls:WebBrowser x:Name="webBrowser1"></WinFormControls:WebBrowser>
                     </WindowsFormsHost>
+                    
                 </Grid>
             </Grid>
         </Grid>

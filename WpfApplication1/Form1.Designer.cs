@@ -44,7 +44,7 @@
             // 
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.listView1.Location = new System.Drawing.Point(51, 45);
+            this.listView1.Location = new System.Drawing.Point(46, -10);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(421, 195);
             this.listView1.SmallImageList = this.imageList1;

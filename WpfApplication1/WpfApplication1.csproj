@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="dataTemplate.cs\Tag.cs" />
     <Compile Include="iDissertation\article.cs" />
     <Compile Include="dataTemplate.cs\Data.cs" />
     <Compile Include="iDissertation\copy_files.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="Window6.xaml.cs">
       <DependentUpon>Window6.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window_Tag.xaml.cs">
+      <DependentUpon>Window_Tag.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -167,6 +171,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Window6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window_Tag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,6 +350,7 @@
     <Content Include="article_xml\coverC.htm" />
     <Content Include="article_xml\statement.htm" />
     <Content Include="article_xml\style.css" />
+    <Resource Include="Images\delete.png" />
     <Resource Include="article_xml\webTemplate.xml" />
     <Resource Include="article_xml\副本 webTemplate.xml">
       <SubType>Designer</SubType>

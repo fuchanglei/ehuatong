@@ -153,3 +153,5 @@ E:\workspace\ehuatong\WpfApplication1\obj\x86\Debug\WpfApplication1.Properties.R
 E:\workspace\ehuatong\WpfApplication1\obj\x86\Debug\WpfApplication1.csproj.GenerateResource.Cache
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window6.baml
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window6.g.cs
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window_Tag.baml
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window_Tag.g.cs
