@@ -294,7 +294,7 @@ namespace WpfApplication1
               
             };
 
-            PropertyNodeItem node1_4 = new PropertyNodeItem()
+           /* PropertyNodeItem node1_4 = new PropertyNodeItem()
             {
                 DisplayName = "标签",
                 Name = "This is the discription of Node1. This is a folder.",
@@ -315,12 +315,13 @@ namespace WpfApplication1
 
             };
             node1_4.Children.Add(node1_4_1);
+            */
            // node1_1.Children.Add(dire_1);
             node1.Children.Add(node1_1);
             node1.Children.Add(node1_2);
             node1.Children.Add(node1_3);
-            node1.Children.Add(node1_4);
-            PropertyNodeItem node2= new PropertyNodeItem()
+           // node1.Children.Add(node1_4);
+            /*PropertyNodeItem node2= new PropertyNodeItem()
             {
                 DisplayName = "点击显示全部标签",
                 Name = "This is the discription of Node2. This is a folder.", 
@@ -328,9 +329,9 @@ namespace WpfApplication1
                 parent=null,
                 node_lev = Nodeetype.none
             };
-
+            */
             itemObservableCollection2.Add(node1);
-            itemObservableCollection2.Add(node2);
+            //itemObservableCollection2.Add(node2);
             node1_1.Children.Add(dire_1);
             return itemObservableCollection2;
         }

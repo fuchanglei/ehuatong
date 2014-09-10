@@ -21,7 +21,7 @@ namespace WpfApplication1
     public partial class Window_Tag : Window
     {
         private Tag_data _listView1Select;
-        private ObservableCollection<Tag> Init_tree = new ObservableCollection<Tag>();
+        public ObservableCollection<Tag> Init_tree = new ObservableCollection<Tag>();
         private ObservableCollection<Tag_data> _listviewItems=new ObservableCollection<Tag_data>();
         private bool isselect = true;
         private Tag _TagSelect;
@@ -50,10 +50,19 @@ namespace WpfApplication1
         private void initTag()
         {
            //  = new ObservableCollection<Tag>();
+            Tag root = new Tag()
+            {
+                DisplayName = "标签",
+                Icon = @"images/tags.ico",
+                isedit = Visibility.Collapsed,
+                isshow = Visibility.Visible,
+                parent = null
+            };
             Tag root1 = new Tag()
             {
                 
                 DisplayName = "编程",
+                Icon = @"images/tag.ico",
                 isedit = Visibility.Collapsed,
                 isshow = Visibility.Visible,
                 parent = null
@@ -62,6 +71,7 @@ namespace WpfApplication1
             {
                 
                 DisplayName = "java",
+                Icon = @"images/tag.ico",
                 isedit = Visibility.Collapsed,
                 isshow = Visibility.Visible,
                 parent = root1
@@ -70,6 +80,7 @@ namespace WpfApplication1
             {
                 
                 DisplayName = "多线程",
+                Icon = @"images/tag.ico",
                 isedit = Visibility.Collapsed,
                 isshow = Visibility.Visible,
                 parent = root1_1
@@ -78,14 +89,17 @@ namespace WpfApplication1
             {
                 
                 DisplayName = "硬件",
+                Icon = @"images/tag.ico",
                 isshow = Visibility.Visible,
                 isedit = Visibility.Collapsed,
                 parent = null
             };
             root1_1.Children.Add(root1_1_1);
             root1.Children.Add(root1_1);
-            Init_tree.Add(root1);
-            Init_tree.Add(root2);
+            root.Children.Add(root1);
+            root.Children.Add(root2);
+            Init_tree.Add(root);
+           // Init_tree.Add(root2);
             //return Init_tree;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -190,15 +204,32 @@ namespace WpfApplication1
         }
         private void MenuItem_Click_CreateTag(object sender, RoutedEventArgs e)
         {
-            
-            Tag newnone = new Tag()
+            if (_TagSelect.DisplayName != "标签")
             {
-                 DisplayName="双击修改",
-                  parent=_TagSelect,
-                  isedit=Visibility.Visible,
-                  isshow=Visibility.Collapsed
-            };
-            _TagSelect.Children.Add(newnone);
+                Tag newnone = new Tag()
+                {
+                    DisplayName = "双击修改",
+                    parent = _TagSelect,
+                    Icon=@"images/tag.ico",
+                    isedit = Visibility.Visible,
+                    isshow = Visibility.Collapsed
+                };
+                _TagSelect.Children.Add(newnone);
+            }
+            else
+            {
+                Tag newnone = new Tag()
+                {
+                    DisplayName = "双击修改",
+                    Icon = @"images/tag.ico",
+                    parent =null,
+                    isedit = Visibility.Visible,
+                    isshow = Visibility.Collapsed
+                };
+                _TagSelect.Children.Add(newnone);
+            
+            }
+            //_TagSelect.Children.Add(newnone);
         }
         private void MenuItem_Click_DeleteTag(object sender, RoutedEventArgs e)
         {
@@ -238,6 +269,8 @@ namespace WpfApplication1
             _TagSelect.isshow = Visibility.Collapsed;
             _TagSelect.isedit = Visibility.Visible;
         }
+
+        
         
     }
 }

@@ -56,6 +56,7 @@
                 <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate  ItemsSource="{Binding Path=Children}">
                             <StackPanel Orientation="Horizontal">
+                            <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="16" Height="16" Margin="0,6,2,2"></Image>
                             <TextBox VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Text="{Binding DisplayName}" IsEnabled="True" Visibility="{Binding isedit}" Focusable="True" MouseEnter="textbox_MouseEnter" LostFocus="TextBox_LostFocus"></TextBox>
                             <TextBlock VerticalAlignment="Center" FontSize="14" Text="{Binding DisplayName}" Visibility="{Binding isshow}" FontWeight="Bold"></TextBlock>
                             <StackPanel.ToolTip>

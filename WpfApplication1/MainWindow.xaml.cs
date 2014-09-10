@@ -69,7 +69,7 @@ namespace WpfApplication1
             showcotext();
             last= ((PropertyNodeItem)tree2.Items[0]).Children.Count;
             //TreeViewItem cc = this.tree2.Items[0] as TreeViewItem;
-          //cc.IsExpanded = true;
+            //cc.IsExpanded = true;
             listView2.ItemsSource = ss;
             invoker = new WebbrowserScriptInvoker(webBrowser1);
             wrapPanel1.Visibility = Visibility.Collapsed;
@@ -86,11 +86,10 @@ namespace WpfApplication1
            // this.listViewTag.ItemsSource = _listviewItems;
             WebBrowserSecurity.setIEInternetSecurity();
             this.listViewTag.ItemsSource = _listviewItems;
+            Window_Tag www = new Window_Tag();
+            this.treeView1.ItemsSource = www.Init_tree;
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
-            //this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(PrintDocument);
-           // invoker.InvokeScript("setContent","sadfasdfasfaf");
-           // outline_Data.Instance.TreeViewItems1 = null;
         }
         private ContextMenu cireateMenu1()
        {
@@ -329,12 +328,6 @@ namespace WpfApplication1
                   // ThreadPool.QueueUserWorkItem(status => sxml.savetem());
                 }
             }
-        }
-        private void label2_MouseMove(object sender, MouseEventArgs e)
-        {
-            //Color clr = Color.FromRgb(0, 255, 255);
-           // SolidColorBrush brush = new SolidColorBrush(clr);
-           // label1.Foreground = brush;
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {    
@@ -973,6 +966,13 @@ namespace WpfApplication1
                 _listView1Select = this.listViewTag.SelectedItem as Tag_data;
                 _listView1Select.isvisibli = Visibility.Visible;
             }
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            Window_Tag w_tag = new Window_Tag();
+            w_tag.getbq += new Window_Tag.myevent(add_tag);
+            w_tag.Show();
         }       
     }
 }

@@ -11,8 +11,23 @@ namespace WpfApplication1
 {
    public class Tag:INotifyPropertyChanged
     {
-      
-        
+
+       private string _Icon;
+       public string Icon
+       {
+           get
+           {
+               return _Icon;
+           }
+           set
+           {
+               if (_Icon != value)
+               {
+                   _Icon = value;
+                   OnPropertyChanged("Icon");
+               }
+           }
+       }
         private Visibility _isedit;
         public Visibility isedit
         {
@@ -76,7 +91,7 @@ namespace WpfApplication1
                  }
              }
         }
-
+        public object obj {get;set; }
         public ObservableCollection<Tag> Children { get; set; }
         public Tag()
         {
