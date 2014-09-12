@@ -973,6 +973,12 @@ namespace WpfApplication1
             Window_Tag w_tag = new Window_Tag();
             w_tag.getbq += new Window_Tag.myevent(add_tag);
             w_tag.Show();
+        }
+
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+           openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
+           // System.Data.DataTable cc = op.getexcel();
         }       
     }
 }

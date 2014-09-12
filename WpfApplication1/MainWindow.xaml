@@ -114,7 +114,7 @@
                 </Menu>
                 <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" Height="19" Width="17" Margin="-16,-2,0,0" ></Image>
                 <Button Margin="40,-2,0,0" Content="保存" Height="23" Name="button2" Width="94" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" ToolTip="保存" Click="button2_Click" />
-                <Button Content="Button" Height="23" Name="button3" Width="75" Margin="30,-2,0,0" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" />
+                <Button Content="Button" Height="23" Name="button3" Width="75" Margin="30,-2,0,0" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" Click="button3_Click" />
             </StackPanel>
         </Grid>
         <Grid Name="grid_1_0" Height="26" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,38,0,0">

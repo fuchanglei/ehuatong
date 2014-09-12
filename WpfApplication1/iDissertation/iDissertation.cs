@@ -43,6 +43,12 @@ namespace WpfApplication1
                }
            }
        }
+       private iDissertation _parent;
+       public iDissertation parent
+       {
+         get{return _parent;}
+         set{ _parent=value; }
+       }
        public iDissType nodetype { get; set; }
        //public iDissertation parent { get;set;}
        public string href { get; set; }
@@ -104,7 +110,7 @@ namespace WpfApplication1
                    Name = "文献",
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    nodetype = iDissType.nonode,
-                  
+                   
                    // parent=null
                };
                iDissertation node_Data= new iDissertation()
@@ -146,6 +152,28 @@ namespace WpfApplication1
           // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(newtitle.href + "\\picture");
            Directory.CreateDirectory(newtitle.href + "\\music");
+           iDissertation node_Article = new iDissertation()
+           {
+
+               icon = @"images/address book.ico",
+               Name = "文献",
+               //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+               nodetype = iDissType.nonode,
+
+               // parent=null
+           };
+           iDissertation node_Data = new iDissertation()
+           {
+
+               icon = @"images/finder.ico",
+               Name = "数据",
+               //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+               nodetype = iDissType.nonode,
+
+               // parent=null
+           };
+           newtitle.Children.Add(node_Article);
+           newtitle.Children.Add(node_Data);
            idisser_data.idisser.TreeViewItems4.Add(newtitle);
            XmlElement xe1 = doc.CreateElement("item");//创建一个节点
            xe1.SetAttribute("id", (_TreeViewItems4.Count+1).ToString());//设置该节点id属性
