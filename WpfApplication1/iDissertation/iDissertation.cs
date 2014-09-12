@@ -21,7 +21,8 @@ namespace WpfApplication1
         yanjiuzongsu=4,
         zikeshenqing=5,
         shekeshenqing=6,
-        yanjiubaogao=7
+        yanjiubaogao=7,
+        nonode=8
     }
    public class iDissertation:INotifyPropertyChanged
     {
@@ -41,6 +42,12 @@ namespace WpfApplication1
                    OnPropertyChanged("Name");
                }
            }
+       }
+       private iDissertation _parent;
+       public iDissertation parent
+       {
+         get{return _parent;}
+         set{ _parent=value; }
        }
        public iDissType nodetype { get; set; }
        //public iDissertation parent { get;set;}
@@ -93,10 +100,31 @@ namespace WpfApplication1
                    icon = Window4.icons[int.Parse(((XmlElement)xm).GetAttribute("type"))],
                    Name = (((XmlElement)xm).GetAttribute("name")),
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
-                   nodetype = (iDissType)(int.Parse(((XmlElement)xm).GetAttribute("type"))),
                    href = (((XmlElement)xm).GetAttribute("href"))
                    // parent=null
                };
+               iDissertation node_Article = new iDissertation()
+               {
+
+                   icon = @"images/address book.ico",
+                   Name = "文献",
+                   //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+                   nodetype = iDissType.nonode,
+                   
+                   // parent=null
+               };
+               iDissertation node_Data= new iDissertation()
+               {
+
+                   icon = @"images/finder.ico",
+                   Name = "数据",
+                   //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+                   nodetype = iDissType.nonode,
+
+                   // parent=null
+               };
+               node.Children.Add(node_Article);
+               node.Children.Add(node_Data);
                item.Add(node);
            }
            return item;
@@ -124,6 +152,28 @@ namespace WpfApplication1
           // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(newtitle.href + "\\picture");
            Directory.CreateDirectory(newtitle.href + "\\music");
+           iDissertation node_Article = new iDissertation()
+           {
+
+               icon = @"images/address book.ico",
+               Name = "文献",
+               //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+               nodetype = iDissType.nonode,
+
+               // parent=null
+           };
+           iDissertation node_Data = new iDissertation()
+           {
+
+               icon = @"images/finder.ico",
+               Name = "数据",
+               //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+               nodetype = iDissType.nonode,
+
+               // parent=null
+           };
+           newtitle.Children.Add(node_Article);
+           newtitle.Children.Add(node_Data);
            idisser_data.idisser.TreeViewItems4.Add(newtitle);
            XmlElement xe1 = doc.CreateElement("item");//创建一个节点
            xe1.SetAttribute("id", (_TreeViewItems4.Count+1).ToString());//设置该节点id属性

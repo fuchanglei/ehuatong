@@ -1,9 +1,10 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)] 
@@ -14,7 +15,7 @@ namespace WpfApplication1
             string filePath = "";
             OpenFileDialog openFileDialog1=new OpenFileDialog();
             openFileDialog1.Multiselect=false;
-            openFileDialog1.Filter = filter;//"mp4文件|*.mp4";
+            openFileDialog1.Filter = filter;//"mp4鏂囦欢|*.mp4";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -28,7 +29,7 @@ namespace WpfApplication1
             string filePath = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Multiselect = false;
-            openFileDialog1.Filter = filter;//图片格式
+            openFileDialog1.Filter = filter;//鍥剧墖鏍煎紡
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -38,6 +39,18 @@ namespace WpfApplication1
                 
             }
             return filePath;
+        }
+        public string MN_InsertChart()
+        {
+            data cc = new data();
+            //cc.Show();
+            cc.ShowDialog();
+            //new聽Thread聽(cc.Show).Start();
+            //while (cc.IsActive == true)
+           // { 
+            return cc.result;
+           // }
+           // MessageBox.Show("aasfaf");
         }
     }
 }

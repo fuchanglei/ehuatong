@@ -11,7 +11,7 @@ namespace WpfApplication1
 {  
     public class sidefiles : INotifyPropertyChanged
         {
-            public string ID;
+        public string path { get; set; }
             private string _file_name;
             public string file_name
             {
@@ -32,7 +32,7 @@ namespace WpfApplication1
             public ImageSource image { get; set; }
            // public string tool_name { get; set; }
             public object obj;
-            public ObservableCollection<sidefiles> items { get; set; }
+           // public ObservableCollection<sidefiles> items { get; set; }
             #region INotifyPropertyChanged Members
 
             public event PropertyChangedEventHandler PropertyChanged;

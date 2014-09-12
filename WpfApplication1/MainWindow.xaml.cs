@@ -51,8 +51,11 @@ namespace WpfApplication1
         private bool isselect = true;
         private string filename;
         private bool issave;
+        private bool isdelete=true;
         public bool web_show = false;
         ObservableCollection<sidefiles> ss = new ObservableCollection<sidefiles>();
+        private Tag_data _listView1Select;
+        private ObservableCollection<Tag_data> _listviewItems = new ObservableCollection<Tag_data>();
         ContextMenu c1;
         ContextMenu c2;
         ContextMenu c3;
@@ -66,7 +69,7 @@ namespace WpfApplication1
             showcotext();
             last= ((PropertyNodeItem)tree2.Items[0]).Children.Count;
             //TreeViewItem cc = this.tree2.Items[0] as TreeViewItem;
-          //cc.IsExpanded = true;
+            //cc.IsExpanded = true;
             listView2.ItemsSource = ss;
             invoker = new WebbrowserScriptInvoker(webBrowser1);
             wrapPanel1.Visibility = Visibility.Collapsed;
@@ -80,12 +83,13 @@ namespace WpfApplication1
             {
                 Directory.CreateDirectory(item_Directory);
             }
+           // this.listViewTag.ItemsSource = _listviewItems;
             WebBrowserSecurity.setIEInternetSecurity();
+            this.listViewTag.ItemsSource = _listviewItems;
+            Window_Tag www = new Window_Tag();
+            this.treeView1.ItemsSource = www.Init_tree;
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
-            //this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(PrintDocument);
-           // invoker.InvokeScript("setContent","sadfasdfasfaf");
-           // outline_Data.Instance.TreeViewItems1 = null;
         }
         private ContextMenu cireateMenu1()
        {
@@ -180,22 +184,6 @@ namespace WpfApplication1
         }  //增加小节
         private void add_charpt(object sender, RoutedEventArgs e)
         {
-
-            /*int c = getindex(tree6_sel);
-            outline cs = new outline()
-            {
-                Name1 = "3 发生啊gf我的",
-                toollip = "3 发生啊师傅打法",
-                parent = null,
-                type = outlinetype.Chapter
-            };
-
-            // cd.TreeViewItems1.Insert(c,cs);
-            //cd.TreeViewItems1[0].children.Insert(c, cs);
-            Data.Instance.TreeViewItems1.Insert(c, cs);
-            //this.treeView1.ItemsSource = cd.TreeViewItems1;
-            // label2.Content = cd.TreeViewItems1[0].children.Count.ToString();
-             * */
             Window5 w5 = new Window5();
             w5.getname(newname, 4);
             w5.getdata += new Window5.myevent(m_window5_outline_addchapter);
@@ -341,12 +329,6 @@ namespace WpfApplication1
                 }
             }
         }
-        private void label2_MouseMove(object sender, MouseEventArgs e)
-        {
-            //Color clr = Color.FromRgb(0, 255, 255);
-           // SolidColorBrush brush = new SolidColorBrush(clr);
-           // label1.Foreground = brush;
-        }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {    
             /*
@@ -474,7 +456,7 @@ namespace WpfApplication1
             } 
 
         }
-        internal static class Utils
+       internal static class Utils
         {
             public static T FindVisualParent<T>(DependencyObject obj) where T : class
             {
@@ -651,11 +633,59 @@ namespace WpfApplication1
                 itemlist.Remove(cc);
                 label4.Content = count.ToString() + "条";
                 de.Children.Add(cs);
-
-              
             }
         }  //删除个人主题
+        private void MenuItem_deletePS(object sender, RoutedEventArgs e) //删除附件
+        {
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            ss.Remove(selectone);
+            if (this.listView2.Items.Count == 0)
+            {
+                this.windowsFormsHost1.Margin = new Thickness(0, 0, 0, 0);
+            }
+        }
+        private void MenuItem_modifyPSname(object sender, RoutedEventArgs e) //附件重命名
+        {
+            MessageBox.Show("MenuItem_modifyPSname(object sender, RoutedEventArgs e");
+            
+            Window6 w6 = new Window6();
+            w6.Show();
+            w6.getdata += new Window6.myevent(MenuItem_modifyPSname_event);
 
+
+        }
+        private void MenuItem_modifyPSname_event(object sender, Window5.textEventArgs e)
+        {
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            string filename = System.IO.Path.GetFileNameWithoutExtension(selectone.path);
+            string Extension = System.IO.Path.GetExtension(selectone.path);
+            FileInfo fi = new FileInfo(selectone.path);
+            int c = selectone.path.LastIndexOf(filename);
+            string path = selectone.path.Substring(0, c);
+            fi.MoveTo(path+e.textbox+Extension);
+            selectone.file_name = selectone.file_name.Replace(filename,e.textbox);
+
+        }
+        private void MenuItem_Saveas(object sender, RoutedEventArgs e) //附件另存为
+        {
+            MessageBox.Show("MenuItem_Saveas(object sender, RoutedEventArgs e");
+            sidefiles selectone = listView2.SelectedItem as sidefiles;
+            string exfile = System.IO.Path.GetExtension(selectone.path);
+            System.Windows.Forms.SaveFileDialog sf = new System.Windows.Forms.SaveFileDialog();
+            sf.Title = "附件另存为";
+            sf.Filter = exfile + "文件|" + exfile + "|所有文件(*.*)|*.*";
+            if (sf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                File.Copy(selectone.path,sf.FileName);
+            }
+            
+        }
+        private void MenuItem_openPS(object sender, RoutedEventArgs e) //打开附件
+        {
+            MessageBox.Show("MenuItem_openPS(object sender, RoutedEventArgs e)");
+            string path = ((sidefiles)this.listView2.SelectedItem).path;
+            System.Diagnostics.Process.Start(path); //打开此文件。
+        }
         private void note_add_Click(object sender, RoutedEventArgs e)   //增加新笔记触发的事件
         {
             int id = listView1.Items.Count;
@@ -673,25 +703,28 @@ namespace WpfApplication1
             label4.Content = count.ToString() + "条";
         }
 
-        private void MenuItem_tag(object sender, RoutedEventArgs e)
+        private void MenuItem_tag(object sender, RoutedEventArgs e) //增加标签
         {
-            Form1 f1 = new Form1();
-            f1.getbq+=new Form1.myevent(add_tag);
-            f1.ShowDialog();
+            //Form1 f1 = new Form1();
+            //f1.getbq+=new Form1.myevent(add_tag);
+          //  f1.ShowDialog();
+            Window_Tag w_tag = new Window_Tag();
+            w_tag.getbq += new Window_Tag.myevent(add_tag);
+            w_tag.Show();
         }
-        private void add_tag(object sender,Form1.ListviewText e)
+        private void add_tag(object sender,Window_Tag.ListviewText e)
         {
-            Data dd = new Data();
-            PropertyNodeItem cc = tree2.Items[0] as PropertyNodeItem;
-           
-            PropertyNodeItem newbq = new PropertyNodeItem()
-            {
-                DisplayName = e.textbox,
-                Name = "This is the Tag of Node1",
-                Icon = "",
-                parent =cc.Children[last-1],
-            };  
-            cc.Children[last - 1].Children.Add(newbq);
+            
+           // _listviewItems = e.m_listview;
+           foreach(Tag_data ta in e.m_listview)
+           {
+             _listviewItems.Add(ta);
+           }
+            this.wrapPanel3.Visibility = Visibility.Visible;
+           // this.listViewTag.ItemsSource = _listviewItems;
+            this.windowsFormsHost1.Margin = new Thickness(0, 28 * n(), 0, 0);
+            
+
         }    //增加标签
         public static ImageSource Converttoimag(Icon icon)   //将图标文件转换为imageSource
         {
@@ -722,6 +755,13 @@ namespace WpfApplication1
             else
                 return len.ToString()+"B";
         }     //计算文件的长度，将文件的Byte字节转换
+        private int n()
+        {
+            if (wrapPanel1.Visibility == Visibility.Visible && wrapPanel3.Visibility == Visibility.Visible)
+                return 2;
+            else
+                return 1;
+        }
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)   //添加附件
         {
 
@@ -732,7 +772,7 @@ namespace WpfApplication1
             //op.ShowDialog();
             if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                wrapPanel1.Visibility = Visibility.Visible;
+               // wrapPanel1.Visibility = Visibility.Visible;
                 filename = op.SafeFileName;
                 FileInfo fi = new FileInfo(op.FileName);
                 System.Drawing.Icon cc = System.Drawing.Icon.ExtractAssociatedIcon(op.FileName);
@@ -742,17 +782,19 @@ namespace WpfApplication1
                 //image4.Source = sd;
                //string ccc=sd.;
                 sidefiles sos = new sidefiles() { 
-                 ID="1",
+                 path=op.FileName,
                  file_name=filename+"("+file_size+")",
                  image=sd,
                 // tool_name=filename
                 };
                 //this.webBrowser1.Margin = new Thickness(0, 26, 0, 0);
-                this.windowsFormsHost1.Margin=new Thickness(0, 26, 0, 0);
+                //int c = n;
+               // d/ouble top = Convert.ToDouble(28*c);
+                this.wrapPanel1.Visibility = Visibility.Visible;
+                this.windowsFormsHost1.Margin=new Thickness(0, 28*n(), 0, 0);
+                //this.wrapPanel3.Visibility = Visibility.Visible;
                 ss.Add(sos);
             }
-            
-            
         }
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
@@ -880,24 +922,63 @@ namespace WpfApplication1
         {
            
             if (isselect)
-            { 
-                issave = false;
-                web_show = true;
-                listView1.Visibility = Visibility.Hidden;
-                this.tree6.Visibility = Visibility.Visible;
+            {
                 tree5_sel = (iDissertation)tree5.SelectedItem;
-                //newname = tree5_sel.Name;
-                idd_href = tree5_sel.href;
-                select_tree5 = new outline_Data(true);
-                //outline_Data.Instance = select_tree5;
-                this.tree6.ItemsSource =select_tree5.TreeViewItems1;
+                if (tree5_sel.nodetype != iDissType.nonode)
+                {
+                    issave = false;
+                    web_show = true;
+                    listView1.Visibility = Visibility.Hidden;
+                    this.tree6.Visibility = Visibility.Visible;
+                    idd_href = tree5_sel.href;
+                    select_tree5 = new outline_Data(true);
+                    //outline_Data.Instance = select_tree5;
+                    this.tree6.ItemsSource = select_tree5.TreeViewItems1;
+                }
+                else
+                {
+                    listView1.Visibility = Visibility.Visible;
+                    this.tree6.Visibility = Visibility.Hidden;
+                }
             }
            
         }
 
+        private void listView2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string path = ((sidefiles)this.listView2.SelectedItem).path;
+            System.Diagnostics.Process.Start(path); //打开此文件。
+        }
+        private void MenuItem_Click_delete(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("dasdasd");
+            isdelete = false;
+            _listviewItems.Remove(_listView1Select);
+            isdelete = true;
 
+        }
+        private void listViewTag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isdelete)
+            {
+                if (_listView1Select != null)
+                    _listView1Select.isvisibli = Visibility.Collapsed;
+                _listView1Select = this.listViewTag.SelectedItem as Tag_data;
+                _listView1Select.isvisibli = Visibility.Visible;
+            }
+        }
 
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            Window_Tag w_tag = new Window_Tag();
+            w_tag.getbq += new Window_Tag.myevent(add_tag);
+            w_tag.Show();
+        }
 
-              
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+           openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
+           // System.Data.DataTable cc = op.getexcel();
+        }       
     }
 }
