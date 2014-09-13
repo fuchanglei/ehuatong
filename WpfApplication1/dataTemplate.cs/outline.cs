@@ -419,6 +419,7 @@ namespace WpfApplication1
                    if (((XmlElement)xm).GetAttribute("id") == id)
                    {    
                        ((XmlElement)xm).SetAttribute("id",newid);
+                       xm.SelectSingleNode("papersectionid").InnerText=newid;
                        doc_contex.Save(idis_xml);
                        break;
                    }
