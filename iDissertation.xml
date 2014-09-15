@@ -1,18 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <iDissertation>
-<item id="1">
-    <name>xxx开题报告1</name>
-    <type>0</type>
-    <href>xxxxxxxxx</href>
-</item>
-<item id="2">
-    <name>xxx开题报告2</name>
-    <type>0</type>
-    <href>xxxxxxxxx</href>
-</item>
-<item id="2">
-    <name>基于xxxx的研究</name>
-    <type>2</type>
-    <href>C:/Users/fuchanglei/Documents/iDissertation/基于xxxx的研究</href>
-</item>
+  <item id="2" name="热污染为" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\热污染为" />
 </iDissertation>
