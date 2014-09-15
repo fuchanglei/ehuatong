@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace WpfApplication1
 {
-     class dataTem
+    class dataTem : INotifyPropertyChanged
     {
         private int _id;
         public int id
@@ -23,5 +23,32 @@ namespace WpfApplication1
             get { return _rowname; }
             set { _rowname = value; }
         }
+        private bool _ischeck;
+        public bool ischeck
+        {
+            get { return _ischeck; }
+            set {
+                if (_ischeck != value)
+                {
+                    _ischeck = value;
+                    OnPropertyChanged("ischeck");
+                }
+            }
+        }
+        #region INotifyPropertyChanged Members
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            private void OnPropertyChanged(string propertyName)
+            {
+                PropertyChangedEventHandler handler = this.PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+
+        
+            #endregion
     }
 }

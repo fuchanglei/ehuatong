@@ -88,7 +88,7 @@ namespace WpfApplication1
             this.listViewTag.ItemsSource = _listviewItems;
             Window_Tag www = new Window_Tag();
             this.treeView1.ItemsSource = www.Init_tree;
-            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+            this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
         }
         private ContextMenu cireateMenu1()
@@ -202,7 +202,9 @@ namespace WpfApplication1
         {
             outline_Data delet_outline = new outline_Data();
             delet_outline.outline_node_delet(tree6_sel);
+            issave = false;
             this.tree6.ItemsSource = delet_outline.TreeViewItems1;
+            
         }
         private void m_window5_outline_modify(object sender, Window5.textEventArgs e)  
         {
@@ -212,6 +214,7 @@ namespace WpfApplication1
            outline_Data modify_outline = new outline_Data();
             modify_outline.outline_node_modify(tree6_sel,newname);
            // select_tree5.outline_node_modify
+            issave = false;
            this.tree6.ItemsSource = modify_outline.TreeViewItems1;
             
         }
@@ -235,6 +238,7 @@ namespace WpfApplication1
             int c = getindex(sel);
             outline aa=add_section.outline_chapter_add(sel, newname);
             //outline_Data.Instance.TreeViewItems1.Insert(c, aa);
+
             ObservableCollection<outline> cc = tree6.ItemsSource as ObservableCollection<outline>;
             cc.Insert(c, aa);
             
@@ -442,7 +446,7 @@ namespace WpfApplication1
             //MessageBox.Show(c.title_name);
             if (web_show)
            {
-               this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+               this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
                 web_show = false;
             }
             cc = (title)listView1.SelectedItem;
@@ -540,7 +544,7 @@ namespace WpfApplication1
             w3.creattitle += new Window3.myevent(createnewtitle);
             w3.Show();            
         }
-        
+       
         private void m_window1_SelectionChanged(object sender, Window1.textEventArgs e)
         {
             //获取事件传递过来的数据
@@ -838,6 +842,23 @@ namespace WpfApplication1
                     if (tree6_sel.type != outlinetype.common)
                     {
                         this.tree6.ContextMenu = c5;
+                        switch (tree6_sel.type)
+                        { 
+                            case outlinetype.Section1:
+                                (c5.Items[0] as MenuItem).IsEnabled = false;
+                                (c5.Items[1] as MenuItem).IsEnabled = true;
+                                break;
+                            case outlinetype.Section2:
+                                (c5.Items[0] as MenuItem).IsEnabled = false;
+                                (c5.Items[1] as MenuItem).IsEnabled = false;
+                                break;
+                            default:
+                                (c5.Items[0] as MenuItem).IsEnabled = true;
+                                (c5.Items[1] as MenuItem).IsEnabled = true;
+                                break;
+                                
+                        }
+                        
                     }
                     else
                         this.tree6.ContextMenu = null;
@@ -856,7 +877,7 @@ namespace WpfApplication1
                     {
                         if (web_show)
                         {
-                            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+                            this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
                             web_show = false;
                         }
                         if (tree6_sel.type != outlinetype.common)
@@ -977,7 +998,7 @@ namespace WpfApplication1
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
-           openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
+           //openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
            // System.Data.DataTable cc = op.getexcel();
         }       
     }

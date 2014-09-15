@@ -4,7 +4,7 @@
          xmlns:local="clr-namespace:WpfApplication1"
         xmlns:WinFormHost="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"         
         xmlns:WinFormControls="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="E划通" Height="833" Width="1338" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
         <HierarchicalDataTemplate x:Key="treeViewTemplate1" DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal">
@@ -224,7 +224,6 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
-                
             </Grid>
             <GridSplitter Width="1" Grid.Column="1" Grid.Row="1" Background="White"></GridSplitter>
             <Grid Name="grid_lef3" Grid.Column="2" Background="WhiteSmoke" Margin="0,6,0,0">
@@ -316,7 +315,7 @@
                             </ListView>
                     </WrapPanel>
                     </StackPanel>
-                    <WindowsFormsHost Name="windowsFormsHost1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <WindowsFormsHost Name="windowsFormsHost1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,-6">
                         <WinFormControls:WebBrowser x:Name="webBrowser1"></WinFormControls:WebBrowser>
                     </WindowsFormsHost>
                     

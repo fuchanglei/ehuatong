@@ -23,11 +23,11 @@
                         <GridView>
                             <GridViewColumn x:Name="gvc" Width="200">
                                 <GridViewColumn.Header>
-                                    <CheckBox>全选</CheckBox>
+                                    <CheckBox Click="CheckBox_Click_1">全选</CheckBox>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox Margin="72,0,0,0" Tag="{Binding Path=id}"></CheckBox>
+                                        <CheckBox Margin="72,0,0,0" Tag="{Binding Path=id}" IsChecked="{Binding Path=ischeck}" Click="CheckBox_Click"></CheckBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
