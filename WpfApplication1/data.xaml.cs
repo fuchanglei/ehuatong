@@ -43,7 +43,7 @@ namespace WpfApplication1
                 rows =rows + "," + mytable.Rows[0][c].ToString();
             }
             rows=rows.Substring(1);
-            StreamWriter sw = new StreamWriter("D:/3.Echarts/data.ini",false,Encoding.Default);
+            StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
             if (this.title_textbox.Text == "")
             {
                 sw.WriteLine(" ");
@@ -84,8 +84,8 @@ namespace WpfApplication1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.comboBox1.Items.Add("D:\\3.Echarts\\data.xlsx");
-            this.comboBox1.Items.Add("D:\\3.Echarts\\data.xlsx1111");
+            this.comboBox1.Items.Add("F:\\3.Echarts\\3.Echarts\\data.xlsx");
+            this.comboBox1.Items.Add("D:\\3.Echarts\\3.Echarts\\data.xlsx1111");
             //this.comboBox1.Text = "F:\\3.Echarts\\3.Echarts\\data.xlsx";
         }
 

@@ -88,7 +88,7 @@ namespace WpfApplication1
             this.listViewTag.ItemsSource = _listviewItems;
             Window_Tag www = new Window_Tag();
             this.treeView1.ItemsSource = www.Init_tree;
-            this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
+            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
         }
         private ContextMenu cireateMenu1()
@@ -446,7 +446,7 @@ namespace WpfApplication1
             //MessageBox.Show(c.title_name);
             if (web_show)
            {
-               this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
+               this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
                 web_show = false;
             }
             cc = (title)listView1.SelectedItem;
@@ -877,7 +877,7 @@ namespace WpfApplication1
                     {
                         if (web_show)
                         {
-                            this.webBrowser1.Navigate("file:///D:/ueditor1_3_6-src/index.html");
+                            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
                             web_show = false;
                         }
                         if (tree6_sel.type != outlinetype.common)
