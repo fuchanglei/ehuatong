@@ -38,6 +38,8 @@ namespace WpfApplication1
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             string rows = string.Empty;
+            string title=string.Empty;
+            string danwei=string.Empty;
             foreach (int c in selectUid)
             {
                 rows =rows + "," + mytable.Rows[0][c].ToString();
@@ -46,20 +48,26 @@ namespace WpfApplication1
             StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
             if (this.title_textbox.Text == "")
             {
-                sw.WriteLine(" ");
+                //sw.WriteLine(" ");
+                title=" ";
             }
             else
-            sw.WriteLine(this.title_textbox.Text);
+            title=this.title_textbox.Text;
             sw.WriteLine(datatype);
             sw.WriteLine(rows);
             if (this.danwei_textbox.Text != "")
             {
-                sw.WriteLine(this.danwei_textbox.Text);
+                //sw.WriteLine(this.danwei_textbox.Text);
+                danwei=this.danwei_textbox.Text;
             }
             else
             {
-                sw.WriteLine(" ");
+               // sw.WriteLine(" ");
+                danwei=" ";
             }
+            
+            result = "#title=" + title + "&datatype=" + datatype + "&rows=" + rows + "&danwei="+danwei+"&data=";
+            
             for (int i = 1; i < mytable.Rows.Count; i++)
             {
                 string data = string.Empty;
@@ -67,12 +75,16 @@ namespace WpfApplication1
                 {
                     data = data + "," + mytable.Rows[i][c].ToString();
                 }
+                data = data.Substring(1);
                 sw.WriteLine(data.Substring(1));
+
+                result = result + data+"@@";
                 
             }
+            //result = "#title="+this.title_textbox.Text+"&datatype="+datatype+"&rows="+rows+",";
             sw.Flush();
             sw.Close();
-            result = "ok";
+            //result = "ok";
             this.Close();
         }
 
