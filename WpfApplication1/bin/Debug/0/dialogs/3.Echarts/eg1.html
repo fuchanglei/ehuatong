@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script type="text/javascript" src="js/esl.js" ></script>
+<title>无标题文档</title>
+</head>
+
+<body>
+	<div id="main" style="height:400px;border:1px solid #ccc;padding:10px;margin-top:10px;">
+	<script type="text/javascript">
+     var myChart;
+	 var i=0;
+	 var data=new Array(new Array(),new Array());
+    // var fso = new ActiveXObject("Scripting.FileSystemObject");
+    // var file=fso.GetFile("F:\\3.Echarts\\3.Echarts\\data.ini");
+   //  var ts = file.OpenAsTextStream(1, -2);
+	 function getParam(name) {
+        return location.href.match(new RegExp('[?#&]' + name + '=([^?#&]+)', 'i')) ? RegExp.$1 : '';
+    }
+    var srcParam;
+    var title = getParam('title');
+    var datatype= getParam('datatype');
+    var rows= getParam('rows');
+	var danwei= getParam('danwei');
+	var getdata= getParam('data');
+	var datas=new Array();
+	datas=getdata.split("@@");
+	 //while (!ts.AtEndOfStream) 
+     //{
+		 //var cc=srcParam.tostring().split(",");
+     data[0]=title;
+	 data[1]=datatype.split(",");
+	 data[2]=rows.split(",");
+     data[3]=danwei;
+	 data[4]=datas[0].split(",");
+	 data[5]=datas[1].split(",");
+	 //alert(data[0][0]);
+     //var ccc = 'asdasdas111';
+    // i++;
+	// }
+	// ts.Close();
+     require.config({
+         paths: {
+             echarts: 'js/echarts',
+             'echarts/chart/line': 'js/echarts'
+         }
+     });
+     require(
+         [
+             'echarts',
+             'echarts/chart/line'
+         ],
+         function (ec) {
+             myChart = ec.init(document.getElementById('main'));
+             var option = {
+                 title: {
+                     text: data[0][0],
+                     subtext: ''
+                 },
+                 tooltip: {
+                     trigger: 'axis'
+                 },
+                 legend: {
+                     data: data[1]
+                 },
+                 toolbox: {
+                     show: true,
+                     feature: {
+                         mark: true,
+                         dataView: { readOnly: false },
+                         magicType: ['line', 'bar'],
+                         restore: true,
+                         saveAsImage: true
+                     }
+                 },
+                 calculable: true,
+                 xAxis: [
+                         {
+                             type: 'category',
+                             boundaryGap: false,
+                             data: data[2]
+                         }
+                     ],
+                 yAxis: [
+                         {
+                             type: 'value',
+                             axisLabel: {
+                                 formatter: '{value} '+data[3][0]
+                             },
+                             splitArea: { show: true }
+                         }
+                     ],
+                 series: [
+                         {
+                             name: data[1][0],
+                             type: 'line',
+                             itemStyle: {
+                                 normal: {
+                                     lineStyle: {
+
+                                         shadowColor: 'rgba(0,0,0,0.9)'
+                                     }
+                                 }
+                             },
+                             data: data[4]
+                         },
+                         
+                         {
+                             name: data[1][1],
+                             type: 'line',
+                             itemStyle: {
+                                 normal: {
+                                     lineStyle: {
+                                         shadowColor: 'rgba(1,0,0,0.4)'
+                                     }
+                                 }
+                             },
+                             data: data[5] 
+                         }
+                     ]
+             };
+
+             myChart.setOption(option);
+         }
+     );
+</script>
+	</div>
+</body>
+</html>

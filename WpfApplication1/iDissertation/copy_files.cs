@@ -35,6 +35,7 @@ namespace WpfApplication1
                File.Copy(fi.FullName,to+"\\"+fi.Name,true);
            }
        }
+       //public static 
        public static void DeleteDir(string aimPath)
        {
            try

@@ -61,7 +61,7 @@ namespace WpfApplication1
         }
         public string image { get; set; }
         public object obj;
-        public ObservableCollection<title> title_item { get; set; }
+       // public ObservableCollection<title> title_item { get; set; }
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

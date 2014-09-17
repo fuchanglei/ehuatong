@@ -166,7 +166,7 @@
                                 </Style>
                             </TreeView.ItemContainerStyle>
                             <TreeView.ContextMenu>
-                                <ContextMenu>
+                                <ContextMenu Name="iddmenu">
                                     <MenuItem Header="删除" Click="delete_idd_title">
                                     </MenuItem>
                                     <MenuItem Header="修改" Click="modify_idd_title">
@@ -224,6 +224,26 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
+                <ListView  BorderThickness="0" x:Name="listView_data_article" Background="#FFF8FFE5" Visibility="Hidden">
+                    <ListView.ItemTemplate>
+                        <HierarchicalDataTemplate  DataType="{x:Type local:title}">
+                            <StackPanel Orientation="Vertical" Width="300" Margin="-6,0,0,0">
+                                <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
+                                <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
+                                <TextBlock Width="auto" Text="{Binding context}"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
+                                <Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="打开" Click="MenuItem_Click_opendataorarticle">
+                            </MenuItem>
+                            <MenuItem Header="删除" Click="MenuItem_Click_delete_data">
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
             </Grid>
             <GridSplitter Width="1" Grid.Column="1" Grid.Row="1" Background="White"></GridSplitter>
             <Grid Name="grid_lef3" Grid.Column="2" Background="WhiteSmoke" Margin="0,6,0,0">

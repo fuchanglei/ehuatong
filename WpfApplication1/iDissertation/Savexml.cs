@@ -106,14 +106,28 @@ namespace WpfApplication1
                         // return img;
                         //break;
                     }
-                    else
+                    if(paragraph.Name=="iframe")
                     {
                         //XmlElement img = doc_tem.CreateElement("richmedia");
-                        img.SetAttribute("type", "media");
-                        string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"), MainWindow.tree5_sel.Name, RegexOptions.IgnoreCase);
-                        string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
-                        img.SetAttribute("src", path[0].Substring(0));
-                        img.InnerXml = "media";
+                        if (((XmlElement)paragraph).GetAttribute("name") == "vedio")
+                        {
+                            img.SetAttribute("type", "vedio");
+                            string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"), MainWindow.tree5_sel.Name, RegexOptions.IgnoreCase);
+                            string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
+                            img.SetAttribute("src", path[0].Substring(0));
+                            img.InnerXml = "vedio";
+                        }
+                        else if (((XmlElement)paragraph).GetAttribute("name") == "chart")
+                        {
+                            //img.SetAttribute("type", "chart");
+                            //string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"), MainWindow.tree5_sel.Name, RegexOptions.IgnoreCase);
+                           // string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
+                            //img.SetAttribute("src", path[0].Substring(0));
+                            //img.InnerXml = "media";
+                            
+                        }
+                        else
+                            ;
                     }
                     return img;
                 }

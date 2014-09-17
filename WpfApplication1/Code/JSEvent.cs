@@ -43,14 +43,8 @@ namespace WpfApplication1
         public string MN_InsertChart()
         {
             data cc = new data();
-            //cc.Show();
             cc.ShowDialog();
-            //new Thread (cc.Show).Start();
-            //while (cc.IsActive == true)
-           // { 
             return cc.result;
-           // }
-           // MessageBox.Show("aasfaf");
         }
     }
 }

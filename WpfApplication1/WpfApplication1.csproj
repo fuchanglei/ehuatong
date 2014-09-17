@@ -111,6 +111,9 @@
     <Compile Include="iDissertation\Savecontext.cs" />
     <Compile Include="iDissertation\Savexml.cs" />
     <Compile Include="Code\JSEvent.cs" />
+    <Compile Include="improtData.xaml.cs">
+      <DependentUpon>improtData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WebbrowserScriptInvoker.cs" />
     <Compile Include="DragDropAdorner.cs" />
     <Compile Include="iDissertation\iDissertation.cs" />
@@ -141,6 +144,10 @@
       <DependentUpon>Window_Tag.xaml</DependentUpon>
     </Compile>
     <Page Include="data.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="improtData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

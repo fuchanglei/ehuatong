@@ -37,7 +37,7 @@ namespace WpfApplication1
         public Data gettreeview = new Data();
         AdornerLayer mAdornerLayer = null;
         DateTime mStartHoverTime = DateTime.MinValue;
-        TreeViewItem mHoveredItem = null;
+       TreeViewItem mHoveredItem = null;
         public static iDissertation tree5_sel;
         private bool isdrag = false;
         private string file_size;  //文件大小
@@ -61,6 +61,8 @@ namespace WpfApplication1
         ContextMenu c3;
         ContextMenu c4;
         ContextMenu c5;
+        ContextMenu c6;  //新增的内容
+        ContextMenu c7;  //文献的菜单操作目录
         WebbrowserScriptInvoker invoker;
         public MainWindow()
         {
@@ -68,17 +70,16 @@ namespace WpfApplication1
             AttachEvent();
             showcotext();
             last= ((PropertyNodeItem)tree2.Items[0]).Children.Count;
-            //TreeViewItem cc = this.tree2.Items[0] as TreeViewItem;
-            //cc.IsExpanded = true;
             listView2.ItemsSource = ss;
             invoker = new WebbrowserScriptInvoker(webBrowser1);
             wrapPanel1.Visibility = Visibility.Collapsed;
-           // listView2.ItemsSource = ss.items;
             c1= cireateMenu1();
             c2 = cireateMenu2();
             c3 = cireateMenu3();
             c4 = cireateMenu4();
             c5 = cireateMenu5();
+            c6 = createMenu6();  //新增的内容
+            c7 = createMenu7();
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
@@ -173,6 +174,50 @@ namespace WpfApplication1
             con1.Items.Add(m4);
             return con1;
         }  //outline 操作菜单
+        private ContextMenu createMenu6()  //新增的内容
+        {
+            ContextMenu con1 = new ContextMenu();
+            MenuItem m1 = new MenuItem();
+            m1.Header = "添加数据";
+            m1.Click += MenuItem_improt;
+            con1.Items.Add(m1);
+            return con1;
+        }
+        private ContextMenu createMenu7()  //新增的内容，文献操作菜单实例化
+        {
+            ContextMenu con1 = new ContextMenu();
+            MenuItem m1 = new MenuItem();
+            m1.Header = "刷新";
+           // m1.Click += MenuItem_improt;
+            MenuItem m2= new MenuItem();
+            m2.Header = "配置文献存放目录";
+            con1.Items.Add(m1);
+            con1.Items.Add(m2);
+            return con1;
+        }
+        private void MenuItem_improt(object sender, RoutedEventArgs e)  //新增的内容
+        {
+            //improtData w2 = new improtData();
+            //w2.creattitle += new Window2.myevent(createnewtitle);
+            System.Windows.Forms.OpenFileDialog op = new System.Windows.Forms.OpenFileDialog();
+            op.InitialDirectory = @"c:\";
+            op.RestoreDirectory = true;
+            op.Filter = "所有文件(*.*)|*.*";
+            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                title newdata = new title()
+                {
+                    date = DateTime.Now.ToString(),
+                    title_name = op.SafeFileName,
+                    context = op.FileName
+                };
+                tree5_sel.parent.data.Add(newdata);
+                idisser_data.idisser.AddiDissertationData_article(tree5_sel.parent.Name, newdata);
+            }
+            
+            //w2.Show();
+        }
+     
         private void add_child(object sender, RoutedEventArgs e)
         {
             // cc = treeView1.SelectedItem as outline;
@@ -398,10 +443,13 @@ namespace WpfApplication1
         private void tree2_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
              web_show = true;
+
              PropertyNodeItem sel = (PropertyNodeItem)tree2.SelectedItem;
              newname = sel.DisplayName;
+             this.listView1.ItemsSource = itemlist;
             this.tree6.Visibility = Visibility.Hidden;
             listView1.Visibility = Visibility.Visible;
+            this.listView_data_article.Visibility=Visibility.Hidden;
             PropertyNodeItem cc = (PropertyNodeItem)tree2.SelectedItem;
             if (cc.node_lev ==Nodeetype.one)
             {
@@ -450,6 +498,8 @@ namespace WpfApplication1
                 web_show = false;
             }
             cc = (title)listView1.SelectedItem;
+            if (cc ==null)
+                return;
             if (isdrag == true)
                 return;
             textBox2.Text = cc.title_name;
@@ -672,7 +722,7 @@ namespace WpfApplication1
         }
         private void MenuItem_Saveas(object sender, RoutedEventArgs e) //附件另存为
         {
-            MessageBox.Show("MenuItem_Saveas(object sender, RoutedEventArgs e");
+            //MessageBox.Show("MenuItem_Saveas(object sender, RoutedEventArgs e");
             sidefiles selectone = listView2.SelectedItem as sidefiles;
             string exfile = System.IO.Path.GetExtension(selectone.path);
             System.Windows.Forms.SaveFileDialog sf = new System.Windows.Forms.SaveFileDialog();
@@ -686,7 +736,7 @@ namespace WpfApplication1
         }
         private void MenuItem_openPS(object sender, RoutedEventArgs e) //打开附件
         {
-            MessageBox.Show("MenuItem_openPS(object sender, RoutedEventArgs e)");
+            //MessageBox.Show("MenuItem_openPS(object sender, RoutedEventArgs e)");
             string path = ((sidefiles)this.listView2.SelectedItem).path;
             System.Diagnostics.Process.Start(path); //打开此文件。
         }
@@ -789,11 +839,7 @@ namespace WpfApplication1
                  path=op.FileName,
                  file_name=filename+"("+file_size+")",
                  image=sd,
-                // tool_name=filename
                 };
-                //this.webBrowser1.Margin = new Thickness(0, 26, 0, 0);
-                //int c = n;
-               // d/ouble top = Convert.ToDouble(28*c);
                 this.wrapPanel1.Visibility = Visibility.Visible;
                 this.windowsFormsHost1.Margin=new Thickness(0, 28*n(), 0, 0);
                 //this.wrapPanel3.Visibility = Visibility.Visible;
@@ -845,8 +891,8 @@ namespace WpfApplication1
                         switch (tree6_sel.type)
                         { 
                             case outlinetype.Section1:
-                                (c5.Items[0] as MenuItem).IsEnabled = false;
-                                (c5.Items[1] as MenuItem).IsEnabled = true;
+                                (c5.Items[0] as MenuItem).IsEnabled = true;
+                                (c5.Items[1] as MenuItem).IsEnabled = false;
                                 break;
                             case outlinetype.Section2:
                                 (c5.Items[0] as MenuItem).IsEnabled = false;
@@ -947,19 +993,42 @@ namespace WpfApplication1
                 tree5_sel = (iDissertation)tree5.SelectedItem;
                 if (tree5_sel.nodetype != iDissType.nonode)
                 {
+                    this.tree5.ContextMenu = this.iddmenu;
                     issave = false;
                     web_show = true;
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Visible;
+                    this.listView_data_article.Visibility = Visibility.Hidden;
                     idd_href = tree5_sel.href;
                     select_tree5 = new outline_Data(true);
                     //outline_Data.Instance = select_tree5;
                     this.tree6.ItemsSource = select_tree5.TreeViewItems1;
                 }
                 else
-                {
-                    listView1.Visibility = Visibility.Visible;
+                {     
+                    listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Hidden;
+                    this.listView_data_article.Visibility = Visibility.Visible;
+                    switch (tree5_sel.Name)
+                    { 
+                        case "数据":
+                        listView_data_article.ItemsSource = tree5_sel.parent.data;
+                        this.tree5.ContextMenu = c6;
+                            break;
+                        case "文献":
+                            listView_data_article.ItemsSource = tree5_sel.parent.article;
+                        this.tree5.ContextMenu = c7;
+                            break;
+                        default:
+                            break;
+                            
+                    }
+                    
+
+                    //ObservableCollection <title>= tree5_sel.parent.data;
+                   // listView1.Visibility = Visibility.Visible;
+                   // listView1.ItemsSource = tree5_sel.parent.data;
+                    
                 }
             }
            
@@ -1000,6 +1069,18 @@ namespace WpfApplication1
         {
            //openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
            // System.Data.DataTable cc = op.getexcel();
+        }
+
+        private void MenuItem_Click_opendataorarticle(object sender, RoutedEventArgs e)
+        {
+            string path = ((title)this.listView_data_article.SelectedItem).context;
+            System.Diagnostics.Process.Start(path); //打开此文件。
+        }
+
+        private void MenuItem_Click_delete_data(object sender, RoutedEventArgs e)
+        {
+            idisser_data.idisser.deletiDissertationData(tree5_sel.parent.Name, this.listView_data_article.SelectedItem as title);
+            tree5_sel.parent.data.Remove(this.listView_data_article.SelectedItem as title);
         }       
     }
 }

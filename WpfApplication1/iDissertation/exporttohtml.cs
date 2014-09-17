@@ -33,6 +33,7 @@ namespace WpfApplication1
                
                string html = ((XmlElement)xm).InnerXml.ToString().Replace(tree5_sel.href+"\\", "");
                html = html.Replace("dialogs\\video\\","");
+               html = html.Replace("&amp;","&");
                sw.WriteLine(html);
            }
            sw.WriteLine("</body>");

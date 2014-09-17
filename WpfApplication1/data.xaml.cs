@@ -27,6 +27,8 @@ namespace WpfApplication1
         private string datatype;
         private List<int> selectUid = new List<int>();//保存多选ID   
         private List<int> allUid = new List<int>();//保存用户ID 
+        private string excel_name;
+        private string sheet_name;
         ObservableCollection<dataTem> Row_data =new ObservableCollection<dataTem>();
        //private List<dataTem> list = new List<dataTem>();//列表源数据   
         public data()
@@ -37,53 +39,59 @@ namespace WpfApplication1
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            string rows = string.Empty;
-            string title=string.Empty;
-            string danwei=string.Empty;
-            foreach (int c in selectUid)
+            try
             {
-                rows =rows + "," + mytable.Rows[0][c].ToString();
-            }
-            rows=rows.Substring(1);
-            StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
-            if (this.title_textbox.Text == "")
-            {
-                //sw.WriteLine(" ");
-                title=" ";
-            }
-            else
-            title=this.title_textbox.Text;
-            sw.WriteLine(datatype);
-            sw.WriteLine(rows);
-            if (this.danwei_textbox.Text != "")
-            {
-                //sw.WriteLine(this.danwei_textbox.Text);
-                danwei=this.danwei_textbox.Text;
-            }
-            else
-            {
-               // sw.WriteLine(" ");
-                danwei=" ";
-            }
-            
-            result = "#title=" + title + "&datatype=" + datatype + "&rows=" + rows + "&danwei="+danwei+"&data=";
-            
-            for (int i = 1; i < mytable.Rows.Count; i++)
-            {
-                string data = string.Empty;
+                string rows = string.Empty;
+                string title = string.Empty;
+                string danwei = string.Empty;
                 foreach (int c in selectUid)
                 {
-                    data = data + "," + mytable.Rows[i][c].ToString();
+                    rows = rows + "," + mytable.Rows[0][c].ToString();
                 }
-                data = data.Substring(1);
-                sw.WriteLine(data.Substring(1));
+                rows = rows.Substring(1);
+                // StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
+                if (this.title_textbox.Text == "")
+                {
+                    //sw.WriteLine(" ");
+                    title = " ";
+                }
+                else
+                    title = this.title_textbox.Text;
+                // sw.WriteLine(datatype);
+                //sw.WriteLine(rows);
+                if (this.danwei_textbox.Text != "")
+                {
+                    //sw.WriteLine(this.danwei_textbox.Text);
+                    danwei = this.danwei_textbox.Text;
+                }
+                else
+                {
+                    // sw.WriteLine(" ");
+                    danwei = " ";
+                }
+                result = "#title=" + title + "&datatype=" + datatype + "&rows=" + rows + "&danwei=" + danwei + "&data=";
 
-                result = result + data+"@@";
-                
+                for (int i = 1; i < mytable.Rows.Count; i++)
+                {
+                    string data = string.Empty;
+                    foreach (int c in selectUid)
+                    {
+                        data = data + "," + mytable.Rows[i][c].ToString();
+                    }
+                    data = data.Substring(1);
+                    // sw.WriteLine(data.Substring(1));
+
+                    result = result + data + "@@";
+
+                }
+            }
+            catch
+            {
+                ;
             }
             //result = "#title="+this.title_textbox.Text+"&datatype="+datatype+"&rows="+rows+",";
-            sw.Flush();
-            sw.Close();
+            //sw.Flush();
+           // sw.Close();
             //result = "ok";
             this.Close();
         }
@@ -96,49 +104,26 @@ namespace WpfApplication1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.comboBox1.Items.Add("F:\\3.Echarts\\3.Echarts\\data.xlsx");
-            this.comboBox1.Items.Add("D:\\3.Echarts\\3.Echarts\\data.xlsx1111");
+            foreach (title abc in MainWindow.tree5_sel.data)
+            {
+                this.comboBox1.Items.Add(abc.context);
+            }
+          //  this.comboBox1.Items.Add("F:\\3.Echarts\\3.Echarts\\data.xlsx");
+           // this.comboBox1.Items.Add("D:\\3.Echarts\\3.Echarts\\data.xlsx1111");
             //this.comboBox1.Text = "F:\\3.Echarts\\3.Echarts\\data.xlsx";
         }
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
-        }
-
-        private void comboBox1_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            MessageBox.Show(comboBox1.Text);
-        }
-
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            open_excel = new openexcel(this.comboBox1.Text);
-            this.comboBox2.ItemsSource = open_excel.getGetOleDbSchemaTable();
-        }
-
-        private void button4_Click(object sender, RoutedEventArgs e)
-        {
-           mytable=open_excel.getexcel(this.comboBox2.Text);
-          
-           for (int c = 1; c < mytable.Columns.Count; c++)
-           {
-               dataTem row_title = new dataTem() 
-               {
-                  id=c,
-                  rowname=mytable.Rows[0][c].ToString(),
-                  ischeck=false
-               };
-               Row_data.Add(row_title); 
-           }
-           for (int i = 1; i < mytable.Rows.Count; i++)
-           {
-               datatype = datatype + "," + mytable.Rows[i][0].ToString();
-
-           }
-           datatype = datatype.Substring(1);
-           this.listView1.ItemsSource = Row_data;
-
+            //MessageBox.Show(comboBox1.SelectedItem.ToString());
+            if (excel_name != comboBox1.SelectedItem.ToString())
+            {
+                open_excel = new openexcel(comboBox1.SelectedItem.ToString());
+                this.comboBox2.ItemsSource = open_excel.getGetOleDbSchemaTable();
+               // this.comboBox2.Text = comboBox2.Items[0].ToString();
+            }
+            excel_name = comboBox1.SelectedItem.ToString();
+            
         }
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -174,6 +159,37 @@ namespace WpfApplication1
                 }
             }
             //selectUid = allUid;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            result = "cancel";
+        }
+
+        private void comboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sheet_name != this.comboBox2.SelectedItem.ToString())
+            {
+                mytable = open_excel.getexcel(this.comboBox2.SelectedItem.ToString());
+            }
+            for (int c = 1; c < mytable.Columns.Count; c++)
+            {
+                dataTem row_title = new dataTem()
+                {
+                    id = c,
+                    rowname = mytable.Rows[0][c].ToString(),
+                    ischeck = false
+                };
+                Row_data.Add(row_title);
+            }
+            for (int i = 1; i < mytable.Rows.Count; i++)
+            {
+                datatype = datatype + "," + mytable.Rows[i][0].ToString();
+
+            }
+            datatype = datatype.Substring(1);
+            this.listView1.ItemsSource = Row_data;
+            sheet_name = this.comboBox2.SelectedItem.ToString();
         }  
     }
 }
