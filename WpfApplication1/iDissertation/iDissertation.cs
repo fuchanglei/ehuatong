@@ -12,7 +12,7 @@ using System.Xml;
 namespace WpfApplication1
 {   
     
-    public enum iDissType
+  public enum iDissType
     {
         kaitibaogao = 0,
         zhongqi= 1,
@@ -106,9 +106,9 @@ namespace WpfApplication1
                foreach (XmlNode xm in datalist)
                {
                    title cc = new title() { 
-                    title_name=xm.InnerText,
-                    context=((XmlElement)xm).GetAttribute("href"),
-                    date = ((XmlElement)xm).GetAttribute("datatime")
+                   title_name=xm.InnerText,
+                   context=((XmlElement)xm).GetAttribute("href"),
+                   date = ((XmlElement)xm).GetAttribute("datatime")
                    };
                    result.Add(cc);
                }
@@ -120,7 +120,10 @@ namespace WpfApplication1
            ObservableCollection<title> result = new ObservableCollection<title>();
            XmlNode cc = nodetype.SelectSingleNode("article");
            string dirinfo = ((XmlElement)cc).GetAttribute("href");
-
+           if (dirinfo != "")
+           {
+               result = copy_files.Getfiles(dirinfo);
+           }
           // string dirinfo=((XmlElement)(nodetype.SelectSingleNode("article"))
            return result;
        }
@@ -139,7 +142,8 @@ namespace WpfApplication1
                    Name = (((XmlElement)xm).GetAttribute("name")),
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    href = (((XmlElement)xm).GetAttribute("href")),
-                   data = getiDissertationData(xm)
+                   data = getiDissertationData(xm),
+                   article = getiDissertationArticle(xm)
                    // parent=null
                };
                iDissertation node_Article = new iDissertation()
@@ -149,7 +153,8 @@ namespace WpfApplication1
                    Name = "文献",
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    nodetype = iDissType.nonode,
-                   parent=node
+                   parent=node,
+                   
                    
                    // parent=null
                };
@@ -199,7 +204,7 @@ namespace WpfApplication1
                Name = "文献",
                //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                nodetype = iDissType.nonode,
-                parent=newtitle
+               parent=newtitle
                // parent=null
            };
            iDissertation node_Data = new iDissertation()
@@ -247,7 +252,6 @@ namespace WpfApplication1
                            xm.SelectSingleNode("Data").RemoveChild(xx);
                            break;
                        }
-                       
                    }
                    break;
                }
@@ -301,9 +305,6 @@ namespace WpfApplication1
                    ((XmlElement)xm).SetAttribute("name",newname);
            }
            doc.Save("iDissertation.xml");
-           
-
-         
        }
        private ObservableCollection<iDissertation> _TreeViewItems4 = null;
    }

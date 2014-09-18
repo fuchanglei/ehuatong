@@ -13,7 +13,7 @@
  <!ENTITY amp "">
  ]>
  <iDisseration>
-  <cover>
+  <CoverC>
     <Classification>G250</Classification>
     <Secret>XXX</Secret>
     <Colleage>中国科学院</Colleage>
@@ -27,7 +27,7 @@
     <ArticleTime>2009年12月</ArticleTime>
     <ArticleTimeDefence>2010年1月</ArticleTimeDefence>
     <CultivateCollege>中国科学院文献情报中心</CultivateCollege>
-  </cover>
+  </CoverC>
   <coverE>
     <ArticleTitleE>The Study on Trend and Evaluation System of Resources Database Functions</ArticleTitleE>
     <ArticleTypeE>Doctoral/Master</ArticleTypeE>

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace WpfApplication1
@@ -35,7 +36,32 @@ namespace WpfApplication1
                File.Copy(fi.FullName,to+"\\"+fi.Name,true);
            }
        }
-       //public static 
+       public static ObservableCollection<title> Getfiles(string aiDirectoryInfo)
+       {
+           ObservableCollection<title> items = new ObservableCollection<title>();
+           if (aiDirectoryInfo[aiDirectoryInfo.Length - 1] != Path.DirectorySeparatorChar)
+               aiDirectoryInfo += Path.DirectorySeparatorChar;
+           string[] fileList = Directory.GetFileSystemEntries(aiDirectoryInfo);
+           foreach (string filename in fileList)
+           {
+               if (Directory.Exists(filename))
+               {
+                   items.Union(Getfiles(aiDirectoryInfo + Path.GetFileName(filename)));
+               }
+               else
+               { 
+                   
+                   title file = new title()
+                   {
+                         context=filename,
+                         title_name=Path.GetFileName(filename),
+                         date=File.GetLastWriteTime(filename).ToString()
+                   };
+                   items.Add(file);
+               }
+           }
+           return items;
+       }
        public static void DeleteDir(string aimPath)
        {
            try

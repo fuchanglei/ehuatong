@@ -32,7 +32,7 @@ namespace WpfApplication1
        // public List<PropertyNodeItem> itemlist3 = new List<PropertyNodeItem>();
         //title listdata=new title();
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
-        private outline_Data select_tree5;
+        public outline_Data select_tree5;
         public static string idd_href;
         public Data gettreeview = new Data();
         AdornerLayer mAdornerLayer = null;
@@ -62,7 +62,7 @@ namespace WpfApplication1
         ContextMenu c4;
         ContextMenu c5;
         ContextMenu c6;  //新增的内容
-        ContextMenu c7;  //文献的菜单操作目录
+        ContextMenu c7;  //文献的菜单操作目录// 新增
         WebbrowserScriptInvoker invoker;
         public MainWindow()
         {
@@ -79,7 +79,7 @@ namespace WpfApplication1
             c4 = cireateMenu4();
             c5 = cireateMenu5();
             c6 = createMenu6();  //新增的内容
-            c7 = createMenu7();
+            c7 = createMenu7();//新增的内容
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
@@ -92,7 +92,7 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
         }
-        private ContextMenu cireateMenu1()
+      private ContextMenu cireateMenu1()
        {
             ContextMenu con1 = new ContextMenu();
             MenuItem m1 = new MenuItem();
@@ -101,7 +101,7 @@ namespace WpfApplication1
             con1.Items.Add(m1);
             return con1;
       }
-        private ContextMenu cireateMenu2()
+      private ContextMenu cireateMenu2()
         {
             ContextMenu con2 = new ContextMenu();
             MenuItem m1 = new MenuItem();
@@ -191,9 +191,21 @@ namespace WpfApplication1
            // m1.Click += MenuItem_improt;
             MenuItem m2= new MenuItem();
             m2.Header = "配置文献存放目录";
+            m2.Click += MenuItem_confArticleDire;
             con1.Items.Add(m1);
             con1.Items.Add(m2);
             return con1;
+        }
+        private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
+        {
+            System.Windows.Forms.FolderBrowserDialog folder1 = new System.Windows.Forms.FolderBrowserDialog();
+            folder1.Description = "选择文献存放目录";
+            folder1.ShowNewFolderButton = true;
+            if (folder1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                //ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel, folder1.SelectedPath));
+
+            }
         }
         private void MenuItem_improt(object sender, RoutedEventArgs e)  //新增的内容
         {
@@ -279,6 +291,7 @@ namespace WpfApplication1
             //获取事件传递过来的数据
             newname = e.textbox;
             outline_Data add_section = new outline_Data();
+
             outline sel = (outline)tree6.SelectedItem;
             int c = getindex(sel);
             outline aa=add_section.outline_chapter_add(sel, newname);
@@ -616,7 +629,8 @@ namespace WpfApplication1
             folder1.ShowNewFolderButton = true;
             if (folder1.ShowDialog()==System.Windows.Forms.DialogResult.OK)
             {
-                ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel,folder1.SelectedPath));
+                //ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel,folder1.SelectedPath));
+                exporttohtml.export(tree5_sel, folder1.SelectedPath,select_tree5.TreeViewItems1);
             }
             
 
@@ -1012,23 +1026,17 @@ namespace WpfApplication1
                     switch (tree5_sel.Name)
                     { 
                         case "数据":
-                        listView_data_article.ItemsSource = tree5_sel.parent.data;
-                        this.tree5.ContextMenu = c6;
+                              listView_data_article.ItemsSource = tree5_sel.parent.data;
+                              this.tree5.ContextMenu = c6;
                             break;
                         case "文献":
                             listView_data_article.ItemsSource = tree5_sel.parent.article;
-                        this.tree5.ContextMenu = c7;
+                            this.tree5.ContextMenu = c7;
                             break;
                         default:
                             break;
                             
                     }
-                    
-
-                    //ObservableCollection <title>= tree5_sel.parent.data;
-                   // listView1.Visibility = Visibility.Visible;
-                   // listView1.ItemsSource = tree5_sel.parent.data;
-                    
                 }
             }
            

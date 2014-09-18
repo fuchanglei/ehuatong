@@ -93,6 +93,7 @@ namespace WpfApplication1
             //sw.Flush();
            // sw.Close();
             //result = "ok";
+           // return result;
             this.Close();
         }
 
@@ -163,7 +164,7 @@ namespace WpfApplication1
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            result = "cancel";
+           // result = "cancel";
         }
 
         private void comboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
