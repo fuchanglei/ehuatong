@@ -37,7 +37,7 @@ namespace WpfApplication1
         public Data gettreeview = new Data();
         AdornerLayer mAdornerLayer = null;
         DateTime mStartHoverTime = DateTime.MinValue;
-       TreeViewItem mHoveredItem = null;
+        TreeViewItem mHoveredItem = null;
         public static iDissertation tree5_sel;
         private bool isdrag = false;
         private string file_size;  //文件大小
@@ -79,7 +79,6 @@ namespace WpfApplication1
             c4 = cireateMenu4();
             c5 = cireateMenu5();
             c6 = createMenu6();  //新增的内容
-            c7 = createMenu7();//新增的内容
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
@@ -183,19 +182,6 @@ namespace WpfApplication1
             con1.Items.Add(m1);
             return con1;
         }
-        private ContextMenu createMenu7()  //新增的内容，文献操作菜单实例化
-        {
-            ContextMenu con1 = new ContextMenu();
-            MenuItem m1 = new MenuItem();
-            m1.Header = "刷新";
-           // m1.Click += MenuItem_improt;
-            MenuItem m2= new MenuItem();
-            m2.Header = "配置文献存放目录";
-            m2.Click += MenuItem_confArticleDire;
-            con1.Items.Add(m1);
-            con1.Items.Add(m2);
-            return con1;
-        }
         private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
         {
             System.Windows.Forms.FolderBrowserDialog folder1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -204,6 +190,10 @@ namespace WpfApplication1
             if (folder1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel, folder1.SelectedPath));
+                ThreadPool.QueueUserWorkItem(status =>idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel,folder1.SelectedPath));
+                //idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel, folder1.SelectedPath);
+               // tree5_sel.article = idisser_data.getiDissertationArticle(folder1.SelectedPath);
+
 
             }
         }
@@ -631,6 +621,7 @@ namespace WpfApplication1
             {
                 //ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel,folder1.SelectedPath));
                 exporttohtml.export(tree5_sel, folder1.SelectedPath,select_tree5.TreeViewItems1);
+                MessageBox.Show("导出任务完成！");
             }
             
 
@@ -899,7 +890,7 @@ namespace WpfApplication1
                 {
                     tree6_sel = this.tree6.SelectedItem as outline;
                     textBox2.Text = tree6_sel.Name1;
-                    if (tree6_sel.type != outlinetype.common)
+                    if (tree6_sel.type != outlinetype.common)   //新增内容
                     {
                         this.tree6.ContextMenu = c5;
                         switch (tree6_sel.type)
@@ -1031,7 +1022,11 @@ namespace WpfApplication1
                             break;
                         case "文献":
                             listView_data_article.ItemsSource = tree5_sel.parent.article;
-                            this.tree5.ContextMenu = c7;
+                            this.tree5.ContextMenu = null;
+                            break;
+                        case "工具":
+                            listView_data_article.ItemsSource = tree5_sel.parent.tools;
+                            this.tree5.ContextMenu = null;
                             break;
                         default:
                             break;
@@ -1089,6 +1084,12 @@ namespace WpfApplication1
         {
             idisser_data.idisser.deletiDissertationData(tree5_sel.parent.Name, this.listView_data_article.SelectedItem as title);
             tree5_sel.parent.data.Remove(this.listView_data_article.SelectedItem as title);
+        }
+
+        private void listView_data_article_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string path = ((title)this.listView_data_article.SelectedItem).context;
+            System.Diagnostics.Process.Start(path); //打开此文件。
         }       
     }
 }

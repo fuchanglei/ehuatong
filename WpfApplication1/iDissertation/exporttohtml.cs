@@ -22,8 +22,6 @@ namespace WpfApplication1
            doc_contex = new XmlDocument();
            doc_contex.Load(xml_context);
            root_contex = doc_contex.DocumentElement;
-           
-
        }
        private static void createhtml(outline outline,string dir)
        {

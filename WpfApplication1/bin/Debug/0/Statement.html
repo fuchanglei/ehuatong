@@ -94,7 +94,7 @@ if(thisInput==3) {reText = "<TimeS>"+this.value+"</TimeS>";
 oldText = nxml.substring(nxml.indexOf("<TimeS>"),nxml.indexOf("</TimeS>")+8);}
 
 var fso=new ActiveXObject("Scripting.FileSystemObject"); 
-var pathF = location.pathname.substring(1,location.pathname.length-13)+"\webTemplate.xml";
+var pathF = location.pathname.substring(1,location.pathname.length-14)+"\webTemplate.xml";
 rFile=fso.CreateTextFile(pathF,1,true);
 nxml = nxml.replace(oldText,reText);
 rFile.WriteLine(nxml);

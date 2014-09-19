@@ -117,17 +117,21 @@ namespace WpfApplication1
                             img.SetAttribute("src", path[0].Substring(0));
                             img.InnerXml = "vedio";
                         }
-                        else if (((XmlElement)paragraph).GetAttribute("name") == "chart")
+                        else if (((XmlElement)paragraph).GetAttribute("name") == "chart")  
                         {
                             //img.SetAttribute("type", "chart");
                             //string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"), MainWindow.tree5_sel.Name, RegexOptions.IgnoreCase);
                            // string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
                             //img.SetAttribute("src", path[0].Substring(0));
                             //img.InnerXml = "media";
+                            //XmlElement img = doc_tem.CreateElement("richmedia");
+                            img.SetAttribute("type", "chart");
+                            img.SetAttribute("src", ((XmlElement)paragraph).GetAttribute("src"));
+                            img.InnerText = "datachart";
+                            return img;
                             
                         }
-                        else
-                            ;
+                        
                     }
                     return img;
                 }

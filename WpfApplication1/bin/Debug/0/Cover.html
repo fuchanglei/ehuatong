@@ -107,7 +107,7 @@ oldText = nxml.substring(nxml.indexOf("<GraduateTeacherE>"),nxml.indexOf("</Grad
 if(thisInput==6) {reText = "<ArticleTimeE>"+this.value+"</ArticleTimeE>";
 oldText = nxml.substring(nxml.indexOf("<ArticleTimeE>"),nxml.indexOf("</ArticleTimeE>")+15);}
 var fso=new ActiveXObject("Scripting.FileSystemObject"); 
-var pathF = location.pathname.substring(1,location.pathname.length-9)+"\webTemplate.xml";
+var pathF = location.pathname.substring(1,location.pathname.length-10)+"\webTemplate.xml";
 rFile=fso.CreateTextFile(pathF,1,true);
 nxml = nxml.replace(oldText,reText);
 rFile.WriteLine(nxml);

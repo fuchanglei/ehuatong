@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <iDissertation>
-  <item id="2" name="范德萨但是" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\范德萨但是">
-    <Data>
-      <dateitem href="F:\3.Echarts\3.Echarts\data.xlsx" datatime="2014/9/18 18:42:54">data.xlsx</dateitem>
-    </Data>
-    <article />
+  <item id="2" name="的费宋德福" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\的费宋德福" articleDir="C:\Users\fuchanglei\Desktop\随易通相关文档\问题收集" toolsDir="d:\\tools">
+    <Data />
+  </item>
+  <item id="3" name="5512孤鸿寡鹄" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\5512孤鸿寡鹄" toolsDir="D:\tools">
+    <Data />
+  </item>
+  <item id="4" name="更改后" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\更改后" toolsDir="D:\tools">
+    <Data />
   </item>
 </iDissertation>

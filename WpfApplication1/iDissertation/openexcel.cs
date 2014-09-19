@@ -13,7 +13,7 @@ namespace WpfApplication1
    class openexcel
     {
        private string _excel_filename;
-       public string _sheetname;
+      // public string _sheetname;
        private OleDbConnection objConn;
        public openexcel(string excel_filename)
        {
