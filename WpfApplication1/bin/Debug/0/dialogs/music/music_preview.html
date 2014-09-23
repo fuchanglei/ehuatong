@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<script type="text/javascript">
+    function getParam(name) {
+        return location.href.match(new RegExp('[?#&]' + name + '=([^?#&]+)', 'i')) ? RegExp.$1 : '';
+    }
+    var srcParam;
+    var srcParam = getParam('videoSrc');
+    var srcWidth= getParam('width');
+    var srcHeight= getParam('height');
+
+    function initVedio() {
+        var vContent = document.getElementById('preview');
+        vContent.innerHTML = '<div style="position:absolute;z-index:0"><object><embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" WindowlessVideo="1"' +
+        ' src="' + srcParam + '"' +
+        ' width="' + srcWidth  + '"' +
+        ' height="' + srcHeight  + '"' +
+        ' play="true" loop="false" menu="false" allowscriptaccess="never" wmode="opaque"  allowfullscreen="true" ></embed><param name="wmode" value="opaque"/> </object></div>';
+    }
+
+ </script>
+<body onload="">
+<div id="preview">
+    <!--
+	<embed type="application/x-shockwave-flash" class="edui-faked-music" pluginspage="http://www.macromedia.com/go/getflashplayer" src="D:\BaiduMusic\Download\Songs\Shape Of My Heart - Sting.mp3" width="400" height="95" align="none" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"/>
+    
+
+-->
+<embed class="BDE_try_Music" allowfullscreen="false" pluginspage="http://www.macromedia.com/go/getflashplayer" src="D:\BaiduMusic\Download\Songs\Shape Of My Heart - Sting.mp3" width="200" height="42" style="position:absolute;left:opx;"  type="application/x-shockwave-flash" wmode="transparent" play="true" loop="false"  menu="false" allowscriptaccess="never" scale="noborder"/>
+
+
+
+
+<!--  test
+<script type="text/javascript">
+var so = new SWFObject("audioplayer.swf","player","290","24","9","#ffffff");
+so.addParam("allowfullscreen","true");
+so.addParam("allowscriptaccess","always");
+so.addParam("wmode","opaque");
+so.addParam("quality","high");
+so.addParam("salign","lt");
+so.addVariable("soundFile",srcParam);
+so.write("MusicPlayer");
+</script>
+
+ test end    -->
+</div>
+</body>
+</html>
+
+

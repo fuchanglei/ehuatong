@@ -101,7 +101,9 @@
     <Compile Include="data.xaml.cs">
       <DependentUpon>data.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dataTemplate.cs\Mp3FileInfo.cs" />
     <Compile Include="dataTemplate.cs\Tag.cs" />
+    <Compile Include="htmlcss\htmlstyle.cs" />
     <Compile Include="iDissertation\article.cs" />
     <Compile Include="dataTemplate.cs\Data.cs" />
     <Compile Include="iDissertation\copy_files.cs" />

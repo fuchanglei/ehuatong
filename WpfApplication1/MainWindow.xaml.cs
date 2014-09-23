@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using WebBrowserEXT;
 using System.Threading;
 using Code.WebbrowserInteropr;
+using WpfApplication1.htmlcss;
 
 
 namespace WpfApplication1
@@ -79,6 +80,7 @@ namespace WpfApplication1
             c4 = cireateMenu4();
             c5 = cireateMenu5();
             c6 = createMenu6();  //新增的内容
+          
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
@@ -90,6 +92,7 @@ namespace WpfApplication1
             this.treeView1.ItemsSource = www.Init_tree;
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
+            textBox2.DataContext = tree6_sel;
         }
       private ContextMenu cireateMenu1()
        {
@@ -158,9 +161,12 @@ namespace WpfApplication1
             m1.Header = "新建小结";
             m1.Click += add_child;
             MenuItem m2 = new MenuItem();
-            m2.Header = "插入新章节";
+            m2.Header = "新建新章节";
             m2.Click += add_charpt;
             MenuItem m3 = new MenuItem();
+            MenuItem m5 = new MenuItem();
+            m5.Header = "插入章节或小节";
+
             m3.Header = "修改提名";
             m3.Click += modify_outline;
             MenuItem m4 = new MenuItem();
@@ -169,6 +175,7 @@ namespace WpfApplication1
            // m4.Click += remove_item;
             con1.Items.Add(m1);
             con1.Items.Add(m2);
+            con1.Items.Add(m5);
             con1.Items.Add(m3);
             con1.Items.Add(m4);
             return con1;
@@ -193,8 +200,6 @@ namespace WpfApplication1
                 ThreadPool.QueueUserWorkItem(status =>idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel,folder1.SelectedPath));
                 //idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel, folder1.SelectedPath);
                // tree5_sel.article = idisser_data.getiDissertationArticle(folder1.SelectedPath);
-
-
             }
         }
         private void MenuItem_improt(object sender, RoutedEventArgs e)  //新增的内容
@@ -235,8 +240,8 @@ namespace WpfApplication1
             w5.getname(newname, 4);
             w5.getdata += new Window5.myevent(m_window5_outline_addchapter);
             w5.Show();
-
         }   //增加章节
+
         private void modify_outline(object sender, RoutedEventArgs e)  //修改outline提名
         {
             string[] ss = tree6_sel.Name1.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -669,6 +674,8 @@ namespace WpfApplication1
         {
             count = listView1.Items.Count;
             label4.Content = count.ToString()+"条";
+           
+
             
         }
         private void MenuItem_delete(object sender, RoutedEventArgs e)
@@ -889,7 +896,8 @@ namespace WpfApplication1
                 try
                 {
                     tree6_sel = this.tree6.SelectedItem as outline;
-                    textBox2.Text = tree6_sel.Name1;
+                    //textBox2.Text = tree6_sel.Name1;
+                    textBox2.DataContext = tree6_sel;
                     if (tree6_sel.type != outlinetype.common)   //新增内容
                     {
                         this.tree6.ContextMenu = c5;
