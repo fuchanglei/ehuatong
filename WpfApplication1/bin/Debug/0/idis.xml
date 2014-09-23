@@ -13,7 +13,7 @@
  <!ENTITY amp "">
  ]>
  <iDisseration>
-  <cover>
+  <CoverC>
     <Classification>G250</Classification>
     <Secret>XXX</Secret>
     <Colleage>中国科学院</Colleage>
@@ -27,7 +27,7 @@
     <ArticleTime>2009年12月</ArticleTime>
     <ArticleTimeDefence>2010年1月</ArticleTimeDefence>
     <CultivateCollege>中国科学院文献情报中心</CultivateCollege>
-  </cover>
+  </CoverC>
   <coverE>
     <ArticleTitleE>The Study on Trend and Evaluation System of Resources Database Functions</ArticleTitleE>
     <ArticleTypeE>Doctoral/Master</ArticleTypeE>
@@ -43,9 +43,9 @@
     <TeacherS>郑建程</TeacherS>
     <TimeS>2010.1</TimeS>
   </Statement>
-  <Abstract>
+  <Abstract id="1">
   </Abstract>
-  <AbstractE>
+  <AbstractE id="2">
   </AbstractE>
   <Papersection>
 <Chapter id="1">
@@ -55,10 +55,10 @@
 <Section2 id="1.1.1">
 </Section2>
 </Papersection>
-  <Refer>
+  <Refer id="1">
   </Refer>
-<Appendix>
+<Appendix id="1">
 </Appendix>
-<Thanks>
+<Thanks id="1">
 </Thanks>
 </iDisseration>

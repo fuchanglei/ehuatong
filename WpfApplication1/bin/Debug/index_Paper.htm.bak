@@ -1,0 +1,23 @@
+<html>
+
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<title>iDisseration</title>
+</head>
+
+<frameset rows="85,*">
+	<frame name="banner" scrolling="no" noresize target="contents" src="head/head_Paper.htm">
+	<frameset cols="252,*">
+		<frame name="contents" src="left/left_Paper.htm" scrolling="auto">
+		<frame name="main"  src="center/CoverC.htm" scrolling="auto" target="main">
+	</frameset>
+	<noframes>
+	<body>
+
+	<p>此网页使用了框架，但您的浏览器不支持框架。</p>
+
+	</body>
+	</noframes>
+</frameset>
+
+</html>

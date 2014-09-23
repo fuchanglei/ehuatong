@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <iDissertation>
+<<<<<<< HEAD
   <item id="2" name="示范点" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\示范点" />
   <item id="3" name="安温泉" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\安温泉" />
   <item id="4" name="地方大师傅" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\地方大师傅" />
+=======
+  <item id="2" name="的费宋德福" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\的费宋德福" articleDir="C:\Users\fuchanglei\Desktop\随易通相关文档\问题收集" toolsDir="d:tools">
+    <Data />
+  </item>
+>>>>>>> 4a270adacca049b8e714bf78237e142373e3d50d
 </iDissertation>

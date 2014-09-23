@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script type="text/javascript" src="js/esl.js" ></script>
+<script type="text/javascript">
+	var myChart;
+	var myChart2;
+	require.config({
+		paths:{ 
+			echarts:'js/echarts',
+			'echarts/chart/bar' : 'js/echarts',
+			'echarts/chart/line': 'js/echarts'
+		}
+	});
+	require(
+		[
+			'echarts',
+			'echarts/chart/bar',
+			'echarts/chart/line'
+		],
+		function(ec) {
+			myChart = ec.init(document.getElementById('main'));
+			var option = {
+				tooltip : {
+					trigger: 'axis',
+					axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+						type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					data:['销售金额','订单数量']
+				},
+				toolbox: {
+					show : true,
+					feature : {
+						mark : true,
+						dataView : {readOnly: false},
+						magicType:['line', 'bar'],
+						restore : true,
+						saveAsImage : true
+					}
+				},
+				calculable : false,
+				xAxis : [
+					{
+						type : 'category',
+						data : dynamic.fee
+					}
+				],
+				yAxis : [
+					{
+						type : 'value',
+						splitArea : {show : true}
+					}
+				],
+				series : [
+					{
+						name:'销售金额',
+						type:'bar',
+						data:dynamic.data1
+					},
+					{
+						name:'订单数量',
+						type:'line',
+						data:dynamic.data2
+					}
+				]
+			};
+			
+			myChart.setOption(option);
+			
+			myChart.on('click',function(eventPacket) {
+					//alert(eventPacket.seriesIndex);
+					var dtindex=eventPacket.dataIndex;
+					var option = getPieOption(dynamic.detail[dtindex],dynamic.fee[dtindex]);
+					myChart2.setOption(option);
+				});
+		}
+	);
+	require(
+		[
+			'echarts',
+			'echarts/chart/pie'
+		],
+		function(ec) {
+			myChart2 = ec.init(document.getElementById('detail'));
+			var option = getPieOption(dynamic.detail[0],dynamic.fee[0]);
+			myChart2.setOption(option);
+			
+		}
+	);
+	var dynamic = {
+				   "fee":['辽宁','西北','河北','晋蒙','湖北','江西','四川','湖南','广东','京津','苏沪','云南','浙江'],
+				   "data1":[1074389.6,4039993.6,5764874.4,6098900,3567138,1714106,2334720,4538552,3180750,1776730,4601826.4,1850546,155900],
+				   "data2":[236120,1319140,1194860,1993200,562460,173140,231200,568040,389700,316880,387480,252920,98200],
+				   "detail":[
+						[{value:12960, name:'双嘧达莫片25mg*100片'},{value:15180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:40000, name:'养血安神片0.25g*100片'},{value:25200, name:'吲达帕胺片2.5mg*20片'},{value:20880, name:'珍菊降压片24片'}],
+						[{value:17960, name:'双嘧达莫片25mg*100片'},{value:10180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:9000, name:'养血安神片0.25g*100片'},{value:15200, name:'吲达帕胺片2.5mg*20片'},{value:13880, name:'珍菊降压片24片'}],
+						[{value:12960, name:'双嘧达莫片25mg*100片'},{value:13180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:9200, name:'养血安神片0.25g*100片'},{value:3200, name:'吲达帕胺片2.5mg*20片'},{value:6880, name:'珍菊降压片24片'}],
+						[{value:12960, name:'双嘧达莫片25mg*100片'},{value:10180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:9400, name:'养血安神片0.25g*100片'},{value:25200, name:'吲达帕胺片2.5mg*20片'},{value:12880, name:'珍菊降压片24片'}],
+						[{value:11960, name:'双嘧达莫片25mg*100片'},{value:11180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:9000, name:'养血安神片0.25g*100片'},{value:25200, name:'吲达帕胺片2.5mg*20片'},{value:11880, name:'珍菊降压片24片'}],
+						[{value:13960, name:'双嘧达莫片25mg*100片'},{value:13180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:9500, name:'养血安神片0.25g*100片'},{value:35200, name:'吲达帕胺片2.5mg*20片'},{value:5880, name:'珍菊降压片24片'}],
+						[{value:14960, name:'双嘧达莫片25mg*100片'},{value:14180, name:'盐酸氟桂利嗪胶囊5mg*30粒'},{value:90200, name:'养血安神片0.25g*100片'},{value:11200, name:'吲达帕胺片2.5mg*20片'},{value:13880, name:'珍菊降压片24片'}]
+					]
+	};
+	
+	function getPieOption(dt,title){
+		var option = {
+				title : {
+					text: title,
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient : 'vertical',
+					x : 'left',
+					data:['双嘧达莫片25mg*100片','盐酸氟桂利嗪胶囊5mg*30粒','养血安神片0.25g*100片','吲达帕胺片2.5mg*20片','珍菊降压片24片']
+				},
+				toolbox: {
+					show : true,
+					feature : {
+						mark : true,
+						dataView : {readOnly: false},
+						restore : true,
+						saveAsImage : true
+					}
+				},
+				series : [
+					{
+						name:'销售金额',
+						type:'pie',
+						radius : [0, 110],
+						center: [500,225],
+						data:dt
+					}
+				]
+			};
+			
+			return option;
+	}
+</script>
+
+<title>无标题文档</title>
+</head>
+
+<body>
+	<div id="main" style="height:400px;border:1px solid #ccc;padding:10px;margin-top:10px;">柱状图</div>
+	
+	<div id="detail" style="height:400px;border:1px solid #ccc;padding:10px;margin-top:10px;width:800px;">详细图</div>
+</body>
+</html>

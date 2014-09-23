@@ -1,0 +1,58 @@
+﻿<Window x:Class="WpfApplication1.data"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="数据集" Height="495" Width="659" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid Width="636">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46" />
+            <RowDefinition Height="354" />
+            <RowDefinition Height="56*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ComboBox Height="23" HorizontalAlignment="Left" Margin="95,8,0,0" Name="comboBox1" VerticalAlignment="Top" Width="198" SelectionChanged="comboBox1_SelectionChanged"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Name="textBlock1" Text="选择数据文件：" VerticalAlignment="Top" Margin="10,11,0,0" />
+            <TextBlock Height="23" HorizontalAlignment="Right" Margin="0,11,189,0" Name="textBlock2" Text="选择数据表：" VerticalAlignment="Top" />
+            <ComboBox Height="23" HorizontalAlignment="Left" Margin="444,8,0,0" Name="comboBox2" VerticalAlignment="Top" Width="125" SelectionChanged="comboBox2_SelectionChanged" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel  Height="318" HorizontalAlignment="Left" Name="stackPanel1" VerticalAlignment="Top" Width="637" Orientation="Horizontal">
+                <ListView Height="316" Name="listView1" Width="638" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn x:Name="gvc" Width="200">
+                                <GridViewColumn.Header>
+                                    <CheckBox Click="CheckBox_Click_1">全选</CheckBox>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Margin="72,0,0,0" Tag="{Binding Path=id}" IsChecked="{Binding Path=ischeck}" Click="CheckBox_Click"></CheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn  Width="234">
+                                <GridViewColumn.Header>
+                                    <TextBlock>列名</TextBlock>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="74,0,0,0" Text="{Binding Path=rowname}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+            <StackPanel Name="st2" Margin="0,315,0,0" Orientation="Horizontal">
+                <TextBlock Height="27" Margin="0,7,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">标题：</TextBlock>
+                <TextBox Width="182" Height="26" Margin="5" Name="title_textbox"></TextBox>
+                <TextBlock Height="27" Margin="145,7,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">单位：</TextBlock>
+                <TextBox Width="182" Height="26" Margin="5" Name="danwei_textbox"></TextBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,6,0,0">
+            <Button Content="确定"  Height="23" HorizontalAlignment="Left" Margin="457,13,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+            <Button Content="取消"  Height="23" HorizontalAlignment="Left" Margin="550,13,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+        </Grid>
+    </Grid>
+</Window>

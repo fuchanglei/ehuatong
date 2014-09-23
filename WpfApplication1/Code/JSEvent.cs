@@ -1,9 +1,10 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)] 
@@ -14,7 +15,7 @@ namespace WpfApplication1
             string filePath = "";
             OpenFileDialog openFileDialog1=new OpenFileDialog();
             openFileDialog1.Multiselect=false;
-            openFileDialog1.Filter = filter;//"mp4文件|*.mp4";
+            openFileDialog1.Filter = filter;//"mp4鏂囦欢|*.mp4";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -28,18 +29,22 @@ namespace WpfApplication1
             string filePath = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Multiselect = false;
-            openFileDialog1.Filter = filter;//图片格式
+            openFileDialog1.Filter = filter;//鍥剧墖鏍煎紡
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 filePath = MainWindow.tree5_sel.href + "\\picture/" + openFileDialog1.SafeFileName;
                 File.Copy(openFileDialog1.FileName, filePath, true);
+                //System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
                 
-                System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
-                //filePath = filePath.Replace("\\","/");
             }
-            //string result="{"+src+w+h+"}";
             return filePath;
+        }
+        public string MN_InsertChart()
+        {
+            data cc = new data();
+            cc.ShowDialog();
+            return cc.result;
         }
     }
 }

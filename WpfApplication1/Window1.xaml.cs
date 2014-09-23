@@ -36,6 +36,7 @@ namespace WpfApplication1
         public delegate void myevent(object sender,textEventArgs e);
         public event myevent getdata;
         public event myevent getnote;
+        public event myevent get_fujiannewname;
         public class textEventArgs : EventArgs
         {
             private string m_textbox;
@@ -74,6 +75,15 @@ namespace WpfApplication1
                     getnote(this, E);
                 }
             }
+            if (type == 2)
+            {
+                if (get_fujiannewname != null)
+                {
+                    //textEventArgs E = new textEventArgs(textBox1.Text.Trim());
+                    get_fujiannewname(this, E);
+                }
+            }
+
 
             this.Close();
         }
@@ -90,6 +100,10 @@ namespace WpfApplication1
             {
                 //w1.Title = "重命名笔记";
                 textBlock1.Text = "笔记名：";
+            }
+            if (type == 2)
+            {
+                textBlock1.Text = "附件名称：";
             }
             textBox1.Text = name;
             button1.IsEnabled = false;
