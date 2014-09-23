@@ -102,7 +102,6 @@ D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
 D:\程序\ehuatong\ehuatong\WpfApplication1\bin\Debug\WpfApplication1.exe
 D:\程序\ehuatong\ehuatong\WpfApplication1\bin\Debug\WpfApplication1.pdb
 D:\程序\ehuatong\ehuatong\WpfApplication1\bin\Debug\WebBrowserEXT.dll
-D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window1.baml
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window2.baml
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\Window3.baml
