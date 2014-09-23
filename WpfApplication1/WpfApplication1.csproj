@@ -98,6 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Code\deleteoutline.cs" />
     <Compile Include="data.xaml.cs">
       <DependentUpon>data.xaml</DependentUpon>
     </Compile>

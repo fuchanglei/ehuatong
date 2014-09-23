@@ -41,7 +41,8 @@
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate x:Key="treeViewTemplate5" DataType="{x:Type local:outline}" ItemsSource="{Binding Path=children}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,6,0,0" VerticalAlignment="Center" Text="{Binding Name1}" FontSize="15">
+                <TextBlock Margin="0,6,0,0" VerticalAlignment="Center" Text="{Binding secid}" FontSize="15" Visibility="{Binding vislible}"></TextBlock>
+                <TextBlock Margin="2,6,0,0" VerticalAlignment="Center" Text="{Binding Name1}" FontSize="15">
                 </TextBlock>
                 <StackPanel.ToolTip>
                     <TextBlock VerticalAlignment="Center" Text="{Binding toollip}" TextWrapping="Wrap" MaxWidth="200" ></TextBlock>
@@ -260,7 +261,8 @@
                 </Grid.RowDefinitions> 
                 <Grid Grid.ColumnSpan="2">
                 <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,-10,0">
-                        <TextBox Height="32" Name="textBox2"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="789" HorizontalContentAlignment="Left"/>
+                        <TextBlock Name="secid_textbl" Margin="0,10,0,0" Text="{Binding secid}" Background="#FFEBDFDF" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="auto" Visibility="{Binding vislible}"></TextBlock>
+                        <TextBox Height="32" Name="textBox2" Margin="4,0,0,0"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="586" HorizontalContentAlignment="Left"/>
             </StackPanel>
                 </Grid>
                 <Grid Margin="0,29,0,6" Grid.RowSpan="2" Grid.ColumnSpan="2">

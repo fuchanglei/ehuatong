@@ -62,10 +62,12 @@ namespace WpfApplication1
            }
            return items;
        }
-       public static void DeleteDir(string aimPath)
+       public static void DeleteDir(object aimPath1)
        {
+           string aimPath = aimPath1.ToString();
            try
            {
+              
                // 检查目标目录是否以目录分割字符结束如果不是则添加之
                if (aimPath[aimPath.Length - 1] != Path.DirectorySeparatorChar)
                    aimPath += Path.DirectorySeparatorChar;

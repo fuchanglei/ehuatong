@@ -96,10 +96,6 @@ namespace WpfApplication1
                     filePath = MainWindow.tree5_sel.href + "\\dialogs\\music\\" + openFileDialog1.SafeFileName;
                     File.Copy(openFileDialog1.FileName, filePath, true);
                 }
-                else
-                {
-                    filePath = openFileDialog1.FileName;
-                }
                 MusicFile mf = new MusicFile()
                 {
                     FileName = info.Title,
