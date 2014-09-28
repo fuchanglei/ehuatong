@@ -44,5 +44,11 @@ namespace WpfApplication1.htmlcss
            return html_title;
 
        }
+       public static string insert_msocaption(string number, string name,string type)
+       {
+           string htmlcode = "<p name='msocaption' style='font-size=10.0pt' align=center style='text-align:center'><head><span style='font-family:黑体;'></span></head><span style='font-family:黑体;'>关联数据相关文献检索情况</span></p>";
+           return htmlcode;
+       }
+
     }
 }

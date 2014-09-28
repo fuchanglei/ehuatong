@@ -9,7 +9,7 @@ namespace WpfApplication1.Code
     {
        public deleteoutline()
        { 
-        
+       
        }
        
     }

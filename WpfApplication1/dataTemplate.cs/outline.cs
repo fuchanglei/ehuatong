@@ -106,10 +106,17 @@ namespace WpfApplication1
                }
            }
        }
+       private string _context;
+       public string context
+       {
+           get { return _context; }
+           set { _context = value; } 
+       }
        public ObservableCollection<outline> children{ get; set; }
        public outline()
        {
            children = new ObservableCollection<outline>();
+           
        }
      
         #region INotifyPropertyChanged Members
@@ -152,8 +159,6 @@ namespace WpfApplication1
                type = (outlinetype)((int)parentnode.type+1),
               vislible=Visibility.Visible
               // nodetype=parent.Name
-               
-               
            };
            
            if (parent.HasChildNodes == false)
@@ -230,7 +235,6 @@ namespace WpfApplication1
                        vislible = Visibility.Collapsed
 
                    };
-                   
                    cc.Add(newnoe);
                    // Console.WriteLine(xm.Name);
                   // Console.WriteLine(xm.InnerText);
@@ -288,6 +292,7 @@ namespace WpfApplication1
                    break;
                }
            }
+           
            return select;
        }
        private XmlNode get_contexnode(string name, string id)  //获取与内容节点
@@ -356,7 +361,7 @@ namespace WpfApplication1
            XmlNode c = getlasnode_tem(select);
            XmlNodeList xmllist = a.ChildNodes;
            string id=select.secid+"."+(xmllist.Count+1).ToString();
-           string newname_add =id+" "+newname;
+           string newname_add =newname;
            string href = select.href + "/" + id;
            string type = ((outlinetype)((int)select.type + 1)).ToString();
            string nodename = type;
@@ -477,6 +482,7 @@ namespace WpfApplication1
            string id = ((XmlElement)select).GetAttribute("id");
            ((XmlElement)select).SetAttribute("id", oldid);
            updateid_context(select.Name, id, oldid);
+           
            foreach (XmlNode ccs in select.ChildNodes)
            {
                updateid(ccs, id, oldid);

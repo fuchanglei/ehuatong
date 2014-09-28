@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Controls;
@@ -29,6 +30,7 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
+       // static AutoResetEvent autoEvent=new AutoResetEvent(true);
         public static string item_Directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\iDissertation";  //当前idss文件所在目录
        // public List<PropertyNodeItem> itemlist3 = new List<PropertyNodeItem>();
         //title listdata=new title();
@@ -57,7 +59,8 @@ namespace WpfApplication1
         ObservableCollection<sidefiles> ss = new ObservableCollection<sidefiles>();
         private Tag_data _listView1Select;
         private ObservableCollection<Tag_data> _listviewItems = new ObservableCollection<Tag_data>();
-        
+       // private  XmlDocument doc_style = new XmlDocument();
+        //public static  XmlNode  root_style;
         ContextMenu c1;
         ContextMenu c2;
         ContextMenu c3;
@@ -94,6 +97,8 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
+            //doc_style.Load(MainWindow.idd_href + "/idis.xml");
+            //root_style = doc_style.DocumentElement;
         }
       private ContextMenu cireateMenu1()
        {
@@ -170,14 +175,21 @@ namespace WpfApplication1
             MenuItem m4 = new MenuItem();
             m4.Header = "删除";
             m4.Click += delet_outline;
+            MenuItem m6 = new MenuItem();
+            m6.Header = "复制章节内容";
+            MenuItem m7 = new MenuItem();
+            m7.Header = "粘贴内容";
             MenuItem m5 = new MenuItem();
             m5.Header = "插入章节或小节";
+            
            // m4.Click += remove_item;
             con1.Items.Add(m1);
             con1.Items.Add(m2);
             con1.Items.Add(m5);
             con1.Items.Add(m3);
             con1.Items.Add(m4);
+            con1.Items.Add(m6);
+            con1.Items.Add(m7);
             return con1;
         }  //outline 操作菜单
         private ContextMenu createMenu6()  //新增的内容
@@ -367,23 +379,26 @@ namespace WpfApplication1
         {
             mAdornerLayer.Update();
         }
-        private void savexml(outline sel, string html)
+        private void savexml(object sell)
         {
+            outline sel = sell as outline;
             //outline sel = tree6.SelectedItem as outline;
             if (sel.nodename != "Cover" || sel.nodename != "Statement")
             {
                 //string html = invoker.InvokeScript("getContent").ToString();
                 if (sel.type == outlinetype.common)
                 {
-                    Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
-                    cxml.savexml(false);
-                    //ThreadPool.QueueUserWorkItem(status => cxml.savetem());
+                    Savexml cxml = new Savexml(sel.nodename, sel.context, sel.secid);
+                   cxml.savexml(false);
+                    //ThreadPool.QueueUserWorkItem(new WaitCallback(cxml.savexml),(object)false);
                 }
                 else
                 {
-                    Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
+                    Savexml sxml = new Savexml("Papersection/" + sel.nodename, sel.context, sel.secid);
                     sxml.savexml(false);
-                  // ThreadPool.QueueUserWorkItem(status => sxml.savetem());
+                    //autoEvent.Set();
+                    //ThreadPool.QueueUserWorkItem(new WaitCallback(sxml.savexml), (object)false);
+                    //ThreadPool.QueueUserWorkItem(status => sxml.savetem());
                 }
             }
         }
@@ -883,21 +898,33 @@ namespace WpfApplication1
 
         private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            //MessageBox.Show("sadasd");
-            //ThreadPool.QueueUserWorkItem(status=>savexml(tree6_sel));
+            //Thread thread_savexml =  new Thread(savexml);
+           // thread.Start((object)row);
+            XmlDocument doc_style = new XmlDocument();
+            doc_style.Load(MainWindow.idd_href + "/idis.xml");
+            XmlNode  root_style = doc_style.DocumentElement;
             if (issave == true)
             {
                 if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
                 {
+                    //autoEvent = new AutoResetEvent(false);
                     savecontext = invoker.InvokeScript("getContent").ToString();
-                    savexml(tree6_sel, savecontext);
-
+                    tree6_sel.context = savecontext;
+                    if (tree6_sel.type != outlinetype.common)
+                    {
+                        pictureandchart_title pt = new pictureandchart_title(tree6_sel);
+                        pt.updatetitle(pt.chapter, 0);
+                    }
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(savexml),(object)tree6_sel);
+                    
+                   // thread_savexml.Start((object)tree6_sel);
+                    //savexml((object)tree6_sel);
+                    
                 }
             }
                 try
                 {
                     tree6_sel = this.tree6.SelectedItem as outline;
-                    //textBox2.Text = tree6_sel.Name1;
                     this.secid_textbl.DataContext = tree6_sel;
                     textBox2.DataContext = tree6_sel;
                     if (tree6_sel.type != outlinetype.common)   //新增内容
@@ -943,21 +970,42 @@ namespace WpfApplication1
                         }
                         if (tree6_sel.type != outlinetype.common)
                         {
-                            article dd = new article(tree6_sel.secid, "Papersection/" + tree6_sel.nodename);
-
-                            if (invoker.WaitWebPageLoad() == true)
+                            if (tree6_sel.context == null)
                             {
-                                invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;", "&"));
+                                article dd = new article(tree6_sel.secid, "Papersection/" + tree6_sel.nodename);
+                                if (invoker.WaitWebPageLoad() == true)
+                                {  
+                                    
+                                    //MessageBox.Show(autoEvent.GetType().ToString());
+                                    //autoEvent.WaitOne();
+                                  //  thread_savexml.Join();
+                                    invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;", "&"));
+                                }
                             }
+                            else
+                                if (invoker.WaitWebPageLoad() == true)
+                                {
+                                    invoker.InvokeScript("setContent", tree6_sel.context);
+                                }
                         }
                         else
                         {
-                            article dd = new article(tree6_sel.nodename);
-
-                            if (invoker.WaitWebPageLoad() == true)
+                            if (tree6_sel.context == null)
                             {
-                                invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;", "&"));
+                                article dd = new article(tree6_sel.nodename);
+
+                                if (invoker.WaitWebPageLoad() == true)
+                                {
+                                    //thread_savexml.Join();
+                                    invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;", "&"));
+                                }
                             }
+                            else
+                                if (invoker.WaitWebPageLoad() == true)
+                                {
+                                    //autoEvent.WaitOne();
+                                    invoker.InvokeScript("setContent", tree6_sel.context);
+                                }
                         }
                     }
                 }
@@ -1044,8 +1092,7 @@ namespace WpfApplication1
                             this.tree5.ContextMenu = null;
                             break;
                         default:
-                            break;
-                            
+                            break;    
                     }
                 }
             }

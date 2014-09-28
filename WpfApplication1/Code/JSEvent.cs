@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 using System.Runtime.InteropServices;
+using WpfApplication1.htmlcss;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)] 
@@ -76,11 +77,12 @@ namespace WpfApplication1
             }
             return @"dialogs\Album\index.html";
         }
-
+        public string MN_insertMsoCaption(string type)
+        {
+           return htmlstyle.insert_msocaption("111","sadsad",type);
+        }
         public MusicFile MN_OpenMusicFile()
         {
-            // string filepath = MN_OpenPic("mp3文件|*.mp3");
-
             string filePath = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Multiselect = false;

@@ -111,6 +111,7 @@
     <Compile Include="iDissertation\data.cs" />
     <Compile Include="iDissertation\exporttohtml.cs" />
     <Compile Include="iDissertation\openexcel.cs" />
+    <Compile Include="iDissertation\pictureandchart_title.cs" />
     <Compile Include="iDissertation\Savecontext.cs" />
     <Compile Include="iDissertation\Savexml.cs" />
     <Compile Include="Code\JSEvent.cs" />
