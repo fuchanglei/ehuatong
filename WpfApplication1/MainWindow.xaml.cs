@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using System.Xml;
 using System.Windows;
 using System.Windows.Interop;
@@ -32,8 +33,6 @@ namespace WpfApplication1
     {
        // static AutoResetEvent autoEvent=new AutoResetEvent(true);
         public static string item_Directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\iDissertation";  //当前idss文件所在目录
-       // public List<PropertyNodeItem> itemlist3 = new List<PropertyNodeItem>();
-        //title listdata=new title();
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
         public outline_Data select_tree5;
         public static string idd_href;
@@ -41,13 +40,13 @@ namespace WpfApplication1
         AdornerLayer mAdornerLayer = null;
         DateTime mStartHoverTime = DateTime.MinValue;
         TreeViewItem mHoveredItem = null;
-        public static iDissertation tree5_sel;
+        public static iDissertation tree5_sel;  //2014-10-10
         private bool isdrag = false;
         private string file_size;  //文件大小
         private string newname=string.Empty;
         private int count;   //当前目录组下笔记的数目
         public title cc = new title();
-        public outline tree6_sel =new outline();
+        public static outline tree6_sel =new outline();  //2014-10-10
         public string savecontext;
         //public bool issave;
         private int last;
@@ -56,11 +55,13 @@ namespace WpfApplication1
         private bool issave;
         private bool isdelete=true;
         public bool web_show = false;
+       // private XmlDocument doc_style;
+      //  private XmlNode root_style;
         ObservableCollection<sidefiles> ss = new ObservableCollection<sidefiles>();
         private Tag_data _listView1Select;
         private ObservableCollection<Tag_data> _listviewItems = new ObservableCollection<Tag_data>();
-       // private  XmlDocument doc_style = new XmlDocument();
-        //public static  XmlNode  root_style;
+        public static TreeView tree6_clone;
+        //public JSEvent js=new JSEvent();
         ContextMenu c1;
         ContextMenu c2;
         ContextMenu c3;
@@ -68,15 +69,15 @@ namespace WpfApplication1
         ContextMenu c5;
         ContextMenu c6;  //新增的内容
         ContextMenu c7;  //文献的菜单操作目录// 新增
-        WebbrowserScriptInvoker invoker;
-        public MainWindow()
+       public static WebbrowserScriptInvoker invoker;
+       public MainWindow()
         {
             InitializeComponent();
             AttachEvent();
             showcotext();
             last= ((PropertyNodeItem)tree2.Items[0]).Children.Count;
             listView2.ItemsSource = ss;
-            invoker = new WebbrowserScriptInvoker(webBrowser1);
+            invoker = new WebbrowserScriptInvoker(this.webBrowser1);
             wrapPanel1.Visibility = Visibility.Collapsed;
             c1= cireateMenu1();
             c2 = cireateMenu2();
@@ -84,12 +85,12 @@ namespace WpfApplication1
             c4 = cireateMenu4();
             c5 = cireateMenu5();
             c6 = createMenu6();  //新增的内容
+            c7 = createMenu7();
             //_listviewItems.Select
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
             }
-           // this.listViewTag.ItemsSource = _listviewItems;
             WebBrowserSecurity.setIEInternetSecurity();
             this.listViewTag.ItemsSource = _listviewItems;
             Window_Tag www = new Window_Tag();
@@ -97,9 +98,9 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
-            //doc_style.Load(MainWindow.idd_href + "/idis.xml");
-            //root_style = doc_style.DocumentElement;
+            
         }
+       
       private ContextMenu cireateMenu1()
        {
             ContextMenu con1 = new ContextMenu();
@@ -130,7 +131,7 @@ namespace WpfApplication1
             con2.Items.Add(m4);
             return con2;
         }
-        private ContextMenu cireateMenu3()
+      private ContextMenu cireateMenu3()
         {
             ContextMenu con3 = new ContextMenu();
             MenuItem m1 = new MenuItem();
@@ -151,7 +152,7 @@ namespace WpfApplication1
             con3.Items.Add(m3);
             return con3;
         }
-        private ContextMenu cireateMenu4()
+      private ContextMenu cireateMenu4()
         {
             ContextMenu c4 = new ContextMenu();
             MenuItem m1 = new MenuItem();
@@ -160,7 +161,7 @@ namespace WpfApplication1
             c4.Items.Add(m1);
             return c4;
         }
-        private ContextMenu cireateMenu5()
+      private ContextMenu cireateMenu5()
         {
             ContextMenu con1 = new ContextMenu();
             MenuItem m1 = new MenuItem();
@@ -192,32 +193,73 @@ namespace WpfApplication1
             con1.Items.Add(m7);
             return con1;
         }  //outline 操作菜单
-        private ContextMenu createMenu6()  //新增的内容
+      private ContextMenu createMenu6()  //新增的内容
         {
             ContextMenu con1 = new ContextMenu();
             MenuItem m1 = new MenuItem();
-            m1.Header = "添加数据";
+            m1.Header = "导入文件";
             m1.Click += MenuItem_improt;
+            MenuItem m2 = new MenuItem();
+            m2.Header = "配置相关内目录";
+            m2.Click += MenuItem_confArticleDire;
+            MenuItem m3 = new MenuItem();
+            m3.Header = "在资源管理器中打开文件夹";
+            m3.Click += openFolder;
             con1.Items.Add(m1);
+            con1.Items.Add(m2);
+            con1.Items.Add(m3);
             return con1;
         }
+      private ContextMenu createMenu7()  //生成目录menu
+      {
+          ContextMenu con1 = new ContextMenu();
+          MenuItem m1 = new MenuItem();
+          m1.Click += create_Catalog;
+          m1.Header = "更新目录";
+          con1.Items.Add(m1);
+          return con1;
+      }
+      private void create_Catalog(object sender, RoutedEventArgs e)
+      {
+          if (invoker.WaitWebPageLoad() == true)
+          {
+              invoker.InvokeScript("setContent", htmlstyle.wirite_Catalog(tree6_sel.secid));
+          }
+          
+      }   //生成目录
         private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
         {
             System.Windows.Forms.FolderBrowserDialog folder1 = new System.Windows.Forms.FolderBrowserDialog();
-            folder1.Description = "选择文献存放目录";
+            folder1.Description = "选择目录";
             folder1.ShowNewFolderButton = true;
             if (folder1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                //ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel, folder1.SelectedPath));
-                ThreadPool.QueueUserWorkItem(status =>idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel,folder1.SelectedPath));
-                //idisser_data.idisser.TreeViewItems4_modify_article_dir(tree5_sel, folder1.SelectedPath);
-               // tree5_sel.article = idisser_data.getiDissertationArticle(folder1.SelectedPath);
+               listView_data_article.ItemsSource= idisser_data.getiDissertations(folder1.SelectedPath);
+              ThreadPool.QueueUserWorkItem(status =>idisser_data.idisser.TreeViewItems4_modify_dir(tree5_sel,folder1.SelectedPath));
+                switch(tree5_sel.Name)
+                {   
+                    case "文献":
+                        //listView_data_article.ItemsSource = tree5_sel.parent.article;
+                        tree5_sel.parent.article = listView_data_article.ItemsSource as ObservableCollection<title>;
+                    // this.listView_data_article.ItemsSource = tree5_sel.parent.article;
+                        break;
+                    case "工具":
+                        tree5_sel.parent.tools = listView_data_article.ItemsSource as ObservableCollection<title>;
+                        break;
+                    case "多媒体":
+                        tree5_sel.parent.media= listView_data_article.ItemsSource as ObservableCollection<title>;
+                        break;
+
+                }
             }
+        }
+        private void openFolder(object sender, RoutedEventArgs e)
+        {
+            string path = tree5_sel.href;
+            System.Diagnostics.Process.Start("explorer.exe", path);
         }
         private void MenuItem_improt(object sender, RoutedEventArgs e)  //新增的内容
         {
-            //improtData w2 = new improtData();
-            //w2.creattitle += new Window2.myevent(createnewtitle);
             System.Windows.Forms.OpenFileDialog op = new System.Windows.Forms.OpenFileDialog();
             op.InitialDirectory = @"c:\";
             op.RestoreDirectory = true;
@@ -228,10 +270,12 @@ namespace WpfApplication1
                 {
                     date = DateTime.Now.ToString(),
                     title_name = op.SafeFileName,
-                    context = op.FileName
+                    context = tree5_sel.href+"\\"+op.SafeFileName
                 };
-                tree5_sel.parent.data.Add(newdata);
-                idisser_data.idisser.AddiDissertationData_article(tree5_sel.parent.Name, newdata);
+                //tree5_sel.parent.data.Add(newdata);
+                ((ObservableCollection<title>)this.listView_data_article.ItemsSource).Add(newdata);
+                ThreadPool.QueueUserWorkItem(status => idisser_data.idisser.AddiDissertationData_article(op.FileName, newdata));
+            
             }
             
             //w2.Show();
@@ -252,8 +296,7 @@ namespace WpfApplication1
             w5.getname(newname, 4);
             w5.getdata += new Window5.myevent(m_window5_outline_addchapter);
             w5.Show();
-        }   //增加章节
-
+        }   //增加章
         private void modify_outline(object sender, RoutedEventArgs e)  //修改outline提名
         {
             //string[] ss = .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -303,8 +346,6 @@ namespace WpfApplication1
             outline sel = (outline)tree6.SelectedItem;
             int c = getindex(sel);
             outline aa=add_section.outline_chapter_add(sel, newname);
-            //outline_Data.Instance.TreeViewItems1.Insert(c, aa);
-
             ObservableCollection<outline> cc = tree6.ItemsSource as ObservableCollection<outline>;
             cc.Insert(c, aa);
             
@@ -336,12 +377,10 @@ namespace WpfApplication1
             if (listitem == null || !(listView1.SelectedItem is title))
                 return;
             DragDropAdorner adorner = new DragDropAdorner(listitem);
-           // mAdornerLayer=
             mAdornerLayer = AdornerLayer.GetAdornerLayer(mTopLevelGrid);
             mAdornerLayer.Add(adorner);
             cc = listitem.Content as title;
             object db = (object)cc.title_name;
-           // DataObject db = new DataObject((Object)cc.title_name);
             System.Windows.DragDrop.DoDragDrop(listView1, db, DragDropEffects.Copy);
             mStartHoverTime = DateTime.MinValue;
             mHoveredItem = null;
@@ -390,22 +429,18 @@ namespace WpfApplication1
                 {
                     Savexml cxml = new Savexml(sel.nodename, sel.context, sel.secid);
                    cxml.savexml(false);
-                    //ThreadPool.QueueUserWorkItem(new WaitCallback(cxml.savexml),(object)false);
+   
                 }
                 else
                 {
                     Savexml sxml = new Savexml("Papersection/" + sel.nodename, sel.context, sel.secid);
                     sxml.savexml(false);
-                    //autoEvent.Set();
-                    //ThreadPool.QueueUserWorkItem(new WaitCallback(sxml.savexml), (object)false);
-                    //ThreadPool.QueueUserWorkItem(status => sxml.savetem());
+                   
                 }
             }
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {    
-            /*
-            */
             Window2 w2 = new Window2();
             w2.creattitle+=new Window2.myevent(createnewtitle);
             w2.Show();
@@ -431,12 +466,10 @@ namespace WpfApplication1
             item.Children.Insert(0, node_item);
         
         }
-
         private void label2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("哒哒哒!");
         }
-
         private void add_node(object sender, RoutedEventArgs e)
         {
 
@@ -447,19 +480,12 @@ namespace WpfApplication1
                 Name = "This is the discription of Node1. This is a folder.",
                 Icon = @"images/my files.ico",
             };
-            // int i=itemlist3.
-            //itemlist3[1].Children.Add(node_item);
-            // item.Children.Add(node_item);
-            //itemlist3.Add(item);
-           // this.tree3.ItemsSource = itemlist3;
             MessageBox.Show(item.DisplayName + "111");
         }
-
         private void StackPanel_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
             MessageBox.Show("111");
         }
-
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             
@@ -477,8 +503,6 @@ namespace WpfApplication1
             PropertyNodeItem cc = (PropertyNodeItem)tree2.SelectedItem;
             if (cc.node_lev ==Nodeetype.one)
             {
-                //MessageBox.Show(tree2.SelectedItem.ToString());
-                //MessageBox.Show(cc.DisplayName);
                 this.tree2.ContextMenu = c1;
             }
             else if (cc.node_lev==Nodeetype.subject)
@@ -498,14 +522,12 @@ namespace WpfApplication1
                  //web_show =false;
                 //invoker.InvokeScript("setContent", "sadfasdfasfaf1111111");
         }
-
         private void tree3_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
              //PropertyNodeItem cc = (PropertyNodeItem)tree3.SelectedItem;
           //  MessageBox.Show(tree2.SelectedItem.ToString());
            // MessageBox.Show(cc.DisplayName);
         }
-
         private void tvProperties_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             PropertyNodeItem cc = (PropertyNodeItem)tvProperties.SelectedItem;
@@ -515,6 +537,8 @@ namespace WpfApplication1
         private void listView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //title c = (title)listView1.SelectedItem;
+            TreeViewItem vi = this.tree6.SelectedItem as TreeViewItem;
+            
             //MessageBox.Show(c.title_name);
             if (web_show)
            {
@@ -661,9 +685,9 @@ namespace WpfApplication1
                isselect = false;
                issave = false;
                idisser_data delete = new idisser_data();
-               iDissertation dd = (iDissertation)tree5.SelectedItem;
-               idisser_data.idisser.TreeViewItems4.Remove(dd);
-               ThreadPool.QueueUserWorkItem(new WaitCallback(delete.TreeViewItems4_delete),dd);
+             //  iDissertation dd = tree5_sel
+               idisser_data.idisser.TreeViewItems4.Remove(tree5_sel);
+               ThreadPool.QueueUserWorkItem(new WaitCallback(delete.TreeViewItems4_delete), tree5_sel);
                //delete.TreeViewItems4_delete(dd);
                this.tree6.ItemsSource = null;
                isselect = true;
@@ -874,7 +898,7 @@ namespace WpfApplication1
                 ss.Add(sos);
             }
         }
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)  //增加iddis项目
         {
             //MenuItem cc = this.menu2.Items[0] as MenuItem;
             var item = sender as MenuItem;
@@ -891,34 +915,47 @@ namespace WpfApplication1
              Name=e1.textbox,
              icon=e2.newtitle.Pic,
              nodetype=e2.type,
-             href=item_Directory+"\\"+e1.textbox 
+             href=item_Directory+"\\"+e1.textbox,
+             Refer=new List<Refer.ReferencesInfo>(),
+             Refernumber=new List<int>()
             };
              idisser_data.idisser.TreeViewItems4_add(newite);
         }  //增加idis项
-
-        private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        public void savas()
         {
-            //Thread thread_savexml =  new Thread(savexml);
-           // thread.Start((object)row);
+            if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+            {
+                savecontext = invoker.InvokeScript("getContent").ToString();
+                tree6_sel.context = savecontext;
+                if (tree6_sel.type != outlinetype.common)
+                {
+                    pictureandchart_title pt = new pictureandchart_title(tree6_sel);
+                    pt.updatetitle(pt.chapter);
+                }
+                invoker.InvokeScript("setContent", tree6_sel.context);
+            }
+        }
+        private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {   
             XmlDocument doc_style = new XmlDocument();
             doc_style.Load(MainWindow.idd_href + "/idis.xml");
             XmlNode  root_style = doc_style.DocumentElement;
             if (issave == true)
             {
+                //TreeViewItem ccccc = new TreeViewItem();
+                
                 if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
                 {
-                    //autoEvent = new AutoResetEvent(false);
                     savecontext = invoker.InvokeScript("getContent").ToString();
                     tree6_sel.context = savecontext;
                     if (tree6_sel.type != outlinetype.common)
                     {
                         pictureandchart_title pt = new pictureandchart_title(tree6_sel);
-                        pt.updatetitle(pt.chapter, 0);
+                        pt.updatetitle(pt.chapter);
+                        updateReferid update = new updateReferid();
+                        update.updateReferidS(tree5_sel.outlines);
                     }
                     ThreadPool.QueueUserWorkItem(new WaitCallback(savexml),(object)tree6_sel);
-                    
-                   // thread_savexml.Start((object)tree6_sel);
-                    //savexml((object)tree6_sel);
                     
                 }
             }
@@ -950,36 +987,29 @@ namespace WpfApplication1
                     }
                     else
                         this.tree6.ContextMenu = null;
-                    // iDissertation ccc = tree5.SelectedItem as iDissertation;
                     if (tree6_sel.Name1.Contains("封面") == true || tree6_sel.nodename == "Statement")
                     {
 
-                        //string filepath = item_Directory;
-                        // cd = "../../" + filepath + "/article_xml/";
-                        //string cccc = ccc.href;
                         string cd = idd_href + "/" + tree6_sel.href;
                         this.webBrowser1.Navigate(@cd);
                         web_show = true;
                     }
-                    else
+                    else   //如果不是封面
                     {
                         if (web_show)
                         {
                             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
                             web_show = false;
                         }
-                        if (tree6_sel.type != outlinetype.common)
+                        if (tree6_sel.type != outlinetype.common)  //如果是章节
                         {
                             if (tree6_sel.context == null)
                             {
-                                article dd = new article(tree6_sel.secid, "Papersection/" + tree6_sel.nodename);
+                                article dd = new article(root_style);
                                 if (invoker.WaitWebPageLoad() == true)
-                                {  
-                                    
-                                    //MessageBox.Show(autoEvent.GetType().ToString());
-                                    //autoEvent.WaitOne();
-                                  //  thread_savexml.Join();
-                                    invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;", "&"));
+                                {
+
+                                    invoker.InvokeScript("setContent", dd.getcontext(tree6_sel.secid, "Papersection/" + tree6_sel.nodename).Replace("&amp;", "&"));
                                 }
                             }
                             else
@@ -988,16 +1018,24 @@ namespace WpfApplication1
                                     invoker.InvokeScript("setContent", tree6_sel.context);
                                 }
                         }
-                        else
+                        else    //如果不是章节
                         {
+                            if (tree6_sel.nodename.Contains("Catalog"))
+                            {
+                                this.tree6.ContextMenu = c7;
+                            }
+                            if(tree6_sel.nodename=="Refer")
+                            {
+                                tree6_sel.context = htmlstyle.writeRefer(tree5_sel.Refernumber,tree5_sel.Refer);
+                            }
                             if (tree6_sel.context == null)
                             {
-                                article dd = new article(tree6_sel.nodename);
+                                article dd = new article(root_style);
 
                                 if (invoker.WaitWebPageLoad() == true)
                                 {
                                     //thread_savexml.Join();
-                                    invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;", "&"));
+                                    invoker.InvokeScript("setContent", dd.getcontext_comm(tree6_sel.nodename).Replace("&amp;", "&"));
                                 }
                             }
                             else
@@ -1021,7 +1059,8 @@ namespace WpfApplication1
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-           
+            invoker.InvokeScript("EnableEditor");
+
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -1047,21 +1086,24 @@ namespace WpfApplication1
                 }
             }
         }
-
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            
-            if (isselect)
+            //tree6_sel = new outline();
+            if (tree6_sel != null)
             {
+                tree6_sel.isselected = false;
+            } 
+              if(isselect)
+              {
                 tree5_sel = (iDissertation)tree5.SelectedItem;
                 if (tree5_sel.nodetype != iDissType.nonode)
                 {
-                    
                     if (tree5_sel.outlines == null)
                     {
                         idd_href = tree5_sel.href;
                         select_tree5 = new outline_Data(true);
                         tree5_sel.outlines = select_tree5.TreeViewItems1;
+                        // tree5_sel.outlines[1].isselected = true;
                     }
                     this.tree5.ContextMenu = this.iddmenu;
                     issave = false;
@@ -1069,36 +1111,41 @@ namespace WpfApplication1
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Visible;
                     this.listView_data_article.Visibility = Visibility.Hidden;
-                    //outline_Data.Instance = select_tree5;
                     this.tree6.ItemsSource = tree5_sel.outlines;
                 }
                 else
-                {     
+                {
+                    idd_href = tree5_sel.parent.href;
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Hidden;
                     this.listView_data_article.Visibility = Visibility.Visible;
                     switch (tree5_sel.Name)
-                    { 
+                    {
                         case "数据":
-                              listView_data_article.ItemsSource = tree5_sel.parent.data;
-                              this.tree5.ContextMenu = c6;
+                            listView_data_article.ItemsSource = tree5_sel.parent.data;
+                            this.tree5.ContextMenu = c6;
                             break;
                         case "文献":
                             listView_data_article.ItemsSource = tree5_sel.parent.article;
-                            this.tree5.ContextMenu = null;
+                            this.tree5.ContextMenu = c6;
                             break;
                         case "工具":
                             listView_data_article.ItemsSource = tree5_sel.parent.tools;
-                            this.tree5.ContextMenu = null;
+                            this.tree5.ContextMenu = c6;
                             break;
                         default:
-                            break;    
+                            listView_data_article.ItemsSource = tree5_sel.parent.media;
+                            this.tree5.ContextMenu = c6;
+                            break;
                     }
                 }
-            }
-           
+                }
+               // MessageBox.Show(tree5_sel.Refer[0].Context.ToString());
+                //doc_style = new XmlDocument();
+               // doc_style.Load(MainWindow.idd_href + "/idis.xml");
+               // root_style = doc_style.DocumentElement;
+              
         }
-
         private void listView2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             string path = ((sidefiles)this.listView2.SelectedItem).path;
@@ -1110,7 +1157,6 @@ namespace WpfApplication1
             isdelete = false;
             _listviewItems.Remove(_listView1Select);
             isdelete = true;
-
         }
         private void listViewTag_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1122,18 +1168,16 @@ namespace WpfApplication1
                 _listView1Select.isvisibli = Visibility.Visible;
             }
         }
-
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
         {
             Window_Tag w_tag = new Window_Tag();
             w_tag.getbq += new Window_Tag.myevent(add_tag);
             w_tag.Show();
         }
-
         private void button3_Click(object sender, RoutedEventArgs e)
         {
            //openexcel op = new openexcel("F:\\3.Echarts\\3.Echarts\\data.xlsx");
-           // System.Data.DataTable cc = op.getexcel();
+           //System.Data.DataTable cc = op.getexcel();
         }
 
         private void MenuItem_Click_opendataorarticle(object sender, RoutedEventArgs e)
@@ -1142,16 +1186,23 @@ namespace WpfApplication1
             System.Diagnostics.Process.Start(path); //打开此文件。
         }
 
-        private void MenuItem_Click_delete_data(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_delete_data(object sender, RoutedEventArgs e)  //2014-10-10
         {
-            idisser_data.idisser.deletiDissertationData(tree5_sel.parent.Name, this.listView_data_article.SelectedItem as title);
-            tree5_sel.parent.data.Remove(this.listView_data_article.SelectedItem as title);
+            title deletitem = this.listView_data_article.SelectedItem as title;
+            ThreadPool.QueueUserWorkItem(new WaitCallback(copy_files.deletiDissertationData), (object)(deletitem.context));
+            ((ObservableCollection<title>)listView_data_article.ItemsSource).Remove(deletitem);
         }
 
         private void listView_data_article_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             string path = ((title)this.listView_data_article.SelectedItem).context;
             System.Diagnostics.Process.Start(path); //打开此文件。
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (tree6_sel != null&&tree6_sel.type!=outlinetype.empty)
+                savexml((object)tree6_sel);
         }       
     }
 }

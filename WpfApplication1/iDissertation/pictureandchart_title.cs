@@ -8,7 +8,7 @@ namespace WpfApplication1
 {
     class pictureandchart_title
     {
-       // private int count;
+        private int cou=0;
         public outline chapter;
         private  outline getchapter(outline sel)
         {
@@ -20,39 +20,65 @@ namespace WpfApplication1
         public pictureandchart_title(outline sel)
         {
             chapter = getchapter(sel);
+            chapter.CatalogFig=new List<Picture_ChartInfo>();
         }
-        public void updatetitle(outline ch,int cou)
+        public void updatetitle(outline ch)
         {
-            XmlDocument doc = new XmlDocument();
-            if (ch.context == null)
+            try
             {
-                article dd = new article(ch.secid,"Papersection/" + ch.nodename);
-                ch.context = dd.getcontext();
-                doc.LoadXml(ch.context);
-            }
-            else
-            {
-                doc.LoadXml(ch.context.Replace("&", "&amp;"));
-            }
-            //XmlDocument doc = new XmlDocument();
-            //doc.LoadXml(ch.context);
-            XmlNodeList xml = doc.DocumentElement.SelectNodes("p");
-            foreach (XmlNode xm in xml)
-            {
-                if (((XmlElement)xm).GetAttribute("name") == "msocaption")
+                XmlDocument doc = new XmlDocument();
+                if (ch.context == null)
                 {
-                    cou++;
-                    ((XmlElement)xm).SetAttribute("id",cou.ToString());
-
-                    xm.FirstChild.InnerText = "图" + chapter.secid.ToString() + "-" + cou.ToString() + " ";
-                    
+                    article dd = new article(ch.secid, "Papersection/" + ch.nodename);
+                    ch.context = dd.getcontext();
+                    doc.LoadXml(ch.context);
+                }
+                else
+                {
+                    doc.LoadXml(ch.context.Replace("&", "&amp;"));
+                }
+                //XmlDocument doc = new XmlDocument();
+                //doc.LoadXml(ch.context);
+                XmlNodeList xml = doc.DocumentElement.SelectNodes("p");
+                foreach (XmlNode xm in xml)
+                {
+                    if (((XmlElement)xm).GetAttribute("name") == "msocaption")
+                    {
+                        cou++;
+                        Picture_ChartInfo newone = null;
+                        ((XmlElement)xm).SetAttribute("id", cou.ToString());
+                        xm.FirstChild.InnerText = "图" + chapter.secid.ToString() + "-" + cou.ToString() + " ";
+                        XmlNode xms = xm.PreviousSibling.FirstChild.FirstChild.SelectSingleNode("img");
+                        if (xms == null)
+                            newone = new Picture_ChartInfo()
+                            {
+                                ownsection = ch.secid,
+                                title = xm.InnerText,
+                                path = ""
+                            };
+                        else
+                            newone = new Picture_ChartInfo()
+                            {
+                                ownsection = ch.secid,
+                                title = xm.InnerText,
+                                path = ((XmlElement)xms).GetAttribute("src").Replace("\\", "/")
+                            };
+                        chapter.CatalogFig.Add(newone);
+                    }
+                }
+                ch.context = doc.InnerXml.Replace("&amp;", "&");
+                foreach (outline ou in ch.children)
+                {
+                    updatetitle(ou);
                 }
             }
-            ch.context = doc.InnerXml.Replace("&amp;", "&");
-            foreach (outline ou in ch.children)
+            catch
             {
-                updatetitle(ou, cou);
+                ;
             }
+            //    ;
         }
+     
+    
     }
 }

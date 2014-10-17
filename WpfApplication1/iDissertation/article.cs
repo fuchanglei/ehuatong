@@ -71,7 +71,7 @@ namespace WpfApplication1
            html = ccwww.InnerXml.ToString();
            return html;
        }
-           public string getcontext_comm()
+       public string getcontext_comm()
        {
            string html = string.Empty;
            XmlNode ccwww = root_style.SelectSingleNode(cc);

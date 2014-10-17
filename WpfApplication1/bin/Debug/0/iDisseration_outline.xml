@@ -5,9 +5,9 @@
 <Statement href="Statement.html" nodetype="empty">原创声明及授权</Statement>
 <Abstract id="1" href="abstractC.htm" nodetype="common">摘要</Abstract>
 <AbstractE id="2" href="abstract.htm" nodetype="common">Abstract</AbstractE>
-<Catalog id="1" href="catalog.htm" nodetype="common">目录</Catalog>
-<Catalog id="2" href="catalogTable.htm" nodetype="common">表目录</Catalog>
-<Catalog id="3" href="catalogFigure.htm" nodetype="common">图目录</Catalog>
+<CatalogOutline id="1" href="catalog.htm" nodetype="common">目录</CatalogOutline>
+<CatalogChart id="2" href="catalogTable.htm" nodetype="common">表目录</CatalogChart>
+<CatalogFig id="3" href="catalogFigure.htm" nodetype="common">图目录</CatalogFig>
 <Chapter id="1" sec-title="一级标题" href="1" nodetype="Chapter">
 <Section1 id="1.1" sec-title="二级标题" href="1/1.1" nodetype="Section1">
     <Section2 id="1.1.1" sec-title="三级标题" href="1/1.1/1.1.1" nodetype="Section2"></Section2>  

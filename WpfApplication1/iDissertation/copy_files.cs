@@ -69,6 +69,14 @@ namespace WpfApplication1
            }
            return items;
        }
+       public static void AddiDissertationMedia(string sourceDir, string desDir)
+       {
+           File.Copy(sourceDir, desDir, true);
+       }
+       public static void deletiDissertationData(object path)
+       {
+               File.Delete(path.ToString());
+       }
        public static void DeleteDir(object aimPath1)
        {
            string aimPath = aimPath1.ToString();

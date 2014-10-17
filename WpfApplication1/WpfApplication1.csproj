@@ -112,11 +112,20 @@
     <Compile Include="iDissertation\exporttohtml.cs" />
     <Compile Include="iDissertation\openexcel.cs" />
     <Compile Include="iDissertation\pictureandchart_title.cs" />
+    <Compile Include="iDissertation\Picture_ChartInfo.cs" />
     <Compile Include="iDissertation\Savecontext.cs" />
     <Compile Include="iDissertation\Savexml.cs" />
     <Compile Include="Code\JSEvent.cs" />
+    <Compile Include="iDissertation\updateReferid.cs" />
     <Compile Include="improtData.xaml.cs">
       <DependentUpon>improtData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="insertPic.xaml.cs">
+      <DependentUpon>insertPic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Refer\References.cs" />
+    <Compile Include="window_References.xaml.cs">
+      <DependentUpon>window_References.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebbrowserScriptInvoker.cs" />
     <Compile Include="DragDropAdorner.cs" />
@@ -155,6 +164,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="insertPic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -167,6 +180,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="window_References.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

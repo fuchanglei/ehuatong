@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Threading;
 using System.Xml;
+using WpfApplication1.Refer;
 
 
 namespace WpfApplication1
@@ -62,6 +63,7 @@ namespace WpfApplication1
            get { return _data; }
            set { _data = value; }
        }
+       public string articlePath { get; set; }
        private ObservableCollection<title> _article;
        public ObservableCollection<title> article
        {
@@ -69,14 +71,25 @@ namespace WpfApplication1
            set { _article = value; }
        }
        private ObservableCollection<title> _tools;
+       public string toolsPath { get; set; }
        public ObservableCollection<title> tools
        {
            get { return _tools; }
            set { _tools = value; }
        }
+       public string mediaPath { get; set; }
+       private ObservableCollection<title> _media;
+       public ObservableCollection<title> media
+       {
+           get { return _media; }
+           set { _media = value; }
+       }
+       public List<ReferencesInfo> Refer { get; set; }
+       public List<int> Refernumber { get; set; }
        public iDissType nodetype { get; set; }
        //public iDissertation parent { get;set;}
        public string href { get; set; }
+      
        public ObservableCollection<iDissertation> Children { get; set; }
        public iDissertation()
        {
@@ -87,7 +100,7 @@ namespace WpfApplication1
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
-        {
+        {  
             PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
             {
@@ -99,6 +112,7 @@ namespace WpfApplication1
     
    #endregion
    public class idisser_data {
+       public static List<int> refercount;
        private static idisser_data _idisser = new idisser_data();
        //private copy_files cf;
        public static idisser_data idisser
@@ -112,23 +126,7 @@ namespace WpfApplication1
           doc.Load("iDissertation.xml");
            root = doc.DocumentElement;
        }
-       private ObservableCollection<title> getiDissertationData(XmlNode nodetype)
-       {
-               ObservableCollection<title> result = new ObservableCollection<title>();
-               XmlNodeList datalist = nodetype.SelectSingleNode("Data").ChildNodes;
-               foreach (XmlNode xm in datalist)
-               {
-                   title cc = new title() { 
-                   title_name=xm.InnerText,
-                   context=((XmlElement)xm).GetAttribute("href"),
-                   date = ((XmlElement)xm).GetAttribute("datatime"),
-                   };
-                   result.Add(cc);
-               }
-               return result;
-       }
-       
-       public static ObservableCollection<title> getiDissertationArticle(string dirinfo)
+       public static ObservableCollection<title> getiDissertations(string dirinfo)
        {
            ObservableCollection<title> result = new ObservableCollection<title>();
           // XmlNode cc = nodetype.SelectSingleNode("article");
@@ -140,65 +138,94 @@ namespace WpfApplication1
           // string dirinfo=((XmlElement)(nodetype.SelectSingleNode("article"))
            return result;
        }
-
+       public static List<ReferencesInfo> initRefer(string path)
+       {
+           refercount = new List<int>();
+           int number = 0;
+           List<ReferencesInfo> refer = new List<ReferencesInfo>();
+           XmlDocument refer_doc = new XmlDocument();
+           refer_doc.Load(path+"\\idis.xml");
+           XmlNodeList refer_context = refer_doc.DocumentElement.SelectSingleNode("Refer").SelectNodes("refermeta");
+           foreach (XmlNode xm in refer_context)
+           { 
+               number++;
+               refercount.Add(number);
+               ReferencesInfo aa = new ReferencesInfo() { 
+                Context=xm.SelectSingleNode("p/refertext").InnerText
+               };
+               refer.Add(aa);  
+           }
+           return refer;
+       }
        private ObservableCollection<iDissertation> getidisser_data()  //初始化idis项
        {
            ObservableCollection<iDissertation> item = new ObservableCollection<iDissertation>();
-           //XmlNode root = doc.DocumentElement;
            XmlNodeList xmllist = root.ChildNodes;
            foreach (XmlNode xm in xmllist)
-           {
+           {   
+
                iDissertation node= new iDissertation()
                {
-                   
                    icon = Window4.icons[int.Parse(((XmlElement)xm).GetAttribute("type"))],
                    Name = (((XmlElement)xm).GetAttribute("name")),
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    href = (((XmlElement)xm).GetAttribute("href")),
-                   data = getiDissertationData(xm),
-                   article = getiDissertationArticle(((XmlElement)xm).GetAttribute("articleDir")),
-                   tools=getiDissertationArticle(((XmlElement)xm).GetAttribute("toolsDir")),
+                   data = getiDissertations(((XmlElement)xm).GetAttribute("href") + "\\data"),
+                   articlePath=((XmlElement)xm).GetAttribute("articleDir"),
+                   article = getiDissertations(((XmlElement)xm).GetAttribute("articleDir")),
+                   toolsPath=((XmlElement)xm).GetAttribute("toolsDir"),
+                   tools = getiDissertations(((XmlElement)xm).GetAttribute("toolsDir")),
+                   mediaPath=((XmlElement)xm).GetAttribute("mediaDir"),
+                   media = getiDissertations(((XmlElement)xm).GetAttribute("mediaDir")),
+                   Refer = initRefer(((XmlElement)xm).GetAttribute("href")),
                    outlines=null
-                   // parent=null
                };
+               node.Refernumber = refercount;
                iDissertation node_Article = new iDissertation()
                {
-
                    icon = @"images/address book.ico",
                    Name = "文献",
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    nodetype = iDissType.nonode,
                    parent=node,
-                   
-                   
+                   href = ((XmlElement)xm).GetAttribute("articleDir")
                    // parent=null
                };
                iDissertation node_Data= new iDissertation()
                {
-
                    icon = @"images/finder.ico",
                    Name = "数据",
-                   //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    nodetype = iDissType.nonode,
                    parent = node,
+                   href=((XmlElement)xm).GetAttribute("href") + "\\data",
                    data=node.data
-                   // parent=null
+                  
                };
                iDissertation node_tools = new iDissertation()
                {
-
                    icon = @"images/trash.ico",
                    Name = "工具",
+                   nodetype = iDissType.nonode,
+                   href = ((XmlElement)xm).GetAttribute("toolsDir"),
+                   parent = node,
+                   // parent=null
+               };
+               iDissertation node_media = new iDissertation()
+               {
+
+                   icon = @"images/music cd.ico",
+                   Name = "多媒体",
+                   href = ((XmlElement)xm).GetAttribute("mediaDir"),
                    //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                    nodetype = iDissType.nonode,
                    parent = node,
-                   
                    // parent=null
                };
                //node.Children.Add(node_tools);
                node.Children.Add(node_Article);
                node.Children.Add(node_Data);
                node.Children.Add(node_tools);
+               node.Children.Add(node_media);
                item.Add(node);
            }
            return item;
@@ -227,6 +254,8 @@ namespace WpfApplication1
           // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(newtitle.href + "\\picture");
            Directory.CreateDirectory(newtitle.href + "\\music");
+           Directory.CreateDirectory(newtitle.href + "\\data");
+           newtitle.Refernumber = new List<int>();
           // newtitle.article=
            iDissertation node_Article = new iDissertation()
            {
@@ -257,12 +286,23 @@ namespace WpfApplication1
                //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
                nodetype = iDissType.nonode,
                parent = newtitle,
-               data=newtitle.data
+               //data=newtitle.data
+               // parent=null
+           };
+           iDissertation node_media = new iDissertation()
+           {
+
+               icon = @"images/music cd.ico",
+               Name = "多媒体",
+               //nodetype=(iDissType)(int.Parse(((XmlElement)xm.SelectSingleNode("type")).InnerText)
+               nodetype = iDissType.nonode,
+               parent = newtitle,
                // parent=null
            };
            newtitle.Children.Add(node_Article);
            newtitle.Children.Add(node_Data);
            newtitle.Children.Add(node_tools);
+           newtitle.Children.Add(node_media);
            idisser_data.idisser.TreeViewItems4.Add(newtitle);
            copy_files.copyfile(System.Environment.CurrentDirectory.ToString() + "\\" + ((int)newtitle.nodetype).ToString(), newtitle.href);
            Savexml sa = new Savexml(newtitle.href);
@@ -286,47 +326,16 @@ namespace WpfApplication1
            root.AppendChild(xe1);
            doc.Save("iDissertation.xml");
            newtitle.article = null;
-           newtitle.tools = getiDissertationArticle("D:\\tools");
+           newtitle.tools = getiDissertations("D:\\tools");
        }
-       public void deletiDissertationData(string nodename,title deleteone)
+       
+       
+       public void AddiDissertationData_article(string path,title newnone)
        {
-           XmlNodeList xmlnodes = root.SelectNodes("item");
-           foreach (XmlNode xm in xmlnodes)
-           {
-               if (((XmlElement)xm).GetAttribute("name") == nodename)
-               {
-                   XmlNodeList xml = xm.SelectSingleNode("Data").ChildNodes;
-                   foreach (XmlNode xx in xml)
-                   {
-                       if (xx.InnerText == deleteone.title_name)
-                       {
-                           xm.SelectSingleNode("Data").RemoveChild(xx);
-                           break;
-                       }
-                   }
-                   break;
-               }
-               
+           iDissertation selectnode = MainWindow.tree5_sel;
+           string nodename = selectnode.parent.Name;
+           File.Copy(path, selectnode.href+"\\"+newnone.title_name, true);
            }
-           doc.Save("iDissertation.xml");
-       }
-       public void AddiDissertationData_article(string nodename,title newnone)
-       {
-           XmlNodeList xmlnodes = root.SelectNodes("item");
-           foreach (XmlNode xm in xmlnodes)
-           {
-               if (((XmlElement)xm).GetAttribute("name") == nodename)
-               {
-                   XmlElement xe = doc.CreateElement("dateitem");
-                   xe.SetAttribute("href",newnone.context);
-                   xe.SetAttribute("datatime", newnone.date);
-                   xe.InnerText=newnone.title_name;
-                   xm.SelectSingleNode("Data").AppendChild(xe);
-                   doc.Save("iDissertation.xml");
-               }
-               break;
-           }
-       }
        public void TreeViewItems4_delete(object deleteone)
        {
            iDissertation newtitle = deleteone as iDissertation;
@@ -357,15 +366,38 @@ namespace WpfApplication1
            }
            doc.Save("iDissertation.xml");
        }
-       public void TreeViewItems4_modify_article_dir(iDissertation newtitle, string newname)
+       public void TreeViewItems4_modify_dir(iDissertation newtitle, string newname)
        {
+          
            foreach (XmlNode xm in root.ChildNodes)
            {
-               if (((XmlElement)xm).GetAttribute("name") == newtitle.Name)
-                   ((XmlElement)xm).SetAttribute("articleDir", newname);
+               if (((XmlElement)xm).GetAttribute("name") == newtitle.parent.Name)
+               {
+                   switch (newtitle.Name)
+                   { 
+                       case "文献":
+                           ((XmlElement)xm).SetAttribute("articleDir", newname);
+                            newtitle.parent.articlePath = newname;
+                            newtitle.href = newname;
+                           break;
+                       case "工具":
+                           ((XmlElement)xm).SetAttribute("toolsDirDir", newname);
+                           newtitle.parent.toolsPath = newname;
+                           newtitle.href = newname;
+                           break;
+                       case "多媒体":
+                           ((XmlElement)xm).SetAttribute("mediaDir", newname);
+                           newtitle.parent.mediaPath = newname;
+                           newtitle.href = newname;
+                           break;
+                       default:
+                           break;
+                   }
+                  
+               }
            }
            doc.Save("iDissertation.xml");
-           newtitle.article = getiDissertationArticle(newname);
+          
        }
        private ObservableCollection<iDissertation> _TreeViewItems4 = null;
    }

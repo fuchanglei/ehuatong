@@ -42,8 +42,6 @@ namespace WpfApplication1
         }
         public delegate void myevent(object sender, Window1.textEventArgs e1,IconSelect e2);
         public event myevent creattitle;
-        
-       
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {

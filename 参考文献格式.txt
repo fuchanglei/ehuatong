@@ -1,0 +1,6 @@
+<refermeta>
+			<p style="margin-right:1cm;margin-bottom:8pt;margin-top:8pt;margin-left:1cm;line-height:125%;">
+			<refernumber><span style="font-size:10.5pt;font-family:Times New Roman;">[1]</span></refernumber>
+			<refertext><span style="font-family:Times New Roman;">毕然. 基于服务工程的网络数据挖掘和可视化系统研究[D].北京:北京邮电大学, 2009.</span></refertext>
+			</p>
+		</refermeta>

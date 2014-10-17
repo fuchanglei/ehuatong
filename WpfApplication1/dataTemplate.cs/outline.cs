@@ -21,7 +21,7 @@ namespace WpfApplication1
         Section2=3,
         empty=4,
     }
-
+    
  public class outline : INotifyPropertyChanged  //目录数据类型
     {
      private string _secid;  
@@ -112,6 +112,23 @@ namespace WpfApplication1
            get { return _context; }
            set { _context = value; } 
        }
+       private bool _isselected;
+       public bool isselected 
+       {
+           get
+           {
+               return this._isselected;
+           }
+           set
+           {
+               if (_isselected != value)
+               {
+                   _isselected = value;
+                   OnPropertyChanged("isselected");
+               }
+           }
+       }
+       public List<Picture_ChartInfo> CatalogFig { get; set; }
        public ObservableCollection<outline> children{ get; set; }
        public outline()
        {
@@ -389,8 +406,8 @@ namespace WpfApplication1
            XmlNode style= doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
-           xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)", id);
-           xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)", newname);
+           xe2.InnerXml = style.InnerXml;
+           //xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)", newname);
            root_contex.InsertAfter(xe2,b);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
@@ -550,7 +567,7 @@ namespace WpfApplication1
            root_contex = doc_contex.DocumentElement.SelectSingleNode("Papersection");
            string id = (int.Parse(select.secid) + 1).ToString();
            string href = id;
-           string newname_add = id + " " + newname;
+           string newname_add = newname;
            string nodename = "Chapter";
            string type = "Chapter";
            outline newone = new outline()
@@ -578,7 +595,7 @@ namespace WpfApplication1
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
            xe2.SetAttribute("papersectiontitle",newname);
-           //xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)",id);
+           xe2.InnerXml = style.InnerXml;
            //xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
           // xe2.SelectSingleNode("papersectionid").InnerText = id;
           // xe2.SelectSingleNode("papersectiontitle").InnerText = " " + newname;

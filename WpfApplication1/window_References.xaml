@@ -1,0 +1,103 @@
+﻿<Window x:Class="WpfApplication1.References"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:WpfApplication1.Refer"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="插入参考文献" Height="380" Width="655" ResizeMode="NoResize" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FFF4F4F4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+        <WrapPanel Name="wrap1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <CheckBox Margin="5,3,0,0" Name="check1" Content="插入已有的文献" Click="check1_Click"></CheckBox>
+                <TextBlock Margin="40,0,0,0" FontWeight="Bold">文献类型</TextBlock>
+                <ComboBox Width="60" Name="com1"  Margin="10,0,0,0" VerticalContentAlignment="Center" ItemsSource="{Binding Source={x:Static local:ReferencesInfo.Instance}, Path=ReferencesTypes}" SelectionChanged="com1_SelectionChanged">
+                </ComboBox>
+            <TextBlock Margin="210,0,0,0" FontWeight="Bold">语言(国家/地区)</TextBlock>
+            <ComboBox Name="lauageCombobox" Width="50" Margin="10,0,0,0">
+                    <ComboBoxItem>默认(中文)</ComboBoxItem>
+                    <ComboBoxItem>中国(中文)</ComboBoxItem>
+                    <ComboBoxItem>英语(美国)</ComboBoxItem>
+                </ComboBox>
+        </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Name="addref" Visibility="Visible" >
+                <GroupBox Grid.Row="1" Name="book" Header="文献信息" Height="300" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Width="635" Visibility="Collapsed">
+                    <StackPanel>
+                        <WrapPanel Margin="0,40,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">作者(Author)</TextBlock>
+                            <TextBox Height="23" Margin="3,0,0,0" Width="292" Name="book_author"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">标题(Title)</TextBlock>
+                            <TextBox Height="23" Margin="18,0,0,0" Width="292" Name="book_title"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">年份(Year)</TextBlock>
+                            <TextBox Height="23" Margin="17,0,0,0" Width="293" Name="book_Year"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="146,0,0,0">地址(Address)</TextBlock>
+                            <TextBox Height="23" Margin="0,0,0,0" Width="293" Name="book_address"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="121,0,0,0">出版商(publishers)</TextBlock>
+                            <TextBox Height="23" Margin="0,0,0,0" Width="293" Name="book_publishers"></TextBox>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Name="journal" Header="文献信息" Height="300" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Width="635" Visibility="Visible">
+                    <StackPanel>
+                        <WrapPanel Margin="0,40,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">作者(Author)</TextBlock>
+                            <TextBox Height="23" Margin="3,0,0,0" Width="292" Name="journal_author"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">标题(Title)</TextBlock>
+                            <TextBox Height="23" Margin="18,0,0,0" Width="292" Name="journal_title"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,10,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="152,0,0,0">期刊名(JTitle)</TextBlock>
+                            <TextBox Height="23" Margin="0,0,0,0" Width="292" Name="journal_qikantitle"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,5,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">年份(Year)</TextBlock>
+                            <TextBox Height="23" Margin="17,0,0,0" Width="293" Name="journal_Year"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,5,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="150,0,0,0">月份(Month)</TextBlock>
+                            <TextBox Height="23" Margin="4,0,0,0" Width="293" Name="journal_Month"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,5,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="140,0,0,0">页码范围(page)</TextBlock>
+                            <TextBox Height="23" Margin="0,0,0,0" Width="293" Name="journal_page"></TextBox>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+            <ListView Name="listref" VerticalAlignment="Stretch" Width="610" HorizontalAlignment="Center" Visibility="Collapsed" Background="White" Margin="12,0,12,6">
+                <ListView.ItemTemplate>
+                    <HierarchicalDataTemplate  DataType="{x:Type local:ReferenceList}">
+                        <StackPanel Orientation="Horizontal" Width="auto" Margin="-6,0,0,0">
+                            <TextBlock Width="auto" Text="{Binding num}" HorizontalAlignment="Left" Margin="6,2,0,0" Foreground="Black" FontWeight="Bold"></TextBlock>
+                            <TextBlock Width="auto" Text="{Binding context}" HorizontalAlignment="Left" Margin="8,2,0,0" Foreground="Black"></TextBlock>
+                            <StackPanel.ToolTip>
+                                <TextBlock Width="auto" Text="{Binding context}"></TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="2">
+            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Name="buttonOk" Width="70" Height="35" Margin="0,0,20,0" Click="buttonOk_Click">确定</Button>
+                <Button Name="buttonCancel" Width="70" Height="35" Click="buttonCancel_Click">取消</Button>
+            </WrapPanel>
+            
+        </Grid>
+    </Grid>
+</Window>

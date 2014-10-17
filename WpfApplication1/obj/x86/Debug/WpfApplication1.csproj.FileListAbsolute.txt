@@ -190,3 +190,7 @@ C:\Users\Administrator\Documents\GitHub\ehuatong\WpfApplication1\obj\x86\Debug\W
 C:\Users\Administrator\Documents\GitHub\ehuatong\WpfApplication1\obj\x86\Debug\WpfApplication1.csproj.GenerateResource.Cache
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\improtData.baml
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\improtData.g.cs
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\insertPic.baml
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\insertPic.g.cs
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\window_References.baml
+D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\window_References.g.cs
