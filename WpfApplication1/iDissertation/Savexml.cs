@@ -200,31 +200,32 @@ namespace WpfApplication1
         public void init_idis()  //创建的时候初始化idis
         {
             XmlNodeList styles = root_style.ChildNodes;
+            string context;
             foreach (XmlNode xm in styles)
             {
                 if (xm.Name.Contains("Chapter") == true || xm.Name.Contains("Section") == true)
                 {
                     if (xm.Name == "Chapter")
                     {
-                       // context = xm.InnerXml.Replace(")#@paper_id@#)","1");
-                       // context = context.Replace(")#@paper_title@#)","一级标题");
-                        (root_context.SelectSingleNode("Papersection/Chapter")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)","1");
+                        context = context.Replace(")#@paper_title@#)","一级标题");
+                        (root_context.SelectSingleNode("Papersection/Chapter")).InnerXml = context;
 
                        // doc_context.Save(@xml_context);
                        // xm.Name
                     }
                     else if (xm.Name == "Section1")
                     {
-                       // context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1");
-                        //context = context.Replace(")#@paper_title@#)", "二级标题");
-                        (root_context.SelectSingleNode("Papersection/Section1")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1");
+                        context = context.Replace(")#@paper_title@#)", "二级标题");
+                        (root_context.SelectSingleNode("Papersection/Section1")).InnerXml = context;
                        // doc_context.Save(@xml_context);
                     }
                     else
                     {
-                        //context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1.1");
-                        //context = context.Replace(")#@paper_title@#)", "三级标题");
-                        (root_context.SelectSingleNode("Papersection/Section2")).InnerXml = xm.InnerXml;
+                        context = xm.InnerXml.Replace(")#@paper_id@#)", "1.1.1");
+                        context = context.Replace(")#@paper_title@#)", "三级标题");
+                        (root_context.SelectSingleNode("Papersection/Section2")).InnerXml = context;
                        // doc_context.Save(@xml_context);
                     }
                 }

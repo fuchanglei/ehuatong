@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 using System.Xml;
-using System.Windows;
 //using Code.WebbrowserInteropr;
 
 namespace WpfApplication1
@@ -24,23 +23,7 @@ namespace WpfApplication1
 
  public class outline : INotifyPropertyChanged  //目录数据类型
     {
-     private string _secid;  
-     public string secid 
-       {
-           get
-           {
-               return _secid;
-           }
-           set
-           {
-               if (_secid != value)
-               {
-                   _secid = value;
-                   OnPropertyChanged("secid");
-               }
-           }
-       }
-     public  Visibility vislible { get; set; }
+       public string secid { get; set; }
        private string _Name;
        public string Name1 {
            get
@@ -52,7 +35,7 @@ namespace WpfApplication1
                if (_Name != value)
                {
                    _Name = value;
-                   OnPropertyChanged("Name1");
+                   OnPropertyChanged("Name");
                }
            }
        }
@@ -144,13 +127,12 @@ namespace WpfApplication1
            outline aa = new outline()
            {
                secid = ((XmlElement)parent).GetAttribute("id"),
-               Name1 = ((XmlElement)parent).GetAttribute("sec-title"),
+               Name1 = ((XmlElement)parent).GetAttribute("id")+" "+((XmlElement)parent).GetAttribute("sec-title"),
                nodename=parent.Name,
                toollip=((XmlElement)parent).GetAttribute("sec-title"),
                href =((XmlElement)parent).GetAttribute("href"),
                parent=parentnode,
-               type = (outlinetype)((int)parentnode.type+1),
-              vislible=Visibility.Visible
+               type = (outlinetype)((int)parentnode.type+1)
               // nodetype=parent.Name
                
                
@@ -226,8 +208,7 @@ namespace WpfApplication1
                        toollip = xm.InnerText,
                        type = (outlinetype)Enum.Parse(typeof(outlinetype), ((XmlElement)xm).GetAttribute("nodetype")),
                        href= ((XmlElement)xm).GetAttribute("href"),
-                       parent=null,
-                       vislible = Visibility.Collapsed
+                       parent=null
 
                    };
                    
@@ -240,13 +221,12 @@ namespace WpfApplication1
                    outline chapter = new outline()
                    {
                        secid = ((XmlElement)xm).GetAttribute("id"),
-                       Name1 = ((XmlElement)xm).GetAttribute("sec-title"),
+                       Name1 = ((XmlElement)xm).GetAttribute("id")+" "+((XmlElement)xm).GetAttribute("sec-title"),
                        nodename=xm.Name,
                        href = ((XmlElement)xm).GetAttribute("href"),
                        toollip=((XmlElement)xm).GetAttribute("sec-title"),
                        type=outlinetype.Chapter,
-                       parent=null,
-                       vislible = Visibility.Visible
+                       parent=null
                    };
                    cc.Add(chapter);
                    //Console.WriteLine(xm.Name);
@@ -255,6 +235,16 @@ namespace WpfApplication1
                    foreach (XmlNode xms in xml)
                    {
                        string title = ((XmlElement)xms).GetAttribute("sec-title");
+                       outline aa = new outline()
+                       {
+                           secid = ((XmlElement)xms).GetAttribute("id"),
+                           Name1 = ((XmlElement)xms).GetAttribute("sec-title"),
+                           nodename=xms.Name,
+                           href =((XmlElement)xms).GetAttribute("href"),
+                           toollip=title,
+                           type=outlinetype.Section1,
+                           parent=chapter
+                       };
                        chapter.children.Add(getnodes(xms,chapter));
                   }
                }
@@ -368,8 +358,7 @@ namespace WpfApplication1
                secid=id,
                nodename=nodename,
                href=href,
-               type = (outlinetype)((int)select.type + 1),
-                vislible=Visibility.Visible
+               type = (outlinetype)((int)select.type + 1)
            };
            select.children.Add(newone);
            XmlElement xe1 = doc_outline.CreateElement(nodename);//创建一个节点
@@ -389,11 +378,10 @@ namespace WpfApplication1
            root_contex.InsertAfter(xe2,b);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
-           //XmlElement xe3_title = doc_tem.CreateElement("papersectiontitle");
-          XmlElement xe3_text = doc_tem.CreateElement("papersectiontext");
+           XmlElement xe3_title = doc_tem.CreateElement("papersectiontitle");
+           XmlElement xe3_text = doc_tem.CreateElement("papersectiontext");
            xe3.SetAttribute("id", id);
-           xe3.SetAttribute("papersectiontext",newname);
-           //xe3.AppendChild(xe3_title);
+           xe3.AppendChild(xe3_title);
            xe3.AppendChild(xe3_text);
            root_tem.InsertAfter(xe3,c);
            doc_tem.Save(tem_xml);
@@ -431,7 +419,7 @@ namespace WpfApplication1
                    if (((XmlElement)xm).GetAttribute("id") == id)
                    {    
                        ((XmlElement)xm).SetAttribute("id",newid);
-                      // xm.SelectSingleNode("papersectionid").InnerText=newid;
+                       xm.SelectSingleNode("papersectionid").InnerText=newid;
                        doc_contex.Save(idis_xml);
                        break;
                    }
@@ -514,6 +502,8 @@ namespace WpfApplication1
            XmlNode b_next = b.NextSibling;
            string oldid = ((XmlElement)b).GetAttribute("id");
            delet_outline(b);
+           //root_outline.RemoveChild(b);
+          //delete_contex(b.Name, oldid);
            if (b_next != null && ((XmlElement)b_next).GetAttribute("nodetype")!="common")
            {
                upadatexml(b_next, oldid);
@@ -525,10 +515,9 @@ namespace WpfApplication1
            XmlNode a = getselectnode(select);
            string id = select.secid;
            XmlNode contex_node = get_contexnode(select.nodename,select.secid);
-          // contex_node = contex_node.SelectSingleNode("papersectiontitle");
-           //string context = contex_node.InnerText;
-           //((XmlElement)contex_node).InnerXml = contex_node.InnerXml.Replace(context," "+newname);
-           ((XmlElement)contex_node).SetAttribute("papersectiontitle",newname);
+           contex_node = contex_node.SelectSingleNode("papersectiontitle");
+           string context = contex_node.InnerText;
+           ((XmlElement)contex_node).InnerXml = contex_node.InnerXml.Replace(context," "+newname);
             doc_contex.Save(idis_xml);
            ((XmlElement)a).SetAttribute("sec-title",newname);
            doc_outline.Save(outline_xml);
@@ -555,8 +544,7 @@ namespace WpfApplication1
                secid = id,
                nodename = nodename,
                href = href,
-               type = outlinetype.Chapter,
-               vislible = Visibility.Visible
+               type = outlinetype.Chapter
            };
            XmlElement xe1 = doc_outline.CreateElement(nodename);//创建一个节点
            xe1.SetAttribute("id", id);//设置该节点id属性
@@ -571,27 +559,24 @@ namespace WpfApplication1
            XmlNode style = doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
-           xe2.SetAttribute("papersectiontitle",newname);
-           //xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)",id);
-           //xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
+           xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)",id);
+           xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
           // xe2.SelectSingleNode("papersectionid").InnerText = id;
           // xe2.SelectSingleNode("papersectiontitle").InnerText = " " + newname;
            //root_contex.InsertAfter(xe2);
            root_contex.AppendChild(xe2);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
-           xe3.SetAttribute("papersectiontitle",newname);
-          // XmlElement xe3_title = doc_tem.CreateElement("");
+           XmlElement xe3_title = doc_tem.CreateElement("papersectiontitle");
            XmlElement xe3_text = doc_tem.CreateElement("papersectiontext");
            xe3.SetAttribute("id", id);
-           //xe3.AppendChild(xe3_title);
+           xe3.AppendChild(xe3_title);
            xe3.AppendChild(xe3_text);
            root_tem.AppendChild(xe3);
            doc_tem.Save(tem_xml);
            return newone;
 
        }
-
        private ObservableCollection<outline> mTreeViewItems1 = null;
        
    }

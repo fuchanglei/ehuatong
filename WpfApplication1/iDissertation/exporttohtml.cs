@@ -5,7 +5,6 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Collections.ObjectModel;
-using WpfApplication1.htmlcss;
 
 namespace WpfApplication1
 {
@@ -65,8 +64,6 @@ namespace WpfApplication1
                    //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
-                   sw.WriteLine(htmlstyle.write_secid(outline.secid, outline.nodename));
-                   sw.WriteLine(htmlstyle.wreit_title(outline.Name1, outline.nodename));
                    sw.WriteLine(gethtmlcode(dd.getcontext()));
                    sw.WriteLine("</body>");
                    sw.WriteLine("</html>");
@@ -89,8 +86,6 @@ namespace WpfApplication1
                //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                sw.WriteLine("</head>");
                sw.WriteLine("<body>");
-               sw.WriteLine(htmlstyle.write_secid(outline.secid, outline.nodename));
-               sw.WriteLine(htmlstyle.wreit_title(outline.Name1, outline.nodename));
                sw.WriteLine(gethtmlcode(dd.getcontext()));
                sw.WriteLine("</body>");
                sw.WriteLine("</html>");

@@ -57,7 +57,6 @@ namespace WpfApplication1
         ObservableCollection<sidefiles> ss = new ObservableCollection<sidefiles>();
         private Tag_data _listView1Select;
         private ObservableCollection<Tag_data> _listviewItems = new ObservableCollection<Tag_data>();
-        
         ContextMenu c1;
         ContextMenu c2;
         ContextMenu c3;
@@ -81,7 +80,7 @@ namespace WpfApplication1
             c4 = cireateMenu4();
             c5 = cireateMenu5();
             c6 = createMenu6();  //新增的内容
-            //_listviewItems.Select
+          
             if(!Directory.Exists(item_Directory))
             {
                 Directory.CreateDirectory(item_Directory);
@@ -165,13 +164,14 @@ namespace WpfApplication1
             m2.Header = "新建新章节";
             m2.Click += add_charpt;
             MenuItem m3 = new MenuItem();
+            MenuItem m5 = new MenuItem();
+            m5.Header = "插入章节或小节";
+
             m3.Header = "修改提名";
             m3.Click += modify_outline;
             MenuItem m4 = new MenuItem();
             m4.Header = "删除";
             m4.Click += delet_outline;
-            MenuItem m5 = new MenuItem();
-            m5.Header = "插入章节或小节";
            // m4.Click += remove_item;
             con1.Items.Add(m1);
             con1.Items.Add(m2);
@@ -244,9 +244,9 @@ namespace WpfApplication1
 
         private void modify_outline(object sender, RoutedEventArgs e)  //修改outline提名
         {
-            //string[] ss = .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] ss = tree6_sel.Name1.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             Window5 w5 = new Window5();
-            w5.getname(tree6_sel.Name1, (int)tree6_sel.type);
+            w5.getname(ss[1],(int)tree6_sel.type);
             w5.getdata += new Window5.myevent(m_window5_outline_modify);
             w5.Show();
         }
@@ -260,15 +260,14 @@ namespace WpfApplication1
         }
         private void m_window5_outline_modify(object sender, Window5.textEventArgs e)  
         {
-            newname = e.textbox;
-            //tree6_sel = this.tree6.SelectedItem as outline;
-            tree6_sel.Name1 =newname;
+            newname =e.textbox.Replace(" ","");
+            //tree6_sel.Name1 = newname;
            // this.tree6.ItemsSource = outline_Data.Instance.TreeViewItems1;
            outline_Data modify_outline = new outline_Data();
             modify_outline.outline_node_modify(tree6_sel,newname);
            // select_tree5.outline_node_modify
             issave = false;
-           //this.tree6.ItemsSource = modify_outline.TreeViewItems1;
+           this.tree6.ItemsSource = modify_outline.TreeViewItems1;
             
         }
         private int getindex(outline cc)
@@ -646,12 +645,12 @@ namespace WpfApplication1
                isselect = false;
                issave = false;
                idisser_data delete = new idisser_data();
-               iDissertation dd = (iDissertation)tree5.SelectedItem;
-               idisser_data.idisser.TreeViewItems4.Remove(dd);
-               ThreadPool.QueueUserWorkItem(new WaitCallback(delete.TreeViewItems4_delete),dd);
-               //delete.TreeViewItems4_delete(dd);
+                iDissertation dd = (iDissertation)tree5.SelectedItem;
+               delete.TreeViewItems4_delete(dd);
                this.tree6.ItemsSource = null;
                isselect = true;
+               
+               //this.tree6.Style
                
             
         }
@@ -898,7 +897,6 @@ namespace WpfApplication1
                 {
                     tree6_sel = this.tree6.SelectedItem as outline;
                     //textBox2.Text = tree6_sel.Name1;
-                    this.secid_textbl.DataContext = tree6_sel;
                     textBox2.DataContext = tree6_sel;
                     if (tree6_sel.type != outlinetype.common)   //新增内容
                     {
@@ -1002,27 +1000,22 @@ namespace WpfApplication1
 
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            
+           
             if (isselect)
             {
                 tree5_sel = (iDissertation)tree5.SelectedItem;
                 if (tree5_sel.nodetype != iDissType.nonode)
                 {
-                    
-                    if (tree5_sel.outlines == null)
-                    {
-                        idd_href = tree5_sel.href;
-                        select_tree5 = new outline_Data(true);
-                        tree5_sel.outlines = select_tree5.TreeViewItems1;
-                    }
                     this.tree5.ContextMenu = this.iddmenu;
                     issave = false;
                     web_show = true;
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Visible;
                     this.listView_data_article.Visibility = Visibility.Hidden;
+                    idd_href = tree5_sel.href;
+                    select_tree5 = new outline_Data(true);
                     //outline_Data.Instance = select_tree5;
-                    this.tree6.ItemsSource = tree5_sel.outlines;
+                    this.tree6.ItemsSource = select_tree5.TreeViewItems1;
                 }
                 else
                 {     
