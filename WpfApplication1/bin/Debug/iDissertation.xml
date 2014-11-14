@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <iDissertation>
+<<<<<<< HEAD
   <item id="2" name="的是非得失" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\的是非得失" toolsDir="D:\tools">
+=======
+  <item id="3" name="访问而发" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\访问而发" toolsDir="D:\tools">
+>>>>>>> xml_change
     <Data />
   </item>
 </iDissertation>

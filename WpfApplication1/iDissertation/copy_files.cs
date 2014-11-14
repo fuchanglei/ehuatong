@@ -38,6 +38,7 @@ namespace WpfApplication1
        }
        public static ObservableCollection<title> Getfiles(string aiDirectoryInfo)
        {
+           // = new ObservableCollection<title>();
            ObservableCollection<title> items = new ObservableCollection<title>();
            if (aiDirectoryInfo[aiDirectoryInfo.Length - 1] != Path.DirectorySeparatorChar)
                aiDirectoryInfo += Path.DirectorySeparatorChar;
@@ -46,7 +47,13 @@ namespace WpfApplication1
            {
                if (Directory.Exists(filename))
                {
-                   items.Union(Getfiles(aiDirectoryInfo + Path.GetFileName(filename)));
+                ObservableCollection<title> cc= Getfiles(aiDirectoryInfo + Path.GetFileName(filename));
+                foreach (title i in cc)
+                {
+                    items.Add(i);
+                }
+                  // cc = new ObservableCollection<title>(ccc);
+                   
                }
                else
                { 
@@ -62,7 +69,19 @@ namespace WpfApplication1
            }
            return items;
        }
+<<<<<<< HEAD
        public static void DeleteDir(string aimPath)
+=======
+       public static void AddiDissertationMedia(string sourceDir, string desDir)
+       {
+           File.Copy(sourceDir, desDir, true);
+       }
+       public static void deletiDissertationData(object path)
+       {
+               File.Delete(path.ToString());
+       }
+       public static void DeleteDir(object aimPath1)
+>>>>>>> xml_change
        {
            try
            {

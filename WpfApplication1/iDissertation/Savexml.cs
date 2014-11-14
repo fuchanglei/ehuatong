@@ -52,19 +52,22 @@ namespace WpfApplication1
             doc_context.Load(xml_context);
             root_context = doc_context.DocumentElement;
         }
-        public void savexml(bool a)  //保存更改后的信息
+        public void savexml(object a)  //保存更改后的信息
         {
-            if (a == false)
+            if ((bool)a == false)
             {
-                XmlNodeList ccwww = root_context.SelectNodes(type);
-                foreach (XmlNode ccd in ccwww)
+                
                 {
-                    if (((XmlElement)ccd).GetAttribute("id") == _id)
+                    XmlNodeList ccwww = root_context.SelectNodes(type);
+                    foreach (XmlNode ccd in ccwww)
                     {
-                        ccd.InnerXml = context_html.Replace("&", "&amp;");
-                        doc_context.Save(@xml_context);
-                        //ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
-                        break;
+                        if (((XmlElement)ccd).GetAttribute("id") == _id)
+                        {
+                            ccd.InnerXml = context_html.Replace("&", "&amp;");
+                            doc_context.Save(@xml_context);
+                            //ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
+                            break;
+                        }
                     }
                 }
             }
@@ -77,7 +80,7 @@ namespace WpfApplication1
                     {
                         ccd.InnerXml = context_html.Replace("&", "&amp;");
                         doc_context.Save(@xml_context);
-                        ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
+                        ThreadPool.QueueUserWorkItem(status => savetem(ccd));
                         break;
                     }
                 }

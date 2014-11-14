@@ -20,7 +20,7 @@ namespace WpfApplication1
         Section2=3,
         empty=4,
     }
-
+    
  public class outline : INotifyPropertyChanged  //目录数据类型
     {
        public string secid { get; set; }
@@ -89,10 +89,34 @@ namespace WpfApplication1
                }
            }
        }
+       private string _context;
+       public string context
+       {
+           get { return _context; }
+           set { _context = value; } 
+       }
+       private bool _isselected;
+       public bool isselected 
+       {
+           get
+           {
+               return this._isselected;
+           }
+           set
+           {
+               if (_isselected != value)
+               {
+                   _isselected = value;
+                   OnPropertyChanged("isselected");
+               }
+           }
+       }
+       public List<Picture_ChartInfo> CatalogFig { get; set; }
        public ObservableCollection<outline> children{ get; set; }
        public outline()
        {
            children = new ObservableCollection<outline>();
+           
        }
      
         #region INotifyPropertyChanged Members
@@ -134,8 +158,6 @@ namespace WpfApplication1
                parent=parentnode,
                type = (outlinetype)((int)parentnode.type+1)
               // nodetype=parent.Name
-               
-               
            };
            
            if (parent.HasChildNodes == false)
@@ -211,7 +233,6 @@ namespace WpfApplication1
                        parent=null
 
                    };
-                   
                    cc.Add(newnoe);
                    // Console.WriteLine(xm.Name);
                   // Console.WriteLine(xm.InnerText);
@@ -278,6 +299,7 @@ namespace WpfApplication1
                    break;
                }
            }
+           
            return select;
        }
        private XmlNode get_contexnode(string name, string id)  //获取与内容节点
@@ -346,7 +368,7 @@ namespace WpfApplication1
            XmlNode c = getlasnode_tem(select);
            XmlNodeList xmllist = a.ChildNodes;
            string id=select.secid+"."+(xmllist.Count+1).ToString();
-           string newname_add =id+" "+newname;
+           string newname_add =newname;
            string href = select.href + "/" + id;
            string type = ((outlinetype)((int)select.type + 1)).ToString();
            string nodename = type;
@@ -373,8 +395,8 @@ namespace WpfApplication1
            XmlNode style= doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
-           xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)", id);
-           xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)", newname);
+           xe2.InnerXml = style.InnerXml;
+           //xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)", newname);
            root_contex.InsertAfter(xe2,b);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
@@ -465,6 +487,7 @@ namespace WpfApplication1
            string id = ((XmlElement)select).GetAttribute("id");
            ((XmlElement)select).SetAttribute("id", oldid);
            updateid_context(select.Name, id, oldid);
+           
            foreach (XmlNode ccs in select.ChildNodes)
            {
                updateid(ccs, id, oldid);
@@ -533,7 +556,7 @@ namespace WpfApplication1
            root_contex = doc_contex.DocumentElement.SelectSingleNode("Papersection");
            string id = (int.Parse(select.secid) + 1).ToString();
            string href = id;
-           string newname_add = id + " " + newname;
+           string newname_add = newname;
            string nodename = "Chapter";
            string type = "Chapter";
            outline newone = new outline()
@@ -559,8 +582,14 @@ namespace WpfApplication1
            XmlNode style = doc.DocumentElement.SelectSingleNode(type);
            XmlElement xe2 = doc_contex.CreateElement(nodename);
            xe2.SetAttribute("id",id);
+<<<<<<< HEAD
            xe2.InnerXml = style.InnerXml.Replace(")#@paper_id@#)",id);
            xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
+=======
+           xe2.SetAttribute("papersectiontitle",newname);
+           xe2.InnerXml = style.InnerXml;
+           //xe2.InnerXml = xe2.InnerXml.Replace(")#@paper_title@#)",newname);
+>>>>>>> xml_change
           // xe2.SelectSingleNode("papersectionid").InnerText = id;
           // xe2.SelectSingleNode("papersectiontitle").InnerText = " " + newname;
            //root_contex.InsertAfter(xe2);

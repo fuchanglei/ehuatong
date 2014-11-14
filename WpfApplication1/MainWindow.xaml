@@ -4,7 +4,7 @@
          xmlns:local="clr-namespace:WpfApplication1"
         xmlns:WinFormHost="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"         
         xmlns:WinFormControls="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <HierarchicalDataTemplate x:Key="treeViewTemplate1" DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal">
@@ -171,8 +171,6 @@
                                     </MenuItem>
                                     <MenuItem Header="修改" Click="modify_idd_title">
                                     </MenuItem>
-                                    <MenuItem Header="配置文献目录" Click="MenuItem_confArticleDire">
-                                    </MenuItem>
                                     <MenuItem Header="导出" Click="saveashtml">
                                     </MenuItem>
                                 </ContextMenu>
@@ -202,7 +200,7 @@
                             <StackPanel Orientation="Vertical" Width="300" Margin="-6,0,0,0">
                                 <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
                                 <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding context}"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
+                                <TextBlock Width="auto" Text="{Binding context}" VerticalAlignment="Stretch"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
                                 <Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
                             </StackPanel>
                         </HierarchicalDataTemplate>
@@ -222,20 +220,24 @@
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="True"></Setter>
-                            <Setter Property="IsSelected" Value="False"></Setter>
+                            <Setter Property="IsSelected" Value="{Binding isselected}"></Setter>
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
-                <ListView  BorderThickness="0" x:Name="listView_data_article" Background="#FFF8FFE5" Visibility="Hidden" MouseDoubleClick="listView_data_article_MouseDoubleClick">
+                <ListView  BorderThickness="0" x:Name="listView_data_article"  Background="#FFF8FFE5" Visibility="Hidden" HorizontalAlignment="Stretch"  MouseDoubleClick="listView_data_article_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <HierarchicalDataTemplate  DataType="{x:Type local:title}">
-                            <StackPanel Orientation="Vertical" Width="300" Margin="-6,0,0,0">
+                            <StackPanel Orientation="Vertical" Width="auto" Margin="-6,0,0,0">
                                 <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
                                 <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding context}"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
+                                <TextBlock Width="auto" Text="{Binding context}"   HorizontalAlignment="Left" Margin="8,0,0,0" MaxHeight="Infinity" MaxWidth="Infinity"></TextBlock>
                                 <!--<Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
                                 -->
+                                <StackPanel.ToolTip>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding context}" TextWrapping="Wrap" MaxWidth="400" ></TextBlock>
+                                </StackPanel.ToolTip>
                             </StackPanel>
+                            
                         </HierarchicalDataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.ContextMenu>

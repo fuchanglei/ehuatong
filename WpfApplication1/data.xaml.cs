@@ -105,13 +105,10 @@ namespace WpfApplication1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (title abc in MainWindow.tree5_sel.data)
-            {
-                this.comboBox1.Items.Add(abc.context);
-            }
-          //  this.comboBox1.Items.Add("F:\\3.Echarts\\3.Echarts\\data.xlsx");
-           // this.comboBox1.Items.Add("D:\\3.Echarts\\3.Echarts\\data.xlsx1111");
-            //this.comboBox1.Text = "F:\\3.Echarts\\3.Echarts\\data.xlsx";
+            this.comboBox1.ItemsSource = MainWindow.tree5_sel.data;
+            this.comboBox1.SelectedValuePath = "context";
+            this.comboBox1.DisplayMemberPath = "title_name";
+           
         }
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)

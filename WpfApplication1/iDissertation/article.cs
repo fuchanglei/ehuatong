@@ -8,11 +8,10 @@ namespace WpfApplication1
 {
    public class article
     {
-      // private  string xml_context;
+      //private  string xml_context;
        private  string xml_style;
        private string cc;   //存储节点的类别，根据类别进行显示
-       private string _id;
-            
+       private string _id;    
        private  XmlNode root_style;
        public article(string id,string name)
        {
@@ -28,11 +27,15 @@ namespace WpfApplication1
        {
            cc = name;
            xml_style = MainWindow.idd_href + "/idis.xml";
-           XmlDocument doc_style = new XmlDocument();
-           doc_style.Load(xml_style);
+          XmlDocument doc_style = new XmlDocument();
+          doc_style.Load(xml_style);
            root_style = doc_style.DocumentElement;
 
        }
+       public article(XmlNode root)
+       {
+           root_style = root;
+        }
        public string getcontext()
        {
            string html = string.Empty;      
@@ -45,6 +48,27 @@ namespace WpfApplication1
                    break;
                }
            }
+           return html;
+       }
+       public string getcontext(string _id,string nodename)
+       {
+           string html = string.Empty;
+           XmlNodeList ccwww = root_style.SelectNodes(nodename);
+           foreach (XmlNode ccd in ccwww)
+           {
+               if (((XmlElement)ccd).GetAttribute("id") == _id)
+               {
+                   html = ccd.InnerXml.ToString();
+                   break;
+               }
+           }
+           return html;
+       }
+       public string getcontext_comm(string nodename)
+       {
+           string html = string.Empty;
+           XmlNode ccwww = root_style.SelectSingleNode(nodename);
+           html = ccwww.InnerXml.ToString();
            return html;
        }
        public string getcontext_comm()

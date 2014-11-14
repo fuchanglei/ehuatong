@@ -10,11 +10,15 @@ none
 false
 DEBUG;TRACE
 D:\程序\ehuatong\ehuatong\WpfApplication1\App.xaml
-10616345295
+121344653524
 6-2140573906
+<<<<<<< HEAD
 351451221219
+=======
+42-1326331799
+>>>>>>> xml_change
 171167504350
-data.xaml;improtData.xaml;MainWindow.xaml;Window1.xaml;Window2.xaml;Window3.xaml;Window4.xaml;Window5.xaml;Window6.xaml;Window_Tag.xaml;
+data.xaml;improtData.xaml;insertPic.xaml;MainWindow.xaml;window_References.xaml;Window1.xaml;Window2.xaml;Window3.xaml;Window4.xaml;Window5.xaml;Window6.xaml;Window_Tag.xaml;
 
 False
 
