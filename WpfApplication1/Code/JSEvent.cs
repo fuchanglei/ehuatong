@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.ObjectModel;
 using WpfApplication1.htmlcss;
+using WpfApplication1.Code;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
@@ -54,17 +55,66 @@ namespace WpfApplication1
             }
         }
         public void MN_opensection(string secid)
-        {
-            string[] cc = secid.Split('.');
-            ArrayList dd=new ArrayList();
+        {  
             
-            for(int i = 0; i < cc.Length; i++)
+            switch(secid)
             {
-                dd.Add(cc[i]);
-            }
-            dd[0] = int.Parse(cc[0]) + 8;
-            getsecid(MainWindow.tree5_sel.outlines, dd).isselected = true;
+                case "CoverC":
+                    MainWindow.tree5_sel.outlines[0].isselected = true;
+                    break;
+                case "Cover":
+                    MainWindow.tree5_sel.outlines[1].isselected = true;
+                    break;
+                case "Statement":
+                    MainWindow.tree5_sel.outlines[2].isselected = true;
+                    break;
+                case "Abstract":
+                    MainWindow.tree5_sel.outlines[3].isselected = true;
+                    break;
+                case "AbstractE":
+                    MainWindow.tree5_sel.outlines[4].isselected = true;
+                    break;
+                case "CatalogOutline":
+                    MainWindow.tree5_sel.outlines[5].isselected = true;
+                    break;
+                case "CatalogChart":
+                    MainWindow.tree5_sel.outlines[6].isselected = true;
+                    break;
+                case "CatalogFig":
+                    MainWindow.tree5_sel.outlines[7].isselected = true;
+                    break;
+                case "Thanks":
+                    int c0 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c0-1].isselected = true;
+                    break;
+                case "Appendix":
+                    int c1 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c1-2].isselected = true;
+                    break;
+                case "Refer":
+                    int c2 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c2-3].isselected = true;
+                    break;
+                default:
+                    string[] cc = secid.Split('.');
+                    ArrayList dd=new ArrayList();
+                    for(int i = 0; i < cc.Length; i++)
+                    {
+                     dd.Add(cc[i]);
+                    }
+                    dd[0] = int.Parse(cc[0]) + 8;
+                    getsecid(MainWindow.tree5_sel.outlines, dd).isselected = true;
+                    break;
+        }
            // MainWindow.js_getdata();
+        }
+        public void MN_showreferinfo(string index)
+        {
+            int i = int.Parse(index);
+            string contex = MainWindow.tree5_sel.Refer[MainWindow.tree5_sel.Refernumber[i-1]-1].Context;
+            ShowRefer ss = new ShowRefer(contex);
+            ss.ShowDialog();
+
         }
         public void Mn_OpenimageInwindow(string path)
         {
@@ -86,7 +136,19 @@ namespace WpfApplication1
            pt.updatetitle(pt.chapter);
            MainWindow.invoker.InvokeScript("setContent", MainWindow.tree6_sel.context);
         }
-
+        
+        public void MN_onmouseover_Changer(string i)
+        {
+            switch (i)
+            { 
+                case "0":
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Hand);
+                    break;
+                case "1":
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    break;
+            }
+        }
            // invoker = new WebbrowserScriptInvoker();
         
         public string MN_InsertChart()
@@ -167,6 +229,22 @@ namespace WpfApplication1
             aa.ShowDialog();
             return aa.result;
 
+        }
+        public String MN_InsertTableGrid()
+        {
+            string filePath = "";
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = MainWindow.tree5_sel.mediaPath;
+            openFileDialog1.Multiselect = false;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog1.FileName;
+                ExceltoJason ej = new ExceltoJason(MainWindow.tree5_sel.href + "/dialogs/Datagrid/" + Path.GetFileNameWithoutExtension(filePath) + ".json", filePath);
+                ej.WriteJason();
+                return ej.resultss;
+            }
+            else
+                return "NO";
         }
         public void MN_updaterefer_id()
         {

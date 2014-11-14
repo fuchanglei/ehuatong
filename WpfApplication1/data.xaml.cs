@@ -34,13 +34,12 @@ namespace WpfApplication1
         public data()
         {
             InitializeComponent();
-
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {  
                 string rows = string.Empty;
                 string title = string.Empty;
                 string danwei = string.Empty;
@@ -52,7 +51,6 @@ namespace WpfApplication1
                 // StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
                 if (this.title_textbox.Text == "")
                 {
-                    //sw.WriteLine(" ");
                     title = " ";
                 }
                 else
@@ -116,7 +114,7 @@ namespace WpfApplication1
             //MessageBox.Show(comboBox1.SelectedItem.ToString());
             if (excel_name != comboBox1.SelectedItem.ToString())
             {
-                open_excel = new openexcel(comboBox1.SelectedItem.ToString());
+                open_excel = new openexcel(comboBox1.SelectedValue.ToString());
                 this.comboBox2.ItemsSource = open_excel.getGetOleDbSchemaTable();
                // this.comboBox2.Text = comboBox2.Items[0].ToString();
             }

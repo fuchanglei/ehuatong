@@ -73,6 +73,9 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\fuchanglei\Desktop\Json60r6\Bin\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -98,7 +101,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Code\deleteoutline.cs" />
+    <Compile Include="Code\ChapterOp.cs" />
+    <Compile Include="Code\ExceltoJason.cs" />
     <Compile Include="data.xaml.cs">
       <DependentUpon>data.xaml</DependentUpon>
     </Compile>
@@ -124,6 +128,9 @@
       <DependentUpon>insertPic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Refer\References.cs" />
+    <Compile Include="ShowRefer.xaml.cs">
+      <DependentUpon>ShowRefer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="window_References.xaml.cs">
       <DependentUpon>window_References.xaml</DependentUpon>
     </Compile>
@@ -180,6 +187,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ShowRefer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="window_References.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

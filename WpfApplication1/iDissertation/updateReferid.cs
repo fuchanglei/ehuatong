@@ -76,6 +76,7 @@ namespace WpfApplication1
                           referStartNumber++;
                           MainWindow.tree5_sel.Refernumber.Add(cd[int.Parse(((XmlElement)cc).GetAttribute("id"))-1]);
                           ((XmlElement)cc).SetAttribute("id",referStartNumber.ToString());
+                          ((XmlElement)cc).SetAttribute("onClick", "window.external.MN_showreferinfo(\"" + referStartNumber.ToString() + "\")");
                           cc.InnerText = "[" + referStartNumber + "]";
                       }
                   }
