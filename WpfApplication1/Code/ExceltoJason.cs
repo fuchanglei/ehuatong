@@ -35,16 +35,17 @@ namespace WpfApplication1.Code
            int Rcount = mytable.Rows.Count;
            for (int c = 0; c < Ccount; c++)
            {
-               Header_name.Add(mytable.Rows[0][c].ToString());
-               resultss = resultss +","+ mytable.Rows[0][c].ToString();
+               Header_name.Add(mytable.Columns[c].ColumnName);
+               resultss = resultss + "," + mytable.Columns[c].ColumnName;
            }
            resultss = resultss.Substring(1);
+           mytable.Rows.Remove(mytable.Rows[0]);
            string result = JsonConvert.SerializeObject(mytable, new DataTableConverter());
  
            sw.Write(result);
            sw.Close();
            sw.Dispose();
-           resultss = "#filename=" +Path.GetFileName(_Filename) +"&HeaderName="+resultss;
+           resultss ="#filename=" +Path.GetFileName(_Filename) +"&HeaderName="+resultss;
        }
     }
 }

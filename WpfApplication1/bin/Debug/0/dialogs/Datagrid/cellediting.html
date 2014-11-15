@@ -11,34 +11,29 @@
 </head>
 <body>
 <script type="text/javascript">
+//window.parent.top.UE.getEditor('editor').fireEvent('show');
 function getParam(name) {
         return location.href.match(new RegExp('[?#&]' + name + '=([^?#&]+)', 'i')) ? RegExp.$1 : '';
     }
 	var filename = getParam('filename');
-	var getdata= getParam('data');
+	var getdata= getParam('HeaderName');
 	var HeadName=getdata.split(",");
 	function WriteHead(HeadName)
 	{
 	 for(var name in HeadName)
 		{
-		 document.write("<th data-options=\"field:'"+name+"',width:80,title:'"+name+"',editor:'text'\"></th>");
+		 document.write("<th data-options=\"field:'"+HeadName[name]+"',width:80,title:'"+HeadName[name]+"',editor:'text'\"></th>");
 
 		}
 	}
 </script>
-	<h2>Cell Editing in DataGrid</h2>
-	<p>Click a cell to start editing.</p>
-	<div style="margin:20px 0;"></div>
-	
-	<table id="dg" class="easyui-datagrid" title="Cell Editing in DataGrid" style="width:700px;height:300px;"
+	<table id="dg" class="easyui-datagrid" title="Cell Editing in DataGrid" style="width:500px;height:300px;"
 			data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,collapsible:true,
-				url: 'datagrid_data1.json',
 				method:'get',
 				onClickCell: onClickCell,
-				multiSort:true,remoteSort:false,
-				url:'datagrid_data1.json'
+				multiSort:true,remoteSort:false
 			">
 		<thead>
 			<tr>
@@ -50,7 +45,7 @@ function getParam(name) {
 	</table>
 
 	<script type="text/javascript">
-	$('#dg').datagrid({url:'datagrid_data1.json'});
+	$('#dg').datagrid({url:filename});
 		$.extend($.fn.datagrid.methods, {
 			editCell: function(jq,param){
 				return jq.each(function(){

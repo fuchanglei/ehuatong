@@ -45,7 +45,7 @@ namespace WpfApplication1
                 string danwei = string.Empty;
                 foreach (int c in selectUid)
                 {
-                    rows = rows + "," + mytable.Rows[0][c].ToString();
+                    rows = rows + "," + mytable.Columns[c].ColumnName;
                 }
                 rows = rows.Substring(1);
                 // StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
@@ -69,7 +69,7 @@ namespace WpfApplication1
                 }
                 result = "#title=" + title + "&datatype=" + datatype + "&rows=" + rows + "&danwei=" + danwei + "&data=";
 
-                for (int i = 1; i < mytable.Rows.Count; i++)
+                for (int i = 0; i < mytable.Rows.Count; i++)
                 {
                     string data = string.Empty;
                     foreach (int c in selectUid)
@@ -173,12 +173,12 @@ namespace WpfApplication1
                 dataTem row_title = new dataTem()
                 {
                     id = c,
-                    rowname = mytable.Rows[0][c].ToString(),
+                    rowname = mytable.Columns[c].ColumnName,
                     ischeck = false
                 };
                 Row_data.Add(row_title);
             }
-            for (int i = 1; i < mytable.Rows.Count; i++)
+            for (int i = 0; i < mytable.Rows.Count; i++)
             {
                 datatype = datatype + "," + mytable.Rows[i][0].ToString();
 

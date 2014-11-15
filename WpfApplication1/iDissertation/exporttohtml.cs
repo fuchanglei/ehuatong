@@ -24,6 +24,25 @@ namespace WpfApplication1
            doc_contex.Load(xml_context);
            root_contex = doc_contex.DocumentElement;
        }
+       private static string updateEVENT_WPFTOJS(string htmls)
+       {
+           XmlDocument doc = new XmlDocument();
+           doc.LoadXml(htmls);
+           XmlNode p = null;
+           XmlNode ccwww = doc.DocumentElement;
+           string html = string.Empty;
+           string htmlfilename = string.Empty;
+           XmlNodeList ccs = ccwww.SelectNodes("CatalogSection");
+           foreach (XmlNode i in ccs)
+           {
+               p = i.SelectSingleNode("p");
+               htmlfilename = ((XmlElement)p).GetAttribute("html_filePath");
+               ((XmlElement)p).SetAttribute("onclick","javascript:change(\""+htmlfilename+"\")");
+           }
+          
+           html = doc.InnerXml.ToString(); 
+           return html;
+       }
        private static void createhtml(outline outline,string dir)
        {
            FileStream fi;
@@ -41,10 +60,18 @@ namespace WpfApplication1
                    sw.WriteLine("<html lang=\"en\">");
                    sw.WriteLine("<head>");
                    sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
+                   sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
                    //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
-                   sw.WriteLine(dd.getcontext_comm());
+                   if (outline.nodename == "CatalogOutline")
+                   {
+                       sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext_comm())));
+                   }
+                   else
+                   {
+                       sw.WriteLine(gethtmlcode(dd.getcontext_comm()));
+                   }
                    sw.WriteLine("</body>");
                    sw.WriteLine("</html>");
                    sw.Flush();
@@ -56,13 +83,13 @@ namespace WpfApplication1
                else
                {
                    article dd = new article(outline.secid, "Papersection/" +outline.nodename);
-                   fi = new FileStream(dir + "\\" +outline.nodename + outline.secid + ".html", FileMode.Create);
+                   fi = new FileStream(dir + "\\" +"section" + outline.secid + ".html", FileMode.Create);
                    sw = new StreamWriter(fi, Encoding.Default);
                    sw.WriteLine("<!doctype html>");
                    sw.WriteLine("<html lang=\"en\">");
                    sw.WriteLine("<head>");
                    sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
-                   //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
+                   sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
                    sw.WriteLine(htmlstyle.write_secid(outline.secid, outline.nodename));
@@ -74,18 +101,18 @@ namespace WpfApplication1
                    sw.Close();
                    fi.Close();
                    create_leftnode(outline,sws);
-
                }
            }
            else
            {
                article dd = new article(outline.secid, "Papersection/" + outline.nodename);
-               fi = new FileStream(dir + "\\" + outline.nodename + outline.secid + ".html", FileMode.Create);
+               fi = new FileStream(dir + "\\" + "section" + outline.secid + ".html", FileMode.Create);
                sw = new StreamWriter(fi, Encoding.Default);
                sw.WriteLine("<!doctype html>");
                sw.WriteLine("<html lang=\"en\">");
                sw.WriteLine("<head>");
                sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
+               sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
                //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                sw.WriteLine("</head>");
                sw.WriteLine("<body>");
@@ -121,7 +148,7 @@ namespace WpfApplication1
                }
                else
                {
-                   htmlname = outl.nodename + outl.secid + ".html";
+                   htmlname = "section" + outl.secid + ".html";
                }
                //XmlElement xe1 = doc_outline.CreateElement("li");
                //xe1.SetAttribute("id", "section" + outl.secid);
@@ -143,44 +170,10 @@ namespace WpfApplication1
                // xe2.InnerText=
               string html_result = html+"<a href=\"../center/" + htmlname + "\">" + outl.Name1 + "</a></li>";
               sw.WriteLine(html_result);
-
-        
-
-               
-
-
-          
-           
        }
        public static void export(iDissertation tree5_sel,string todire,ObservableCollection<outline> outlines)
        {  
            string title_c,title_e;
-           /* FileStream fi = new FileStream(MainWindow.idd_href + "\\" + tree5_sel.Name + ".html", FileMode.Create);
-            StreamWriter sw = new StreamWriter(fi, Encoding.Default);
-            sw.WriteLine("<!doctype html>");
-            sw.WriteLine("<html lang=\"en\">");
-            sw.WriteLine("<head>");
-            sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
-            sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
-            sw.WriteLine("</head>");
-            sw.WriteLine("<body>");
-            XmlDocument ep = new XmlDocument();
-            ep.Load(xml_style);
-            XmlNodeList context = ep.DocumentElement.ChildNodes;
-            foreach (XmlNode xm in context)
-            {
-               
-                string html = ((XmlElement)xm).InnerXml.ToString().Replace(tree5_sel.href+"\\", "");
-                html = html.Replace("dialogs\\video\\","");
-                html = html.Replace("&amp;","&");
-                sw.WriteLine(html);
-            }
-            sw.WriteLine("</body>");
-            sw.WriteLine("</html>");
-            sw.Flush();
-            sw.Close();
-            * left_Paper.htm
-            fi.Close();*/
            XmlDocument doc = new XmlDocument();
            doc.Load(xml_webcon);
            XmlNode coverC = doc.DocumentElement.SelectSingleNode("cover").SelectSingleNode("ArticleTitle");
@@ -189,6 +182,7 @@ namespace WpfApplication1
            title_e = coverC.InnerText;
            File.Copy("index_Paper.htm", todire + "\\index_Paper.htm", true);
            Directory.CreateDirectory(todire + "\\center");
+           File.Copy("change.js", todire + "\\center\\change.js", true);
            copy_files.copyfile(tree5_sel.href, todire + "\\center");
            // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(todire + "\\head");

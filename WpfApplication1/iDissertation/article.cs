@@ -27,8 +27,8 @@ namespace WpfApplication1
        {
            cc = name;
            xml_style = MainWindow.idd_href + "/idis.xml";
-          XmlDocument doc_style = new XmlDocument();
-          doc_style.Load(xml_style);
+           XmlDocument doc_style = new XmlDocument();
+           doc_style.Load(xml_style);
            root_style = doc_style.DocumentElement;
 
        }

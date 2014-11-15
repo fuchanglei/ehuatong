@@ -137,18 +137,6 @@ namespace WpfApplication1
            MainWindow.invoker.InvokeScript("setContent", MainWindow.tree6_sel.context);
         }
         
-        public void MN_onmouseover_Changer(string i)
-        {
-            switch (i)
-            { 
-                case "0":
-                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Hand);
-                    break;
-                case "1":
-                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    break;
-            }
-        }
            // invoker = new WebbrowserScriptInvoker();
         
         public string MN_InsertChart()
@@ -241,7 +229,7 @@ namespace WpfApplication1
                 filePath = openFileDialog1.FileName;
                 ExceltoJason ej = new ExceltoJason(MainWindow.tree5_sel.href + "/dialogs/Datagrid/" + Path.GetFileNameWithoutExtension(filePath) + ".json", filePath);
                 ej.WriteJason();
-                return ej.resultss;
+                return MainWindow.tree5_sel.href+@"\dialogs\Datagrid\cellediting.html"+ej.resultss;
             }
             else
                 return "NO";

@@ -67,27 +67,29 @@ namespace WpfApplication1.htmlcss
            return w;
        }
        public static string get_CatalogOutlineString(outline cc)
-       { 
+       {
+           string html_filePath = "section"+cc.secid+".html";
            string htmlcode=string.Empty;
            switch (cc.type)
                { 
                    case outlinetype.Section1:
-                       htmlcode = "<CatalogSection Level=\"2\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' onmouseover='this.style.cursor=\"hand\"' style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:10.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;'>" +
+                       htmlcode = "<CatalogSection Level=\"2\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\""+html_filePath+"\" style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:10.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
                                "" + PadRightEx(cc.secid + "  " + cc.Name1, 60, '.') + "" +
                                "</p></CatalogSection>";
                    break;
                case outlinetype.Section2:
-                   htmlcode = "<CatalogSection Level=\"3\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' onmouseover='this.style.cursor=\"hand\"' style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;'>" +
+                   htmlcode = "<CatalogSection Level=\"3\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\"" + html_filePath + "\" style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
                            ""+PadRightEx(cc.secid+"  "+cc.Name1, 62,'.')+""+ 
                            "</p></CatalogSection>";
                    break;
                case outlinetype.Chapter:
-                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' onmouseover='this.style.cursor=\"hand\"' style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体'>" +
+                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\"" + html_filePath + "\" style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
                            ""+PadRightEx(cc.secid+"  "+cc.Name1,64,'.')+""+ 
                            "</p></CatalogSection>";
                    break;
                default:
-                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.nodename + "\")' onmouseover='this.style.cursor=\"hand\"' style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;'>" +
+                   html_filePath =cc.nodename+".html";
+                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.nodename + "\")' html_filePath=\"" + html_filePath + "\" style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
                            ""+PadRightEx(cc.Name1, 64,'.')+""+ 
                            "</p></CatalogSection>";
                    break;

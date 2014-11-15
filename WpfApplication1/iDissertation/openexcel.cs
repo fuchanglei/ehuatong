@@ -18,7 +18,7 @@ namespace WpfApplication1
        public openexcel(string excel_filename)
        {
            _excel_filename = excel_filename;
-           objConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source=" + _excel_filename + ";" + "Extended Properties=\"Excel 12.0 Xml;HDR=NO;IMEX=1\"");
+           objConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source=" + _excel_filename + ";" + "Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\"");
        }
        public List<string> getGetOleDbSchemaTable()
        {
