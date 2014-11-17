@@ -1,3 +1,3 @@
 function change(htmlfile){
-      window.parent.x_main.location=htmlfile;
+      window.parent.main.location=htmlfile;
    }

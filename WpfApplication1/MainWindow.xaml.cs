@@ -1234,6 +1234,11 @@ namespace WpfApplication1
             if (tree6_sel != null&&tree6_sel.type!=outlinetype.empty)
                 savexml((object)tree6_sel);
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
      
     }
 }

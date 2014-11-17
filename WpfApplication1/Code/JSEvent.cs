@@ -114,6 +114,8 @@ namespace WpfApplication1
             string contex = MainWindow.tree5_sel.Refer[MainWindow.tree5_sel.Refernumber[i-1]-1].Context;
             ShowRefer ss = new ShowRefer(contex);
             ss.ShowDialog();
+           // MainWindow.invoker.InvokeScript("show");
+            
 
         }
         public void Mn_OpenimageInwindow(string path)
@@ -136,9 +138,6 @@ namespace WpfApplication1
            pt.updatetitle(pt.chapter);
            MainWindow.invoker.InvokeScript("setContent", MainWindow.tree6_sel.context);
         }
-        
-           // invoker = new WebbrowserScriptInvoker();
-        
         public string MN_InsertChart()
         {
             data cc = new data();

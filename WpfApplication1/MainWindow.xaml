@@ -4,7 +4,7 @@
          xmlns:local="clr-namespace:WpfApplication1"
         xmlns:WinFormHost="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"         
         xmlns:WinFormControls="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
     <Window.Resources>
         <HierarchicalDataTemplate x:Key="treeViewTemplate1" DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal">

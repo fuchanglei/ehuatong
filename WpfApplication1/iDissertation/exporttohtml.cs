@@ -24,7 +24,7 @@ namespace WpfApplication1
            doc_contex.Load(xml_context);
            root_contex = doc_contex.DocumentElement;
        }
-       private static string updateEVENT_WPFTOJS(string htmls)
+       private static string updateEVENT_WPFTOJS(string htmls,int type)
        {
            XmlDocument doc = new XmlDocument();
            doc.LoadXml(htmls);
@@ -32,24 +32,54 @@ namespace WpfApplication1
            XmlNode ccwww = doc.DocumentElement;
            string html = string.Empty;
            string htmlfilename = string.Empty;
-           XmlNodeList ccs = ccwww.SelectNodes("CatalogSection");
-           foreach (XmlNode i in ccs)
+           if (type == 1)
            {
-               p = i.SelectSingleNode("p");
-               htmlfilename = ((XmlElement)p).GetAttribute("html_filePath");
-               ((XmlElement)p).SetAttribute("onclick","javascript:change(\""+htmlfilename+"\")");
+               XmlNodeList ccs = ccwww.SelectNodes("CatalogSection");
+               foreach (XmlNode i in ccs)
+               {
+                   p = i.SelectSingleNode("p");
+                   htmlfilename = ((XmlElement)p).GetAttribute("html_filePath");
+                   ((XmlElement)p).SetAttribute("onclick", "javascript:change(\"" + htmlfilename + "\")");
+               }
+
+              
            }
-          
-           html = doc.InnerXml.ToString(); 
+           if (type == 4)
+           {
+               XmlNode xml = doc.DocumentElement.FirstChild;
+               do
+               {
+                   XmlNodeList sups = xml.SelectNodes("span/span/sup");
+                   if (sups.Count > 0)
+                   { 
+                       string refer_context=string.Empty;
+                       int refer_id = 0;
+                       foreach (XmlNode cc in sups)
+                       {
+                           if (cc.Attributes.Count != 0)
+                           {
+                               refer_id = Int16.Parse(((XmlElement)cc).GetAttribute("id"));
+                               refer_context=MainWindow.tree5_sel.Refer[MainWindow.tree5_sel.Refernumber[refer_id- 1] - 1].Context;
+                               ((XmlElement)cc).SetAttribute("onmouseover", "javascript:Tip('" + refer_context + "')");
+                               ((XmlElement)cc).SetAttribute("onmouseout", "javascript:UnTip()");
+                               ((XmlElement)cc).RemoveAttribute("onClick");
+                           }
+                       }
+                   }
+                   xml = xml.NextSibling;
+               } while (xml != null);
+           }
+           html = doc.InnerXml.ToString();
            return html;
        }
+
        private static void createhtml(outline outline,string dir)
        {
            FileStream fi;
            StreamWriter sw;
            if (outline.children.Count==0)
            {
-               
+               #region outlinetype.common
                if (outline.type==outlinetype.common)
                {
                    article dd = new article(outline.nodename);
@@ -61,12 +91,13 @@ namespace WpfApplication1
                    sw.WriteLine("<head>");
                    sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
                    sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
+                   sw.WriteLine("<script type=\"text/javascript\" src=\"wz_tooltip.js\"></script>");
                    //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
                    if (outline.nodename == "CatalogOutline")
                    {
-                       sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext_comm())));
+                       sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext_comm(),1)));
                    }
                    else
                    {
@@ -77,9 +108,10 @@ namespace WpfApplication1
                    sw.Flush();
                    sw.Close();
                    fi.Close();
-                   //create_leftnode(root_body,doc,outl.href,outl.Name1,outl.type);
                    create_leftnode(outline,sws);
                }
+               #endregion
+               #region outlinetype.section
                else
                {
                    article dd = new article(outline.secid, "Papersection/" +outline.nodename);
@@ -89,12 +121,13 @@ namespace WpfApplication1
                    sw.WriteLine("<html lang=\"en\">");
                    sw.WriteLine("<head>");
                    sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
-                   sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
+                   //sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
+                   sw.WriteLine("<script type=\"text/javascript\" src=\"wz_tooltip.js\"></script>");
                    sw.WriteLine(htmlstyle.write_secid(outline.secid, outline.nodename));
                    sw.WriteLine(htmlstyle.wreit_title(outline.Name1, outline.nodename));
-                   sw.WriteLine(gethtmlcode(dd.getcontext()));
+                   sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext(), 4)));
                    sw.WriteLine("</body>");
                    sw.WriteLine("</html>");
                    sw.Flush();
@@ -102,6 +135,7 @@ namespace WpfApplication1
                    fi.Close();
                    create_leftnode(outline,sws);
                }
+               #endregion
            }
            else
            {
@@ -112,13 +146,13 @@ namespace WpfApplication1
                sw.WriteLine("<html lang=\"en\">");
                sw.WriteLine("<head>");
                sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
-               sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
-               //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
+              // sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
                sw.WriteLine("</head>");
                sw.WriteLine("<body>");
+               sw.WriteLine("<script type=\"text/javascript\" src=\"wz_tooltip.js\"></script>");
                sw.WriteLine(htmlstyle.write_secid(outline.secid, outline.nodename));
                sw.WriteLine(htmlstyle.wreit_title(outline.Name1, outline.nodename));
-               sw.WriteLine(gethtmlcode(dd.getcontext()));
+               sw.WriteLine(gethtmlcode(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext(),4))));
                sw.WriteLine("</body>");
                sw.WriteLine("</html>");
                sw.Flush();
@@ -183,6 +217,7 @@ namespace WpfApplication1
            File.Copy("index_Paper.htm", todire + "\\index_Paper.htm", true);
            Directory.CreateDirectory(todire + "\\center");
            File.Copy("change.js", todire + "\\center\\change.js", true);
+           File.Copy("wz_tooltip.js", todire + "\\center\\wz_tooltip.js", true);
            copy_files.copyfile(tree5_sel.href, todire + "\\center");
            // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(todire + "\\head");
