@@ -229,6 +229,7 @@ namespace WpfApplication1
               
           }
           ThreadPool.QueueUserWorkItem(new WaitCallback(savexml), (object)tree6_sel);
+
       }   //生成目录
         private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
         {

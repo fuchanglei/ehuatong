@@ -123,7 +123,7 @@ namespace WpfApplication1
        private static XmlNode root;
        static idisser_data()
        {
-          doc.Load("iDissertation.xml");
+           doc.Load(Environment.CurrentDirectory+"\\"+"iDissertation.xml");
            root = doc.DocumentElement;
        }
        public static ObservableCollection<title> getiDissertations(string dirinfo)

@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Text.RegularExpressions;
 using WpfApplication1;
 
 namespace WpfApplication1.Code
@@ -26,6 +27,19 @@ namespace WpfApplication1.Code
            sw = new StreamWriter(fi, Encoding.UTF8);
            resultss = string.Empty;
        }
+       public ExceltoJason(string filename)
+       {
+           _Filename = filename;
+           fi = new FileStream(_Filename, FileMode.Create);
+           sw = new StreamWriter(fi, Encoding.UTF8);
+       }
+       public void WriteJason(string context)
+       {
+          sw.Write(context);
+          sw.Flush();
+          sw.Close();
+          fi.Close();
+       }
        public void WriteJason()
        {
            resultss = "";
@@ -41,11 +55,11 @@ namespace WpfApplication1.Code
            resultss = resultss.Substring(1);
            mytable.Rows.Remove(mytable.Rows[0]);
            string result = JsonConvert.SerializeObject(mytable, new DataTableConverter());
- 
            sw.Write(result);
            sw.Close();
            sw.Dispose();
            resultss ="#filename=" +Path.GetFileName(_Filename) +"&HeaderName="+resultss;
        }
+
     }
 }

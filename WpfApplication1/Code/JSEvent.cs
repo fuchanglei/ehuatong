@@ -8,6 +8,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using WpfApplication1.htmlcss;
 using WpfApplication1.Code;
 namespace WpfApplication1
@@ -53,6 +54,12 @@ namespace WpfApplication1
                 return getsecid(dd[i-1].children,secid);
                 
             }
+        }
+        public void MN_SaveGridData(string jsoncontext)
+        {
+            string[] json = Regex.Split(jsoncontext,"#@#file_name#@#", RegexOptions.IgnoreCase);
+            ExceltoJason cc = new ExceltoJason(MainWindow.tree5_sel.href + "\\dialogs\\Datagrid\\"+json[1]);
+            cc.WriteJason(json[0]);
         }
         public void MN_opensection(string secid)
         {  
