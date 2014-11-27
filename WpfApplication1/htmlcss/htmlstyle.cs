@@ -114,7 +114,7 @@ namespace WpfApplication1.htmlcss
        public static string wirite_Catalog(string type)
        {   
 
-           string htmlcode="<div style='width:700px;margin-left:150px;'>";
+           string htmlcode="<div style='width:600px;margin-left:140px;'>";
            IEnumerable<List<Picture_ChartInfo>> result = null;
            switch(type)
            {
@@ -146,7 +146,7 @@ namespace WpfApplication1.htmlcss
                {   
                    foreach (Picture_ChartInfo i in cc)
                    {
-                       htmlcode = htmlcode + "<p style=\"cursor:pointer;\"><a image_path='"+i.path+"' ondblclick='window.external.Mn_OpenimageInwindow(\"" + i.path + "\")'>" + PadRightEx(i.title, 80, '-') + "</a><button onclick='window.external.MN_opensection(\"" + i.ownsection + "\")'>" + i.ownsection + "</button></p>";
+                       htmlcode = htmlcode + "<p style=\"cursor:pointer;\"><a image_path='"+i.path+"' ondblclick='window.external.Mn_OpenimageInwindow(\"" + i.path + "\")'>" + PadRightEx(i.title, 65, '-') + "</a><button onclick='window.external.MN_opensection(\"" + i.ownsection + "\")'>" + i.ownsection + "</button></p>";
                        //Console.WriteLine(i.title.PadRight(20, '-'));
                    }
                }

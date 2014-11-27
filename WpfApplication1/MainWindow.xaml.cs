@@ -31,7 +31,6 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-       // static AutoResetEvent autoEvent=new AutoResetEvent(true);
         public static string item_Directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\iDissertation";  //当前idss文件所在目录
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
         public outline_Data select_tree5;
@@ -100,9 +99,7 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
-            
         }
-       
       private ContextMenu cireateMenu1()
        {
             ContextMenu con1 = new ContextMenu();

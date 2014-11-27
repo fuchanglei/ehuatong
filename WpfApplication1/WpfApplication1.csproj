@@ -73,8 +73,14 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Users\fuchanglei\Desktop\Json60r6\Bin\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -102,7 +108,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Code\ChapterOp.cs" />
+    <Compile Include="Code\DataTableToExcel.cs" />
+    <Compile Include="Code\DataTableToTxt.cs" />
     <Compile Include="Code\ExceltoJason.cs" />
+    <Compile Include="Code\ExportDataTable.cs" />
+    <Compile Include="Code\exportToPPT.cs" />
+    <Compile Include="Code\JsonToDatable.cs" />
     <Compile Include="data.xaml.cs">
       <DependentUpon>data.xaml</DependentUpon>
     </Compile>

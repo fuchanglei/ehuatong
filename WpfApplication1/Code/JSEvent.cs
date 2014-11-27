@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using WpfApplication1.htmlcss;
 using WpfApplication1.Code;
+using System.Data;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
@@ -60,6 +61,42 @@ namespace WpfApplication1
             string[] json = Regex.Split(jsoncontext,"#@#file_name#@#", RegexOptions.IgnoreCase);
             ExceltoJason cc = new ExceltoJason(MainWindow.tree5_sel.href + "\\dialogs\\Datagrid\\"+json[1]);
             cc.WriteJason(json[0]);
+        }
+        public void MN_DataGridSAves(string jsonText)
+        {
+          string[] json = Regex.Split(jsonText, "#@#file_type#@#", RegexOptions.IgnoreCase);
+          DataTable mytable=JsonToDatable.JsonToDataTable(json[0]);
+          SaveFileDialog sfd = new SaveFileDialog();
+          sfd.RestoreDirectory = true;
+          sfd.FilterIndex = 1;
+          sfd.Title = "保存文件";
+          if (json[1] == "txt")
+          {
+              sfd.Filter = "文本文件（*.txt）|*.txt";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable txt = new DataTableToTxt();
+                  txt.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
+          else if (json[1] == "csv")
+          {
+              sfd.Filter = "csv文件（*.csv）|*.csv";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable txt = new DataTableToTxt();
+                  txt.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
+          else if (json[1] == "xls")
+          {
+              sfd.Filter = "EXCEl文件--2003（*.xls）|*.xls|EXCEL文件--2007(*.xlsx)|*.xlsx";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable excel = new DataTableToExcel();
+                  excel.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
         }
         public void MN_opensection(string secid)
         {  

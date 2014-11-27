@@ -22,7 +22,7 @@ function getParam(name) {
 	{
 	 for(var name in HeadName)
 		{
-		 document.write("<th data-options=\"field:'"+HeadName[name]+"',width:80,title:'"+HeadName[name]+"',editor:'text'\"></th>");
+		 document.write("<th data-options=\"field:'"+HeadName[name]+"',width:80,title:'"+HeadName[name]+"',sortable:true,editor:'text'\"></th>");
 
 		}
 	}
@@ -45,11 +45,21 @@ function getParam(name) {
 			</tr>
 		</thead>
 	</table>
-<div id="tb" style="height:auto">
+<div id="tb" style="padding:5px;height:auto">
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加一行</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除一行</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">撤销修改</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a>
+		&nbsp;&nbsp;&nbsp;
+		<select id="savesfilestype" class="easyui-combobox" panelHeight="auto" style="width:100px">
+				<option value="ppt">PPT</option>
+				<option value="csv">CSV</option>
+				<option value="txt">TXT</option>
+				<option value="xls">EXCEL</option>
+			</select>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="saveas()">转存</a>
+</body>
+</div>
 	<script type="text/javascript">
 	$('#dg').datagrid({url:filename});
 		$.extend($.fn.datagrid.methods, {
@@ -175,7 +185,19 @@ function getParam(name) {
 			$('#dg').datagrid('rejectChanges');
 			editIndex = undefined;
 		}	
+		function saveas()
+		{
+			var cc=$('#savesfilestype').combobox('getValue');
+			if(endEditing())
+			{
+			$('#dg').datagrid('acceptChanges');
+			if(mydata==null)
+				{
+				mydata=$('#dg').datagrid('getData');
+				}
+				window.parent.top.UE.getEditor('editor').fireEvent('saveas',JSON.stringify(mydata)+"#@#file_type#@#"+cc);
+				
+			}
+		}
 	</script>
-	</script>
-</body>
 </html>
