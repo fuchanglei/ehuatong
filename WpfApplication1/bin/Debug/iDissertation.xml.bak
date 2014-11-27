@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <iDissertation>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <item id="2" name="的费宋德福" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\的费宋德福" articleDir="C:\Users\fuchanglei\Desktop\随易通相关文档\问题收集" toolsDir="d:tools">
 =======
   <item id="4" name="为二位但是" type="0" href="C:\Users\fuchanglei\Documents\iDissertation\为二位但是" toolsDir="D:\tools">
+>>>>>>> xml_change
+=======
+  <item id="3" name="分为是非得失" type="0" href="C:\Users\Administrator.Win8-1409031709\Documents\iDissertation\分为是非得失" toolsDir="e:\tools">
+    <Data />
+  </item>
+  <item id="4" name="werewr" type="0" href="C:\Users\Administrator.Win8-1409031709\Documents\iDissertation\werewr" toolsDir="e:\tools">
+    <Data />
+  </item>
+  <item id="4" name="额外认为二位" type="0" href="C:\Users\Administrator.Win8-1409031709\Documents\iDissertation\额外认为二位" toolsDir="D:\tools">
 >>>>>>> xml_change
     <Data />
   </item>

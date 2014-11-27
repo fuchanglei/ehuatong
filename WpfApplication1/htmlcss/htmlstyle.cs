@@ -34,36 +34,96 @@ namespace WpfApplication1.htmlcss
            string w = str.PadRight(totalByteCount - dcount*2, c);
            return w;
        }
+       public static string get_CatalogOutlineString(outline cc)
+       {
+           string html_filePath = "section"+cc.secid+".html";
+           string htmlcode=string.Empty;
+           switch (cc.type)
+               { 
+                   case outlinetype.Section1:
+                       htmlcode = "<CatalogSection Level=\"2\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\""+html_filePath+"\" style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:10.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
+                               "" + PadRightEx(cc.secid + "  " + cc.Name1, 70, '.') + "" +
+                               "</p></CatalogSection>";
+                   break;
+               case outlinetype.Section2:
+                   htmlcode = "<CatalogSection Level=\"3\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\"" + html_filePath + "\" style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
+                           ""+PadRightEx(cc.secid+"  "+cc.Name1, 72,'.')+""+ 
+                           "</p></CatalogSection>";
+                   break;
+               case outlinetype.Chapter:
+                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.secid + "\")' html_filePath=\"" + html_filePath + "\" style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
+                           ""+PadRightEx(cc.secid+"  "+cc.Name1,74,'.')+""+ 
+                           "</p></CatalogSection>";
+                   break;
+               default:
+                   html_filePath =cc.nodename+".html";
+                   htmlcode = "<CatalogSection Level=\"1\"><p onclick='window.external.MN_opensection(\"" + cc.nodename + "\")' html_filePath=\"" + html_filePath + "\" style='margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:20.0pt;font-size:12.0pt;font-family:宋体;cursor:pointer;'>" +
+                           ""+PadRightEx(cc.Name1, 74,'.')+""+ 
+                           "</p></CatalogSection>";
+                   break;
+               }
+           return htmlcode;
+       }
+       public static string write_CatalogOutline(outline ch)
+       {
+           string htmlcode = string.Empty;
+           htmlcode = get_CatalogOutlineString(ch);
+           if (ch.children.Count == 0)
+               return htmlcode;
+           else
+           {
+               foreach (outline ca in ch.children)
+               {
+                    htmlcode=htmlcode+write_CatalogOutline(ca);
+               }
+               return htmlcode;
+           }
+       }
        public static string wirite_Catalog(string type)
        {   
 
-           string htmlcode=string.Empty;
+           string htmlcode="<div style='width:600px;margin-left:140px;'>";
            IEnumerable<List<Picture_ChartInfo>> result = null;
            switch(type)
            {
                case "1":
            //MainWindow.tree5_sel.outlines.Select
-           result = MainWindow.tree5_sel.outlines.Select((x)=>x.CatalogFig);
+                   //MainWindow.tree5_sel.outlines.Select
+                   htmlcode += "<CatalogName>"+
+                  "<h1 align=\"center\" style=\"margin-top:3.9pt;margin-right:0cm;margin-bottom:3.9pt;margin-left:0cm;text-align:center;text-indent:.05pt\">" +
+	              "<span style=\"font-family:黑体;\">目录</span></h1>"+
+	              "</CatalogName>";
+                   foreach(outline ch in MainWindow.tree5_sel.outlines)
+                   {
+                       htmlcode += write_CatalogOutline(ch);
+                   }
            break;
                case "2":
            result = MainWindow.tree5_sel.outlines.Select((x) => x.CatalogFig);
+
            break;
                case "3":
-                    result = MainWindow.tree5_sel.outlines.Select((x)=>x.CatalogFig);
-           break;
-       }
-           foreach (List<Picture_ChartInfo> cc in result)
-           {
-               if (cc != null)
+           htmlcode += "<CatalogName>" +
+           "<h1 align=\"center\" style=\"margin-top:3.9pt;margin-right:0cm;margin-bottom:3.9pt;margin-left:0cm;text-align:center;text-indent:.05pt\">" +
+           "<span style='font-family:黑体;'>图目录</span></h1>" +
+           "</CatalogName><catalogsection>";
+                   result = MainWindow.tree5_sel.outlines.Select((x)=>x.CatalogFig);
+                   foreach (List<Picture_ChartInfo> cc in result)
                {
+               if (cc != null)
+               {   
                    foreach (Picture_ChartInfo i in cc)
                    {
-                       htmlcode = htmlcode + "<p><a ondblclick='window.external.Mn_OpenimageInwindow(\"" + i.path + "\")'>" + PadRightEx(i.title, 20, '-') + "</a><button onclick='window.external.MN_opensection(\"" + i.ownsection + "\")'>" + i.ownsection + "</button></a></p>";
+                       htmlcode = htmlcode + "<p style=\"cursor:pointer;\"><a image_path='"+i.path+"' ondblclick='window.external.Mn_OpenimageInwindow(\"" + i.path + "\")'>" + PadRightEx(i.title, 65, '-') + "</a><button onclick='window.external.MN_opensection(\"" + i.ownsection + "\")'>" + i.ownsection + "</button></p>";
                        //Console.WriteLine(i.title.PadRight(20, '-'));
                    }
                }
            }
-           return htmlcode;
+                   htmlcode += "</catalogsection>";
+           break;
+       }
+           MainWindow.tree6_sel.context = htmlcode + "</div>";
+           return htmlcode+"</div>";
        
        }
        public static string writeRefer(List<int> number,List<ReferencesInfo> context)

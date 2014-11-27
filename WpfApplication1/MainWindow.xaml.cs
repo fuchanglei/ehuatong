@@ -31,7 +31,6 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-       // static AutoResetEvent autoEvent=new AutoResetEvent(true);
         public static string item_Directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\iDissertation";  //当前idss文件所在目录
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
         public outline_Data select_tree5;
@@ -51,8 +50,10 @@ namespace WpfApplication1
         //public bool issave;
         private int last;
         private bool isselect = true;
+        private bool isedit = false;
         private string filename;
         private bool issave;
+        private bool istree6select;
         private bool isdelete=true;
         public bool web_show = false;
        // private XmlDocument doc_style;
@@ -105,9 +106,7 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
-            
         }
-       
       private ContextMenu cireateMenu1()
        {
             ContextMenu con1 = new ContextMenu();
@@ -237,8 +236,10 @@ namespace WpfApplication1
           if (invoker.WaitWebPageLoad() == true)
           {
               invoker.InvokeScript("setContent", htmlstyle.wirite_Catalog(tree6_sel.secid));
+              
           }
-          
+          ThreadPool.QueueUserWorkItem(new WaitCallback(savexml), (object)tree6_sel);
+
       }   //生成目录
         private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
         {
@@ -429,6 +430,7 @@ namespace WpfApplication1
         private void OnQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
             mAdornerLayer.Update();
+           
         }
         private void savexml(object sell)
         {
@@ -827,7 +829,6 @@ namespace WpfApplication1
             count++;
             label4.Content = count.ToString() + "条";
         }
-
         private void MenuItem_tag(object sender, RoutedEventArgs e) //增加标签
         {
             //Form1 f1 = new Form1();
@@ -956,34 +957,41 @@ namespace WpfApplication1
         }
         private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {   
-            XmlDocument doc_style = new XmlDocument();
-            doc_style.Load(MainWindow.idd_href + "/idis.xml");
-            XmlNode  root_style = doc_style.DocumentElement;
-            if (issave == true)
+            idd_href = tree5_sel.href;
+            if (istree6select)
             {
-                //TreeViewItem ccccc = new TreeViewItem();
                 
-                if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+                if (issave == true && isedit == true)
                 {
-                    savecontext = invoker.InvokeScript("getContent").ToString();
-                    tree6_sel.context = savecontext;
-                    if (tree6_sel.type != outlinetype.common)
+                    //TreeViewItem ccccc = new TreeViewItem();
+                    tree6_sel.isselected = false;
+                    if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
                     {
-                        pictureandchart_title pt = new pictureandchart_title(tree6_sel);
-                        pt.updatetitle(pt.chapter);
-                        updateReferid update = new updateReferid();
-                        update.updateReferidS(tree5_sel.outlines);
+                        savecontext = invoker.InvokeScript("getContent").ToString();
+                        tree6_sel.context = savecontext;
+                        if (tree6_sel.type != outlinetype.common)
+                        {
+                            pictureandchart_title pt = new pictureandchart_title(tree6_sel);
+                            pt.updatetitle(pt.chapter);
+                            updateReferid update = new updateReferid();
+                            update.updateReferidS(tree5_sel.outlines);
+                        }
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(savexml), (object)tree6_sel);
+
                     }
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(savexml),(object)tree6_sel);
-                    
                 }
-            }
                 try
                 {
+
+                    (this.tree6.SelectedItem as outline).isselected = true;
                     tree6_sel = this.tree6.SelectedItem as outline;
+<<<<<<< HEAD
 <<<<<<< HEAD
                     //textBox2.Text = tree6_sel.Name1;
 =======
+=======
+                    //tree6_sel.isselected = true;
+>>>>>>> xml_change
                     this.secid_textbl.DataContext = tree6_sel;
 >>>>>>> xml_change
                     textBox2.DataContext = tree6_sel;
@@ -991,7 +999,7 @@ namespace WpfApplication1
                     {
                         this.tree6.ContextMenu = c5;
                         switch (tree6_sel.type)
-                        { 
+                        {
                             case outlinetype.Section1:
                                 (c5.Items[0] as MenuItem).IsEnabled = true;
                                 (c5.Items[1] as MenuItem).IsEnabled = false;
@@ -1004,42 +1012,50 @@ namespace WpfApplication1
                                 (c5.Items[0] as MenuItem).IsEnabled = true;
                                 (c5.Items[1] as MenuItem).IsEnabled = true;
                                 break;
-                                
+
                         }
-                        
+
                     }
                     else
                         this.tree6.ContextMenu = null;
-                    if (tree6_sel.Name1.Contains("封面") == true || tree6_sel.nodename == "Statement")
+                    if (tree6_sel.type == outlinetype.empty)
                     {
 
                         string cd = idd_href + "/" + tree6_sel.href;
                         this.webBrowser1.Navigate(@cd);
                         web_show = true;
+                        this.button1.Content = "编辑";
                     }
                     else   //如果不是封面
                     {
                         if (web_show)
                         {
                             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+                            invoker.WaitWebPageLoad();
                             web_show = false;
+                            isedit = false;
                         }
                         if (tree6_sel.type != outlinetype.common)  //如果是章节
                         {
-                            if (tree6_sel.context == null)
+                            if (tree6_sel.context == null || tree6_sel.context == "")
                             {
+                                XmlDocument doc_style = new XmlDocument();
+                                doc_style.Load(idd_href + "/idis.xml");
+                                XmlNode root_style = doc_style.DocumentElement;
                                 article dd = new article(root_style);
-                                if (invoker.WaitWebPageLoad() == true)
-                                {
-
-                                    invoker.InvokeScript("setContent", dd.getcontext(tree6_sel.secid, "Papersection/" + tree6_sel.nodename).Replace("&amp;", "&"));
-                                }
+                                
+                                    tree6_sel.context = dd.getcontext(tree6_sel.secid, "Papersection/" + tree6_sel.nodename).Replace("&amp;", "&");
+                                    //invoker.InvokeScript("setContent", tree6_sel.context);
+                                    //invoker.InvokeScript("setContent", );
+                                
+                                
+                               
                             }
-                            else
-                                if (invoker.WaitWebPageLoad() == true)
-                                {
-                                    invoker.InvokeScript("setContent", tree6_sel.context);
-                                }
+                       
+                        
+                            invoker.InvokeScript("setContent", tree6_sel.context);
+                        
+
                         }
                         else    //如果不是章节
                         {
@@ -1047,26 +1063,26 @@ namespace WpfApplication1
                             {
                                 this.tree6.ContextMenu = c7;
                             }
-                            if(tree6_sel.nodename=="Refer")
+                            if (tree6_sel.nodename == "Refer")
                             {
-                                tree6_sel.context = htmlstyle.writeRefer(tree5_sel.Refernumber,tree5_sel.Refer);
+                                tree6_sel.context = htmlstyle.writeRefer(tree5_sel.Refernumber, tree5_sel.Refer);
                             }
                             if (tree6_sel.context == null)
                             {
+                                XmlDocument doc_style = new XmlDocument();
+                                doc_style.Load(idd_href + "/idis.xml");
+                                XmlNode root_style = doc_style.DocumentElement;
                                 article dd = new article(root_style);
-
-                                if (invoker.WaitWebPageLoad() == true)
-                                {
-                                    //thread_savexml.Join();
-                                    invoker.InvokeScript("setContent", dd.getcontext_comm(tree6_sel.nodename).Replace("&amp;", "&"));
-                                }
+                                tree6_sel.context = dd.getcontext(tree6_sel.secid, tree6_sel.nodename).Replace("&amp;", "&");
+                                    // invoker.InvokeScript("setContent", dd.getcontext_comm(tree6_sel.nodename).Replace("&amp;", "&"));
+                                  
+                                
                             }
-                            else
-                                if (invoker.WaitWebPageLoad() == true)
-                                {
-                                    //autoEvent.WaitOne();
-                                    invoker.InvokeScript("setContent", tree6_sel.context);
-                                }
+                            //autoEvent.WaitOne();
+                      
+                        
+                            invoker.InvokeScript("setContent", tree6_sel.context);
+                        
                         }
                     }
                 }
@@ -1074,16 +1090,30 @@ namespace WpfApplication1
                 {
                     if (invoker.WaitWebPageLoad() == true)
                     {
-                        invoker.InvokeScript("setContent", "");
+                        invoker.InvokeScript("setContent", "1111");
                     }
                 }
-            issave = true;
+                issave = true;
+            }
         }
-
+         
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            invoker.InvokeScript("EnableEditor");
-
+            if (tree6_sel != null && tree6_sel.type != outlinetype.empty)
+            {
+                if (isedit == false)
+                {
+                    this.button1.Content = "退出编辑";
+                    invoker.InvokeScript("EnableEditor");
+                    isedit = true;
+                }
+                else
+                {
+                    this.button1.Content = "编辑";
+                    invoker.InvokeScript("DisableEditor");
+                    isedit = false;
+                }
+            }
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -1112,13 +1142,17 @@ namespace WpfApplication1
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
            
             if (isselect)
 =======
             //tree6_sel = new outline();
+=======
+>>>>>>> xml_change
             if (tree6_sel != null)
 >>>>>>> xml_change
             {
+                istree6select = false;
                 tree6_sel.isselected = false;
             } 
               if(isselect)
@@ -1133,12 +1167,11 @@ namespace WpfApplication1
                         idd_href = tree5_sel.href;
                         select_tree5 = new outline_Data(true);
                         tree5_sel.outlines = select_tree5.TreeViewItems1;
-                        // tree5_sel.outlines[1].isselected = true;
                     }
 >>>>>>> xml_change
                     this.tree5.ContextMenu = this.iddmenu;
                     issave = false;
-                    web_show = true;
+                   // web_show = true;
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Visible;
                     this.listView_data_article.Visibility = Visibility.Hidden;
@@ -1149,6 +1182,10 @@ namespace WpfApplication1
                     this.tree6.ItemsSource = select_tree5.TreeViewItems1;
 =======
                     this.tree6.ItemsSource = tree5_sel.outlines;
+<<<<<<< HEAD
+>>>>>>> xml_change
+=======
+                    istree6select = true;
 >>>>>>> xml_change
                 }
                 else
@@ -1177,6 +1214,7 @@ namespace WpfApplication1
                             break;
                     }
                 }
+                
                 }
                // MessageBox.Show(tree5_sel.Refer[0].Context.ToString());
                 //doc_style = new XmlDocument();
@@ -1241,6 +1279,12 @@ namespace WpfApplication1
         {
             if (tree6_sel != null&&tree6_sel.type!=outlinetype.empty)
                 savexml((object)tree6_sel);
-        }       
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+     
     }
 }

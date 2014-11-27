@@ -8,7 +8,10 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using WpfApplication1.htmlcss;
+using WpfApplication1.Code;
+using System.Data;
 namespace WpfApplication1
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
@@ -53,18 +56,111 @@ namespace WpfApplication1
                 
             }
         }
-        public void MN_opensection(string secid)
+        public void MN_SaveGridData(string jsoncontext)
         {
-            string[] cc = secid.Split('.');
-            ArrayList dd=new ArrayList();
+            string[] json = Regex.Split(jsoncontext,"#@#file_name#@#", RegexOptions.IgnoreCase);
+            ExceltoJason cc = new ExceltoJason(MainWindow.tree5_sel.href + "\\dialogs\\Datagrid\\"+json[1]);
+            cc.WriteJason(json[0]);
+        }
+        public void MN_DataGridSAves(string jsonText)
+        {
+          string[] json = Regex.Split(jsonText, "#@#file_type#@#", RegexOptions.IgnoreCase);
+          DataTable mytable=JsonToDatable.JsonToDataTable(json[0]);
+          SaveFileDialog sfd = new SaveFileDialog();
+          sfd.RestoreDirectory = true;
+          sfd.FilterIndex = 1;
+          sfd.Title = "保存文件";
+          if (json[1] == "txt")
+          {
+              sfd.Filter = "文本文件（*.txt）|*.txt";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable txt = new DataTableToTxt();
+                  txt.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
+          else if (json[1] == "csv")
+          {
+              sfd.Filter = "csv文件（*.csv）|*.csv";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable txt = new DataTableToTxt();
+                  txt.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
+          else if (json[1] == "xls")
+          {
+              sfd.Filter = "EXCEl文件--2003（*.xls）|*.xls|EXCEL文件--2007(*.xlsx)|*.xlsx";
+              if (sfd.ShowDialog() == DialogResult.OK)
+              {
+                  ExportDataTable excel = new DataTableToExcel();
+                  excel.ExportDataTable_file(sfd.FileName, mytable);
+              }
+          }
+        }
+        public void MN_opensection(string secid)
+        {  
             
-            for(int i = 0; i < cc.Length; i++)
+            switch(secid)
             {
-                dd.Add(cc[i]);
-            }
-            dd[0] = int.Parse(cc[0]) + 8;
-            getsecid(MainWindow.tree5_sel.outlines, dd).isselected = true;
+                case "CoverC":
+                    MainWindow.tree5_sel.outlines[0].isselected = true;
+                    break;
+                case "Cover":
+                    MainWindow.tree5_sel.outlines[1].isselected = true;
+                    break;
+                case "Statement":
+                    MainWindow.tree5_sel.outlines[2].isselected = true;
+                    break;
+                case "Abstract":
+                    MainWindow.tree5_sel.outlines[3].isselected = true;
+                    break;
+                case "AbstractE":
+                    MainWindow.tree5_sel.outlines[4].isselected = true;
+                    break;
+                case "CatalogOutline":
+                    MainWindow.tree5_sel.outlines[5].isselected = true;
+                    break;
+                case "CatalogChart":
+                    MainWindow.tree5_sel.outlines[6].isselected = true;
+                    break;
+                case "CatalogFig":
+                    MainWindow.tree5_sel.outlines[7].isselected = true;
+                    break;
+                case "Thanks":
+                    int c0 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c0-1].isselected = true;
+                    break;
+                case "Appendix":
+                    int c1 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c1-2].isselected = true;
+                    break;
+                case "Refer":
+                    int c2 = MainWindow.tree5_sel.outlines.Count;
+                    MainWindow.tree5_sel.outlines[c2-3].isselected = true;
+                    break;
+                default:
+                    string[] cc = secid.Split('.');
+                    ArrayList dd=new ArrayList();
+                    for(int i = 0; i < cc.Length; i++)
+                    {
+                     dd.Add(cc[i]);
+                    }
+                    dd[0] = int.Parse(cc[0]) + 8;
+                    getsecid(MainWindow.tree5_sel.outlines, dd).isselected = true;
+                    break;
+        }
            // MainWindow.js_getdata();
+        }
+        public void MN_showreferinfo(string index)
+        {
+            int i = int.Parse(index);
+            string contex = MainWindow.tree5_sel.Refer[MainWindow.tree5_sel.Refernumber[i-1]-1].Context;
+            ShowRefer ss = new ShowRefer(contex);
+            ss.ShowDialog();
+           // MainWindow.invoker.InvokeScript("show");
+            
+
         }
         public void Mn_OpenimageInwindow(string path)
         {
@@ -86,9 +182,6 @@ namespace WpfApplication1
            pt.updatetitle(pt.chapter);
            MainWindow.invoker.InvokeScript("setContent", MainWindow.tree6_sel.context);
         }
-
-           // invoker = new WebbrowserScriptInvoker();
-        
         public string MN_InsertChart()
         {
             data cc = new data();
@@ -171,6 +264,22 @@ namespace WpfApplication1
             aa.ShowDialog();
             return aa.result;
 
+        }
+        public String MN_InsertTableGrid()
+        {
+            string filePath = "";
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = MainWindow.tree5_sel.mediaPath;
+            openFileDialog1.Multiselect = false;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog1.FileName;
+                ExceltoJason ej = new ExceltoJason(MainWindow.tree5_sel.href + "/dialogs/Datagrid/" + Path.GetFileNameWithoutExtension(filePath) + ".json", filePath);
+                ej.WriteJason();
+                return MainWindow.tree5_sel.href+@"\dialogs\Datagrid\cellediting.html"+ej.resultss;
+            }
+            else
+                return "NO";
         }
         public void MN_updaterefer_id()
         {

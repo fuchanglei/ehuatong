@@ -14,7 +14,6 @@ namespace WpfApplication1
        public updateReferid()
        {
            referStartNumber = 0;
-          //d MainWindow.tree5_sel.Refernumber=new List<int>();
            if (MainWindow.tree5_sel.Refernumber.Count == 0)
                cd.Add(0);
            else
@@ -74,8 +73,10 @@ namespace WpfApplication1
                       if (cc.Attributes.Count != 0)
                       {   
                           referStartNumber++;
+                          //refer_context=MainWindow.tree5_sel.Refer[MainWindow.tree5_sel.Refernumber[referStartNumber - 1] - 1].Context;
                           MainWindow.tree5_sel.Refernumber.Add(cd[int.Parse(((XmlElement)cc).GetAttribute("id"))-1]);
                           ((XmlElement)cc).SetAttribute("id",referStartNumber.ToString());
+                          ((XmlElement)cc).SetAttribute("onClick", "window.external.MN_showreferinfo(\"" + referStartNumber.ToString() + "\")");
                           cc.InnerText = "[" + referStartNumber + "]";
                       }
                   }

@@ -39,8 +39,7 @@ namespace WpfApplication1
             openFileDialog1.InitialDirectory = MainWindow.tree5_sel.mediaPath;
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                filePath = MainWindow.tree5_sel.href + "\\picture\\" + openFileDialog1.SafeFileName;
-
+                filePath = MainWindow.tree5_sel.href + "\\picture/" + openFileDialog1.SafeFileName;
                 if (File.Exists(MainWindow.tree5_sel.mediaPath + "\\" + openFileDialog1.SafeFileName))
                     issave = false;
                 else
@@ -116,7 +115,7 @@ namespace WpfApplication1
         private void selctpic_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string filep = this.selctpic.SelectedValue.ToString();
-            filePath = MainWindow.tree5_sel.href + "\\picture\\" +System.IO.Path.GetFileName(filep);
+            filePath = MainWindow.tree5_sel.href + "\\picture/" +System.IO.Path.GetFileName(filep);
             if(IsImage(filep))
             {
             this.fileath.Text = filep;

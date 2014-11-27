@@ -34,25 +34,23 @@ namespace WpfApplication1
         public data()
         {
             InitializeComponent();
-
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {  
                 string rows = string.Empty;
                 string title = string.Empty;
                 string danwei = string.Empty;
                 foreach (int c in selectUid)
                 {
-                    rows = rows + "," + mytable.Rows[0][c].ToString();
+                    rows = rows + "," + mytable.Columns[c].ColumnName;
                 }
                 rows = rows.Substring(1);
                 // StreamWriter sw = new StreamWriter("F:/3.Echarts/3.Echarts/data.ini", false, Encoding.Default);
                 if (this.title_textbox.Text == "")
                 {
-                    //sw.WriteLine(" ");
                     title = " ";
                 }
                 else
@@ -71,7 +69,7 @@ namespace WpfApplication1
                 }
                 result = "#title=" + title + "&datatype=" + datatype + "&rows=" + rows + "&danwei=" + danwei + "&data=";
 
-                for (int i = 1; i < mytable.Rows.Count; i++)
+                for (int i = 0; i < mytable.Rows.Count; i++)
                 {
                     string data = string.Empty;
                     foreach (int c in selectUid)
@@ -116,7 +114,7 @@ namespace WpfApplication1
             //MessageBox.Show(comboBox1.SelectedItem.ToString());
             if (excel_name != comboBox1.SelectedItem.ToString())
             {
-                open_excel = new openexcel(comboBox1.SelectedItem.ToString());
+                open_excel = new openexcel(comboBox1.SelectedValue.ToString());
                 this.comboBox2.ItemsSource = open_excel.getGetOleDbSchemaTable();
                // this.comboBox2.Text = comboBox2.Items[0].ToString();
             }
@@ -175,12 +173,12 @@ namespace WpfApplication1
                 dataTem row_title = new dataTem()
                 {
                     id = c,
-                    rowname = mytable.Rows[0][c].ToString(),
+                    rowname = mytable.Columns[c].ColumnName,
                     ischeck = false
                 };
                 Row_data.Add(row_title);
             }
-            for (int i = 1; i < mytable.Rows.Count; i++)
+            for (int i = 0; i < mytable.Rows.Count; i++)
             {
                 datatype = datatype + "," + mytable.Rows[i][0].ToString();
 

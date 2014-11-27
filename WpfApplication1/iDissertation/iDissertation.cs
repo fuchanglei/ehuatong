@@ -116,7 +116,11 @@ namespace WpfApplication1
        private static XmlNode root;
        static idisser_data()
        {
+<<<<<<< HEAD
            doc.Load("iDissertation.xml");
+=======
+           doc.Load(Environment.CurrentDirectory+"\\"+"iDissertation.xml");
+>>>>>>> xml_change
            root = doc.DocumentElement;
        }
 <<<<<<< HEAD
@@ -330,13 +334,19 @@ namespace WpfApplication1
            xe1.SetAttribute("id", (_TreeViewItems4.Count+1).ToString());//设置该节点id属性
            xe1.SetAttribute("name", newtitle.Name);//设置该节点name属性
            xe1.SetAttribute("type", ((int)newtitle.nodetype).ToString());//设置该节点type属性
+<<<<<<< HEAD
            xe1.SetAttribute("href",newtitle.href);//设置节点的href
            xe1.SetAttribute("toolsDir","D:\\tools");
+=======
+           xe1.SetAttribute("href", newtitle.href);//设置节点的href
+           xe1.SetAttribute("toolsDir", "");
+>>>>>>> xml_change
            xe1.AppendChild(xe_data);
           // xe1.AppendChild(xe_article);
            root.AppendChild(xe1);
            doc.Save("iDissertation.xml");
            newtitle.article = null;
+<<<<<<< HEAD
 <<<<<<< HEAD
            newtitle.tools = getiDissertationArticle("D:\\tools");
           // cf = new copy_files(System.Environment.CurrentDirectory.ToString()+"\\"+((int)newtitle.nodetype).ToString(), newtitle.href);
@@ -368,6 +378,9 @@ namespace WpfApplication1
            doc.Save("iDissertation.xml");
 =======
            newtitle.tools = getiDissertations("D:\\tools");
+>>>>>>> xml_change
+=======
+           //newtitle.tools = getiDissertations("D:\\tools");
 >>>>>>> xml_change
        }
        

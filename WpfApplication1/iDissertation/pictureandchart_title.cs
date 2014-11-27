@@ -61,7 +61,7 @@ namespace WpfApplication1
                             {
                                 ownsection = ch.secid,
                                 title = xm.InnerText,
-                                path = ((XmlElement)xms).GetAttribute("src").Replace("\\", "/")
+                                path = ((XmlElement)xms).GetAttribute("src")
                             };
                         chapter.CatalogFig.Add(newone);
                     }

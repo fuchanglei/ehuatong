@@ -4,7 +4,7 @@
          xmlns:local="clr-namespace:WpfApplication1"
         xmlns:WinFormHost="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"         
         xmlns:WinFormControls="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
     <Window.Resources>
         <HierarchicalDataTemplate x:Key="treeViewTemplate1" DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal">
@@ -261,8 +261,14 @@
                     <RowDefinition Height="642*"></RowDefinition>
                 </Grid.RowDefinitions> 
                 <Grid Grid.ColumnSpan="2">
+<<<<<<< HEAD
                 <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,-10,0">
                         <TextBox Height="32" Name="textBox2"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="789" HorizontalContentAlignment="Left"/>
+=======
+                <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,0,0">
+                        <TextBlock Name="secid_textbl" Margin="0,10,0,0" Text="{Binding secid}" Background="#FFEBDFDF" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="auto" Visibility="{Binding vislible}"></TextBlock>
+                        <TextBox Height="32" Name="textBox2" Margin="4,0,0,0"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="576" HorizontalContentAlignment="Left"/>
+>>>>>>> xml_change
             </StackPanel>
                 </Grid>
                 <Grid Margin="0,29,0,6" Grid.RowSpan="2" Grid.ColumnSpan="2">
@@ -347,7 +353,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="28" HorizontalAlignment="Stretch" Margin="0,0,-10,0" Name="stackPanel3" VerticalAlignment="Top" Background="#FFE8D9D9">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="28" HorizontalAlignment="Stretch" Name="stackPanel3" VerticalAlignment="Top" Background="#FFE8D9D9">
             <TextBox Height="26" Name="textBox3" Width="237" Text="消息中心" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Bottom" IsReadOnly="True" />
             <StackPanel Height="27" Name="stackPanel4" Width="300" Background="#FFEFC4C4" Orientation="Horizontal">
                 <Menu Height="25" Name="menu5" Width="27" Background="#FFEFC4C4">
