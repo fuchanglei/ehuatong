@@ -46,10 +46,10 @@ namespace WpfApplication1
                case 2:   //图表
                break;
                case 3:   //图片
-                   XmlNodeList cc_image = ccwww.SelectNodes("catalogsection");
-                   foreach (XmlNode i in cc_image)
+                   XmlNode cc_image = ccwww.SelectSingleNode("catalogsection");
+                   foreach (XmlNode i in cc_image.ChildNodes)
                    {
-                   p= i.SelectSingleNode("p").FirstChild;
+                   p= i.SelectSingleNode("a");
                    htmlfilename = ((XmlElement)p).GetAttribute("image_path");
                    ((XmlElement)p).SetAttribute("onmouseover", "javascript:Tip(\"<img src='"+htmlfilename+"' width='100' heigth='100'>'\")");
                    ((XmlElement)p).SetAttribute("onmouseout", "javascript:UnTip()");

@@ -27,19 +27,21 @@ function getParam(name) {
 		}
 	}
 </script>
-	<table id="dg" class="easyui-datagrid" title="Cell Editing in DataGrid" style="width:500px;height:300px;"
+	<table id="dg" class="easyui-datagrid" title="DataGrid" style="width:500px;height:300px;"
 			data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,collapsible:true,
 				method:'get',
 				toolbar:'#tb',
-				onClickCell: onClickCell,
+				onDblClickCell: onClickCell,
+				onClickRow:onClickRow,
 				rownumbers:true,
 				multiSort:true,remoteSort:false
 			">
 		<thead>
 			<tr>
 			<script type="text/javascript">
+			  this.document.getElementById("dg").title=filename;
               WriteHead(HeadName);
 			</script>
 			</tr>
@@ -143,7 +145,14 @@ function getParam(name) {
 				editIndex = index;
 			}
 		}
-		
+		function onClickRow(index)
+		{
+		 if(endEditing()){
+         editIndex = index;
+		 }
+		 else
+		   $('#dg').datagrid('selectRow',editIndex);
+		}
 		function append(){
 			var selrow=$('#dg').datagrid('getSelected');
 			if(selrow == null)

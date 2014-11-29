@@ -24,8 +24,8 @@ namespace WpfApplication1
     
  public class outline : INotifyPropertyChanged  //目录数据类型
     {
-     private string _secid;  
-     public string secid 
+       private string _secid;  
+       public string secid 
        {
            get
            {
@@ -40,7 +40,7 @@ namespace WpfApplication1
                }
            }
        }
-     public  Visibility vislible { get; set; }
+       public  Visibility vislible { get; set; }
        private string _Name;
        public string Name1 {
            get
