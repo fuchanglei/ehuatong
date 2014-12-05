@@ -4,7 +4,8 @@
          xmlns:local="clr-namespace:WpfApplication1"
         xmlns:WinFormHost="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"         
         xmlns:WinFormControls="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="E划通" Height="733" Width="1138" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
+        Title="E划通" Height="840" Width="1138" AllowsTransparency="False" WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Icon="/WpfApplication1;component/Images/wiz.ico"
+        WindowStartupLocation="CenterScreen" MouseLeftButtonDown="Main_MouseLeftButtonDown" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed" BorderThickness="1" SizeToContent="Manual">
     <Window.Resources>
         <HierarchicalDataTemplate x:Key="treeViewTemplate1" DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal">
@@ -49,364 +50,371 @@
                 </StackPanel.ToolTip>
             </StackPanel>
         </HierarchicalDataTemplate>
+        <Style TargetType="{x:Type TreeViewItem}" x:Key="ContainerStyle">
+            <Setter Property="IsSelected" Value="False"></Setter>
+        </Style>
     </Window.Resources>
-    <Grid  x:Name="mTopLevelGrid" Height="auto" Width="Auto"  Background="Red" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="36" />
-            <RowDefinition Height="32" />
-            <RowDefinition Height="525*" />
-        </Grid.RowDefinitions>
-        <Grid Name="grid_0_0" Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <StackPanel Height="40"  Margin="0,-4,0,0" Name="stackPanel1" VerticalAlignment="Top" Background="#FFF8ECEC" Orientation="Horizontal">
-                <Image Height="Auto" Name="image1" Stretch="Fill" Width="44" Source="/WpfApplication1;component/Images/a044ad345982b2b7485dd9cd33adcbef77099bfd.jpg" VerticalAlignment="Center" />
-                <Label Content="fu_changlei@126.com" Height="25" Name="label1" Width="Auto" VerticalAlignment="Center" />
-                <Menu Margin="-5" Height="25" Name="menu1" Width="22" Background="#FFF8ECEC" BorderBrush="#FF702B2B">
-                    <MenuItem BorderThickness="0" Margin="0,3,0,0" Width="Auto" Background="#FFF8ECEC" BorderBrush="#FFF8ECEC" Foreground="#FFB52C2C">
-                        <MenuItem.Icon>
-                            <Image  Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
-                        </MenuItem.Icon>
-                        <MenuItem Header="账户信息(A)" InputGestureText="" />
-                        <MenuItem Header="账户设置" />
-                        <MenuItem Header="在线笔记" />
-                    </MenuItem>
-                </Menu>
-                <TextBox Height="23" Margin="50,0,-20,2" Name="textBox1" Width="233" />
-                <Image Margin="-20,0,0,2" Source="/WpfApplication1;component/Images/main_search1.ico" Height="23" Width="18"></Image>
-                <Menu Margin="0" Height="19" Width="19" Name="menu2" Background="White">
-                    <MenuItem  BorderThickness="0" Width="18" Height="18"  HorizontalContentAlignment="Right">
-                        <MenuItem.Icon>
-                            <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
-                        </MenuItem.Icon>
-                        <MenuItem Header="搜索全部笔记" ToolTip="搜索全部笔记" VerticalContentAlignment="Stretch" />
-                    </MenuItem>
-                </Menu>
-                <Image Margin="40,0,0,0" Source="/WpfApplication1;component/Images/main_menu.ico" Height="15" Name="image2" Stretch="Fill" Width="19" />
-                <Label Content="新建笔记" Height="28" Name="label2" Foreground="#FF2E2828" Background="#FFF8ECEC" MouseLeftButtonDown="label2_MouseLeftButtonDown"></Label>
-                <Menu  BorderThickness="0" Margin="-4,-3,0,0" Name="menu3" Width="20" Height="20" Background="#FFF8ECEC">
-                    <MenuItem  BorderThickness="0" Width="20" Height="20" Header="新建桌面便笺" HorizontalContentAlignment="Right">
-                        <MenuItem.Icon>
-                            <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
-                        </MenuItem.Icon>
-                        <MenuItem Header="新建笔记" ToolTip="搜索全部笔记" VerticalContentAlignment="Stretch" />
-                        <MenuItem Header="新建日记" VerticalContentAlignment="Stretch" />
-                        <MenuItem Header="新建桌面便笺" VerticalContentAlignment="Stretch" />
-                    </MenuItem>
-                    <MenuItem Header="新建日记" />
-                </Menu>
-                <Menu Height="27" Name="menu12" Width="117" Margin="17,-4,0,0">
-                    <MenuItem Header="新建iDissertation" Width="120" HorizontalAlignment="Left" BorderThickness="0" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Background="#FFF8ECEC">
+    <Border BorderThickness="2" CornerRadius="2" Background="White" BorderBrush="#BEBEBE" Height="820" Width="1130">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0" Opacity="1" />
+        </Border.Effect>
+        <Grid  x:Name="mTopLevelGrid" Height="810" Width="1125"  Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36" />
+                <RowDefinition Height="32" />
+                <RowDefinition Height="525*" />
+            </Grid.RowDefinitions>
+            <Grid Name="grid_0_0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
+                <StackPanel Height="36" Name="stackPanel1" VerticalAlignment="Top" Background="White" Orientation="Horizontal" Margin="0,0,0,0">
+                    <Image Height="38" Name="image1" Stretch="Fill" Width="44" Source="/WpfApplication1;component/Images/a044ad345982b2b7485dd9cd33adcbef77099bfd.jpg" />
+                    <WrapPanel Width="193" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Label Content="fu_changlei@126.com" Height="25" Name="label1" Width="Auto" VerticalAlignment="Center" />
+                        <Menu Margin="-5" Height="25" Name="menu1" Width="22" Background="White" BorderBrush="White">
+                            <MenuItem BorderThickness="0" Margin="0,3,0,0" Width="Auto" Background="White" BorderBrush="#FFF8ECEC" Foreground="#FFB52C2C">
+                                <MenuItem.Icon>
+                                    <Image  Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
+                                </MenuItem.Icon>
+                                <MenuItem Header="账户信息(A)" InputGestureText="" />
+                                <MenuItem Header="账户设置" />
+                                <MenuItem Header="在线笔记" />
+                            </MenuItem>
+                        </Menu>
+                    </WrapPanel>
+                    <TextBox Height="23" Margin="0,0,-20,2" Name="textBox1" Width="233" />
+                    <Image Margin="-20,0,0,2" Source="/WpfApplication1;component/Images/main_search1.ico" Height="23" Width="18"></Image>
+                    <Menu Margin="0" Height="19" Width="19" Name="menu2" Background="White">
+                        <MenuItem  BorderThickness="0" Width="18" Height="18"  HorizontalContentAlignment="Right">
+                            <MenuItem.Icon>
+                                <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
+                            </MenuItem.Icon>
+                            <MenuItem Header="搜索全部笔记" ToolTip="搜索全部笔记" VerticalContentAlignment="Stretch" />
+                        </MenuItem>
+                    </Menu>
+                    <Button Content="新建条目" Margin="10,0,0,0" Height="28" Name="label2" Foreground="Black" Background="White" MouseLeftButtonDown="label2_MouseLeftButtonDown"></Button>
+                    <Menu  BorderThickness="0" Margin="-4,-3,0,0" Name="menu3" Width="20" Height="20" Background="#FFF8ECEC">
+                        <MenuItem  BorderThickness="0" Width="20" Height="20" Header="新建桌面便笺" HorizontalContentAlignment="Right">
+                            <MenuItem.Icon>
+                                <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" />
+                            </MenuItem.Icon>
+                            <MenuItem Header="新建笔记" ToolTip="搜索全部笔记" VerticalContentAlignment="Stretch" />
+                            <MenuItem Header="新建日记" VerticalContentAlignment="Stretch" />
+                            <MenuItem Header="新建桌面便笺" VerticalContentAlignment="Stretch" />
+                        </MenuItem>
+                        <MenuItem Header="新建日记" />
+                    </Menu>
+                    <Menu Height="27" Name="menu12" Width="117" Margin="17,-4,0,0">
+                        <MenuItem Header="新建iDissertation" Width="120" HorizontalAlignment="Left" BorderThickness="0" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Background="#FFF8ECEC">
 
-                        <MenuItem Header="学位论文">
-                            <MenuItem Header="开题报告" Name="m0" Click="MenuItem_Click_3"></MenuItem>
-                            <MenuItem Header="中期报告" Name="m1" Click="MenuItem_Click_3"></MenuItem>
-                            <MenuItem Header="毕业论文" Name="m2" Click="MenuItem_Click_3"></MenuItem>
+                            <MenuItem Header="学位论文">
+                                <MenuItem Header="开题报告" Name="m0" Click="MenuItem_Click_3"></MenuItem>
+                                <MenuItem Header="中期报告" Name="m1" Click="MenuItem_Click_3"></MenuItem>
+                                <MenuItem Header="毕业论文" Name="m2" Click="MenuItem_Click_3"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="研究论文">
+                                <MenuItem Header="研究综述" Name="m4" Click="MenuItem_Click_3"></MenuItem>
+                                <MenuItem Header="期刊论文" Name="m3" Click="MenuItem_Click_3"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="基金申请">
+                                <MenuItem Header="社科申请" Name="m6" Click="MenuItem_Click_3"></MenuItem>
+                                <MenuItem Header="自科申请" Name="m5" Click="MenuItem_Click_3"></MenuItem>
+                                <MenuItem Header="研究报告" Name="m7" Click="MenuItem_Click_3"></MenuItem>
+                            </MenuItem>
                         </MenuItem>
-                        <MenuItem Header="研究论文">
-                            <MenuItem Header="研究综述" Name="m4" Click="MenuItem_Click_3"></MenuItem>
-                            <MenuItem Header="期刊论文" Name="m3" Click="MenuItem_Click_3"></MenuItem>
-                        </MenuItem>
-                        <MenuItem Header="基金申请">
-                            <MenuItem Header="社科申请" Name="m6" Click="MenuItem_Click_3"></MenuItem>
-                            <MenuItem Header="自科申请" Name="m5" Click="MenuItem_Click_3"></MenuItem>
-                            <MenuItem Header="研究报告" Name="m7" Click="MenuItem_Click_3"></MenuItem>
-                        </MenuItem>
-                    </MenuItem>
-                    
-                </Menu>
-                <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" Height="19" Width="17" Margin="-16,-2,0,0" ></Image>
-                <Button Margin="40,-2,0,0" Content="保存" Height="23" Name="button2" Width="94" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" ToolTip="保存" Click="button2_Click" />
-                <Button Content="Button" Height="23" Name="button3" Width="75" Margin="30,-2,0,0" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" Click="button3_Click" />
-            </StackPanel>
-        </Grid>
-        <Grid Name="grid_1_0" Height="26" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,38,0,0">
-        </Grid>
-        <Grid Name="left_grid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Background="#FFE7E7F7" Margin="0,24,0,0" Grid.RowSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="237"></ColumnDefinition>
-                <ColumnDefinition Width="300"></ColumnDefinition>
-                <ColumnDefinition MinWidth="300" Width="779*" /> 
-            </Grid.ColumnDefinitions>
-            <Grid Name="lefe_1" Grid.Row="0" Background="#FFDEDEE6">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <TreeView x:Name="tvProperties" BorderThickness="0,0,0.5,0" Background="#FFDEDEE6" FontWeight="Bold" SelectedItemChanged="tvProperties_SelectedItemChanged" 
-                                  ItemTemplate="{StaticResource treeViewTemplate1}" ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems1}">               
-                </TreeView>
-                    <TextBlock Text="个人专题" FontWeight="Bold" FontSize="14"></TextBlock>
-                        <TreeView Name="tree2" BorderThickness="0,0.7,0.5,0" Background="#FFDEDEE6" SelectedItemChanged="tree2_SelectedItemChanged" ItemTemplate="{StaticResource treeViewTemplate2}"  ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems2}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop">
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True"></Setter>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                        </TreeView>
-                        <TreeView Margin="20,0,0,0" Name="treeView1" BorderThickness="0,0.0,0,0" Background="#FFDEDEE6">
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True"></Setter>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate  ItemsSource="{Binding Path=Children}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="16" Height="16" Margin="0,6,2,2"></Image>
-                                        <TextBox VerticalAlignment="Center" Text="{Binding DisplayName}" IsEnabled="True" Visibility="{Binding isedit}" Focusable="True"></TextBox>
-                                        <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" Visibility="{Binding isshow}"></TextBlock>
-                                        <StackPanel.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" TextWrapping="Wrap" MaxWidth="200" ></TextBlock>
-                                        </StackPanel.ToolTip>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </TreeView>
-                        <TextBlock Text="iDissertation" FontWeight="Bold" Margin="15,0,0,0"  FontSize="12"></TextBlock>
-                        <TreeView Name="tree5" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6"  ItemTemplate="{StaticResource treeViewTemplate4}"  ItemsSource="{Binding Source={x:Static local:idisser_data.idisser}, Path=TreeViewItems4}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" SelectedItemChanged="tree5_SelectedItemChanged_1">
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsSelected" Value="False"></Setter>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                            <TreeView.ContextMenu>
-                                <ContextMenu Name="iddmenu">
-                                    <MenuItem Header="删除" Click="delete_idd_title">
-                                    </MenuItem>
-                                    <MenuItem Header="修改" Click="modify_idd_title">
-                                    </MenuItem>
-                                    <MenuItem Header="导出" Click="saveashtml">
-                                    </MenuItem>
-                                </ContextMenu>
-                            </TreeView.ContextMenu>
-                        </TreeView>
-                        <TextBlock Text="团队专题" FontWeight="Bold" Margin="3,10,0,2" FontSize="14"></TextBlock>
-                        <TreeView Name="tree3" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6" SelectedItemChanged="tree3_SelectedItemChanged" ItemTemplate="{StaticResource treeViewTemplate3}" ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems3}" DragDrop.DragOver="OnDragOver" DragDrop.Drop="OnDrop" AllowDrop="True">
-                            <TreeView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="新建根文件夹" Click="add_node">
-                                    </MenuItem>
-                                    <MenuItem Header="删除" Click="MenuItem_Click">
-                                    </MenuItem>
-                                    <MenuItem Header="修改" Click="MenuItem_Click">
-                                    </MenuItem>
-                                </ContextMenu>
-                            </TreeView.ContextMenu>                        
-                    </TreeView>
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
-            <GridSplitter Width="1" Grid.Column="0" Grid.Row="1" Background="#FFDEDEE6"></GridSplitter>
-            <Grid Name="grid_lef2" Grid.Column="1" Grid.Row="1" Background="White">
-                <ListView  BorderThickness="0" x:Name="listView1" SelectionChanged="listView1_SelectionChanged" Background="#FFF8FFE5">
-                    <ListView.ItemTemplate>
-                        <HierarchicalDataTemplate  DataType="{x:Type local:title}">
-                            <StackPanel Orientation="Vertical" Width="300" Margin="-6,0,0,0">
-                                <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding context}" VerticalAlignment="Stretch"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
-                                <Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="重命名" Click="MenuItem_modify">
-                            </MenuItem>
-                            <MenuItem Header="删除" Click="MenuItem_delete">
-                            </MenuItem>
-                            <MenuItem Header="标签" Click="MenuItem_tag">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                </ListView>
-                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}" Height="auto" SelectedItemChanged="tree6_SelectedItemChanged">
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="IsExpanded" Value="True"></Setter>
-                            <Setter Property="IsSelected" Value="{Binding isselected}"></Setter>
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-                </TreeView>
-                <ListView  BorderThickness="0" x:Name="listView_data_article"  Background="#FFF8FFE5" Visibility="Hidden" HorizontalAlignment="Stretch"  MouseDoubleClick="listView_data_article_MouseDoubleClick">
-                    <ListView.ItemTemplate>
-                        <HierarchicalDataTemplate  DataType="{x:Type local:title}">
-                            <StackPanel Orientation="Vertical" Width="auto" Margin="-6,0,0,0">
-                                <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
-                                <TextBlock Width="auto" Text="{Binding context}"   HorizontalAlignment="Left" Margin="8,0,0,0" MaxHeight="Infinity" MaxWidth="Infinity"></TextBlock>
-                                <!--<Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
-                                -->
-                                <StackPanel.ToolTip>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding context}" TextWrapping="Wrap" MaxWidth="400" ></TextBlock>
-                                </StackPanel.ToolTip>
-                            </StackPanel>
-                            
-                        </HierarchicalDataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="打开" Click="MenuItem_Click_opendataorarticle">
-                            </MenuItem>
-                            <MenuItem Header="删除" Click="MenuItem_Click_delete_data">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                </ListView>
-            </Grid>
-            <GridSplitter Width="1" Grid.Column="1" Grid.Row="1" Background="White"></GridSplitter>
-            <Grid Name="grid_lef3" Grid.Column="2" Background="WhiteSmoke" Margin="0,6,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="179*" />
-                    <ColumnDefinition Width="600*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="28*"></RowDefinition>
-                    <RowDefinition Height="642*"></RowDefinition>
-                </Grid.RowDefinitions> 
-                <Grid Grid.ColumnSpan="2">
-                <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,0,0">
-                        <TextBlock Name="secid_textbl" Margin="0,10,0,0" Text="{Binding secid}" Background="#FFEBDFDF" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="auto" Visibility="{Binding vislible}"></TextBlock>
-                        <TextBox Height="32" Name="textBox2" Margin="4,0,0,0"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="576" HorizontalContentAlignment="Left"/>
+                    </Menu>
+                    <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" Height="19" Width="17" Margin="-16,-2,0,0" ></Image>
+                    <Button Margin="40,-2,0,0" Content="保存" Height="23" Name="button2" Width="94" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" ToolTip="保存" Click="button2_Click" />
+                    <Button Content="Button" Height="23" Name="button3" Width="75" Margin="30,-2,0,0" Background="#FFF8ECEC" BorderBrush="#FF3C3B3B" BorderThickness="0.5" Click="button3_Click" />
                 </StackPanel>
-                </Grid>
-                <Grid Margin="0,29,0,6" Grid.RowSpan="2" Grid.ColumnSpan="2">
-                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel1" VerticalAlignment="Top" Background="#FFE5E5E5" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
-                <TextBox Margin="10,0,0,0" Background="#FFE5E5E5" BorderThickness="0" FontSize="15" FontWeight="Normal" Foreground="#FF564E53" Height="32" Name="textBox4" Text="附件" VerticalContentAlignment="Center" />
-                <Menu Height="28" Name="menu4" Width="28">
-                    <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
-                        <MenuItem.Icon>
-                            <Image Width="28" Height="28" Source="/WpfApplication1;component/Images/attachment_s.ico" Margin="-5,-5,0,0" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </Menu>
-                <ListView Height="28"  Name="listView2" Width="auto" Background="#FFE5E5E5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="listView2_MouseDoubleClick">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel>
-                            </WrapPanel>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                        <Image Width="25" Margin="0,-3,0,0" Height="25" Source="{Binding image}"></Image>
-                                        <TextBlock Margin="0,2,0,0" Text="{Binding file_name}" Grid.Column="1"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                            <ListView.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="打开" Click="MenuItem_openPS">
-                                    </MenuItem>
-                                    <MenuItem Header="重命名" Click="MenuItem_modifyPSname">
-                                    </MenuItem>
-                                    <MenuItem Header="另存为" Click="MenuItem_Saveas">
-                                    </MenuItem>
-                                    <MenuItem Header="删除" Click="MenuItem_deletePS">
-                                    </MenuItem>
-                                </ContextMenu>
-                            </ListView.ContextMenu>
-                        </ListView>
-                    </WrapPanel>
-                    <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel3" VerticalAlignment="Top" Background="White" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
-                        <TextBlock Margin="12,4,0,0" Background="#FFE5E5E5"  FontSize="15" FontWeight="Bold" Foreground="#FF564E53" Height="20">标签：</TextBlock>
-                        <ListView Height="28" HorizontalAlignment="Center" Margin="0,0,0,0" Name="listViewTag" VerticalAlignment="Center" Width="auto"  BorderThickness="0" SelectionChanged="listViewTag_SelectionChanged">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Margin="0,2,0,0">
-                                    </WrapPanel>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Margin="0,0,0,0" Text="{Binding name}" Grid.Column="0"/>
-                                        <MenuItem Height="15" Width="15" BorderThickness="0.5" Grid.Column="1" Margin="-1,0,0,0" Visibility="{Binding isvisibli}" Click="MenuItem_Click_delete">
-                                            <MenuItem.Icon>
-                                                <Image Width="15" Height="15" Source="Images/delete.png"  Margin="-2,0,0,0" />
-                                            </MenuItem.Icon>
+            </Grid>
+            <Grid Name="grid_1_0" Height="26" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,38,0,0">
+            </Grid>
+            <Grid Name="left_grid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Background="#FFE7E7F7" Margin="0,24,0,0" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="237"></ColumnDefinition>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="300" Width="779*" />
+                </Grid.ColumnDefinitions>
+                <Grid Name="lefe_1" Grid.Row="0" Background="#FFDEDEE6">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Height="656">
+                            <TreeView x:Name="tvProperties" BorderThickness="0,0,0.5,0" Background="#FFDEDEE6" FontWeight="Bold" SelectedItemChanged="tvProperties_SelectedItemChanged" 
+                                  ItemTemplate="{StaticResource treeViewTemplate1}" ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems1}">
+                            </TreeView>
+                            <TextBlock Text="个人专题" FontWeight="Bold" FontSize="14"></TextBlock>
+                            <TreeView Name="tree2" BorderThickness="0,0.7,0.5,0" Background="#FFDEDEE6" SelectedItemChanged="tree2_SelectedItemChanged" ItemTemplate="{StaticResource treeViewTemplate2}"  ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems2}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" Width="237">
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsExpanded" Value="True"></Setter>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                            </TreeView>
+                            <TreeView Margin="20,0,0,0" Name="treeView1" BorderThickness="0,0.0,0,0" Background="#FFDEDEE6">
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsExpanded" Value="True"></Setter>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate  ItemsSource="{Binding Path=Children}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="16" Height="16" Margin="0,6,2,2"></Image>
+                                            <TextBox VerticalAlignment="Center" Text="{Binding DisplayName}" IsEnabled="True" Visibility="{Binding isedit}" Focusable="True"></TextBox>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" Visibility="{Binding isshow}"></TextBlock>
+                                            <StackPanel.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" TextWrapping="Wrap" MaxWidth="200" ></TextBlock>
+                                            </StackPanel.ToolTip>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                            <TextBlock Text="iDissertation" FontWeight="Bold" Margin="15,0,0,0"  FontSize="12"></TextBlock>
+                            <TreeView Name="tree5" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6"  ItemTemplate="{StaticResource treeViewTemplate4}"  ItemsSource="{Binding Source={x:Static local:idisser_data.idisser}, Path=TreeViewItems4}" AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" SelectedItemChanged="tree5_SelectedItemChanged_1">
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsSelected" Value="False"></Setter>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeView.ContextMenu>
+                                    <ContextMenu Name="iddmenu">
+                                        <MenuItem Header="删除" Click="delete_idd_title">
                                         </MenuItem>
-                                        <Grid.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding name}" TextWrapping="Wrap"></TextBlock>
-                                        </Grid.ToolTip>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            </ListView>
-                    </WrapPanel>
-                    </StackPanel>
-                    <WindowsFormsHost Name="windowsFormsHost1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,-6">
-                        <WinFormControls:WebBrowser x:Name="webBrowser1"></WinFormControls:WebBrowser>
-                    </WindowsFormsHost>
-                    
+                                        <MenuItem Header="修改" Click="modify_idd_title">
+                                        </MenuItem>
+                                        <MenuItem Header="导出" Click="saveashtml">
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </TreeView.ContextMenu>
+                            </TreeView>
+                            <TextBlock Text="团队专题" FontWeight="Bold" Margin="3,10,0,2" FontSize="14"></TextBlock>
+                            <TreeView Name="tree3" BorderThickness="0,0.5,0.5,0" Background="#FFDEDEE6" SelectedItemChanged="tree3_SelectedItemChanged" ItemTemplate="{StaticResource treeViewTemplate3}" ItemsSource="{Binding Source={x:Static local:Data.Instance}, Path=TreeViewItems3}" DragDrop.DragOver="OnDragOver" DragDrop.Drop="OnDrop" AllowDrop="True">
+                                <TreeView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="新建根文件夹" Click="add_node">
+                                        </MenuItem>
+                                        <MenuItem Header="删除" Click="MenuItem_Click">
+                                        </MenuItem>
+                                        <MenuItem Header="修改" Click="MenuItem_Click">
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </TreeView.ContextMenu>
+                            </TreeView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                <GridSplitter Width="1" Grid.Column="0" Grid.Row="1" Background="#FFDEDEE6"></GridSplitter>
+                <Grid Name="grid_lef2" Grid.Column="1" Grid.Row="1" Background="White">
+                    <ListView  BorderThickness="0" x:Name="listView1" SelectionChanged="listView1_SelectionChanged" Background="#FFF8FFE5">
+                        <ListView.ItemTemplate>
+                            <HierarchicalDataTemplate  DataType="{x:Type local:title}">
+                                <StackPanel Orientation="Vertical" Width="300" Margin="-6,0,0,0">
+                                    <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
+                                    <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
+                                    <TextBlock Width="auto" Text="{Binding context}" VerticalAlignment="Stretch"  HorizontalAlignment="Left" Margin="8,0,0,0"></TextBlock>
+                                    <Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="重命名" Click="MenuItem_modify">
+                                </MenuItem>
+                                <MenuItem Header="删除" Click="MenuItem_delete">
+                                </MenuItem>
+                                <MenuItem Header="标签" Click="MenuItem_tag">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                    <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}" Height="auto" SelectedItemChanged="tree6_SelectedItemChanged">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="IsExpanded" Value="True"></Setter>
+                                <Setter Property="IsSelected" Value="{Binding isselected}"></Setter>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                    </TreeView>
+                    <ListView  BorderThickness="0" x:Name="listView_data_article"  Background="#FFF8FFE5" Visibility="Hidden" HorizontalAlignment="Stretch"  MouseDoubleClick="listView_data_article_MouseDoubleClick">
+                        <ListView.ItemTemplate>
+                            <HierarchicalDataTemplate  DataType="{x:Type local:title}">
+                                <StackPanel Orientation="Vertical" Width="auto" Margin="-6,0,0,0">
+                                    <TextBlock Width="auto" Text="{Binding title_name}" HorizontalAlignment="Left" Margin="9,2,0,0" Foreground="#FF036A67" FontWeight="Bold"></TextBlock>
+                                    <TextBlock Width="auto" Text="{Binding date}" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#FF21C9C4"></TextBlock>
+                                    <TextBlock Width="auto" Text="{Binding context}"   HorizontalAlignment="Left" Margin="8,0,0,0" MaxHeight="Infinity" MaxWidth="Infinity"></TextBlock>
+                                    <!--<Image Source="{Binding image}" Height="60" Width="60" HorizontalAlignment="Right" Margin="0,-45,0,0"></Image>
+                                -->
+                                    <StackPanel.ToolTip>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding context}" TextWrapping="Wrap" MaxWidth="400" ></TextBlock>
+                                    </StackPanel.ToolTip>
+                                </StackPanel>
+
+                            </HierarchicalDataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="打开" Click="MenuItem_Click_opendataorarticle">
+                                </MenuItem>
+                                <MenuItem Header="删除" Click="MenuItem_Click_delete_data">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </Grid>
+                <GridSplitter Width="1" Grid.Column="1" Grid.Row="1" Background="White"></GridSplitter>
+                <Grid Name="grid_lef3" Grid.Column="2" Background="WhiteSmoke" Margin="0,6,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="179*" />
+                        <ColumnDefinition Width="600*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28*"></RowDefinition>
+                        <RowDefinition Height="642*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.ColumnSpan="2">
+                        <StackPanel Height="38"  Orientation="Horizontal" HorizontalAlignment="Stretch" Name="stackPanel2" VerticalAlignment="Top" Background="#FFEBDFDF" Margin="0,-6,0,0">
+                            <TextBlock Name="secid_textbl" Margin="0,10,0,0" Text="{Binding secid}" Background="#FFEBDFDF" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="auto" Visibility="{Binding vislible}"></TextBlock>
+                            <TextBox Height="32" Name="textBox2" Margin="4,0,0,0"  BorderThickness="0" Background="#FFEBDFDF" Text="{Binding Path=Name1}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF564E53" Width="576" HorizontalContentAlignment="Left"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Margin="0,29,0,6" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel1" VerticalAlignment="Top" Background="#FFE5E5E5" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                <TextBox Margin="10,0,0,0" Background="#FFE5E5E5" BorderThickness="0" FontSize="15" FontWeight="Normal" Foreground="#FF564E53" Height="32" Name="textBox4" Text="附件" VerticalContentAlignment="Center" />
+                                <Menu Height="28" Name="menu4" Width="28">
+                                    <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
+                                        <MenuItem.Icon>
+                                            <Image Width="28" Height="28" Source="/WpfApplication1;component/Images/attachment_s.ico" Margin="-5,-5,0,0" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </Menu>
+                                <ListView Height="28"  Name="listView2" Width="auto" Background="#FFE5E5E5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="listView2_MouseDoubleClick">
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel>
+                                            </WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Width="25" Margin="0,-3,0,0" Height="25" Source="{Binding image}"></Image>
+                                                <TextBlock Margin="0,2,0,0" Text="{Binding file_name}" Grid.Column="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="打开" Click="MenuItem_openPS">
+                                            </MenuItem>
+                                            <MenuItem Header="重命名" Click="MenuItem_modifyPSname">
+                                            </MenuItem>
+                                            <MenuItem Header="另存为" Click="MenuItem_Saveas">
+                                            </MenuItem>
+                                            <MenuItem Header="删除" Click="MenuItem_deletePS">
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </ListView.ContextMenu>
+                                </ListView>
+                            </WrapPanel>
+                            <WrapPanel Grid.Column="1" Height="28" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="wrapPanel3" VerticalAlignment="Top" Background="White" Orientation="Vertical" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                <TextBlock Margin="12,4,0,0" Background="#FFE5E5E5"  FontSize="15" FontWeight="Bold" Foreground="#FF564E53" Height="20">标签：</TextBlock>
+                                <ListView Height="28" HorizontalAlignment="Center" Margin="0,0,0,0" Name="listViewTag" VerticalAlignment="Center" Width="auto"  BorderThickness="0" SelectionChanged="listViewTag_SelectionChanged">
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Margin="0,2,0,0">
+                                            </WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Margin="0,0,0,0" Text="{Binding name}" Grid.Column="0"/>
+                                                <MenuItem Height="15" Width="15" BorderThickness="0.5" Grid.Column="1" Margin="-1,0,0,0" Visibility="{Binding isvisibli}" Click="MenuItem_Click_delete">
+                                                    <MenuItem.Icon>
+                                                        <Image Width="15" Height="15" Source="Images/delete.png"  Margin="-2,0,0,0" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <Grid.ToolTip>
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding name}" TextWrapping="Wrap"></TextBlock>
+                                                </Grid.ToolTip>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </WrapPanel>
+                        </StackPanel>
+                        <WindowsFormsHost Name="windowsFormsHost1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-1,0,1">
+                            <WinFormControls:WebBrowser x:Name="webBrowser1"></WinFormControls:WebBrowser>
+                        </WindowsFormsHost>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="28" HorizontalAlignment="Stretch" Name="stackPanel3" VerticalAlignment="Top" Background="#FFE8D9D9">
-            <TextBox Height="26" Name="textBox3" Width="237" Text="消息中心" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Bottom" IsReadOnly="True" />
-            <StackPanel Height="27" Name="stackPanel4" Width="300" Background="#FFEFC4C4" Orientation="Horizontal">
-                <Menu Height="25" Name="menu5" Width="27" Background="#FFEFC4C4">
-                    <MenuItem Background="#FFEFC4C4" Height="27" Width="27" Margin="0,-1,1,0">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Height="28" HorizontalAlignment="Stretch" Name="stackPanel3" VerticalAlignment="Top" Background="#FFE8D9D9">
+                <TextBox Height="26" Name="textBox3" Width="237" Text="消息中心" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Bottom" IsReadOnly="True" />
+                <StackPanel Height="27" Name="stackPanel4" Width="300" Background="#FFEFC4C4" Orientation="Horizontal">
+                    <Menu Height="25" Name="menu5" Width="27" Background="#FFEFC4C4">
+                        <MenuItem Background="#FFEFC4C4" Height="27" Width="27" Margin="0,-1,1,0">
+                            <MenuItem.Icon>
+                                <Image Source="/WpfApplication1;component/Images/zoom.ico"></Image>
+                            </MenuItem.Icon>
+                            <MenuItem Header="一行" />
+                            <MenuItem Header="多行" />
+                            <MenuItem Header="两行" />
+                        </MenuItem>
+                    </Menu>
+                    <Menu Height="27" Name="menu6" Width="117" Margin="17,0,0,0">
+                        <MenuItem Header="按照搜索结果排序" Width="120" HorizontalAlignment="Left" BorderThickness="0" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Background="#FFEFC4C4">
+                            <MenuItem Header="位置" />
+                            <MenuItem Header="位置" />
+                            <MenuItem Header="创建日期" />
+                        </MenuItem>
+                    </Menu>
+                    <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" Height="19" Width="17" Margin="-15,0,0,0" ></Image>
+                    <Label  Margin="95,0,0,0" Height="28" Name="label4" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <Button BorderThickness="0" Height="26" Margin="52,0,0,0" Name="button1" Width="71" Content="编辑" Background="#FFE69C9C" HorizontalContentAlignment="Center" ToolTip="编辑" Click="button1_Click" />
+                <Menu Height="26" Name="menu7">
+                    <MenuItem  Height="26" BorderThickness="0.5" Width="21" Margin="-22,0,0,0" Background="#FFE39D9D">
                         <MenuItem.Icon>
-                            <Image Source="/WpfApplication1;component/Images/zoom.ico"></Image>
+                            <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png"></Image>
                         </MenuItem.Icon>
-                        <MenuItem Header="一行" />
-                        <MenuItem Header="多行" />
-                        <MenuItem Header="两行" />
+                        <MenuItem FontWeight="Normal" Header="编辑" />
+                        <MenuItem Header="查看图片" />
+                        <MenuItem FontWeight="Bold" Header="编辑选项" />
                     </MenuItem>
                 </Menu>
-                <Menu Height="27" Name="menu6" Width="117" Margin="17,0,0,0">
-                    <MenuItem Header="按照搜索结果排序" Width="120" HorizontalAlignment="Left" BorderThickness="0" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Background="#FFEFC4C4">
-                        <MenuItem Header="位置" />
-                        <MenuItem Header="位置" />
-                        <MenuItem Header="创建日期" />
-                    </MenuItem>
-                </Menu>
-                <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png" Height="19" Width="17" Margin="-15,0,0,0" ></Image>
-                <Label  Margin="95,0,0,0" Height="28" Name="label4" HorizontalAlignment="Right"/>
+                <Image Source="/WpfApplication1;component/Images/star2.ico"   Margin="-118,0,0,0" Height="26" Name="image3" Stretch="Fill"  Width="24" />
+                <ToolBarPanel Height="26" Name="toolBarPanel1" Width="84" Orientation="Horizontal" Margin="30,0,0,0">
+                    <Menu Height="28" Name="menu10" Width="28">
+                        <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
+                            <MenuItem.Icon>
+                                <Image Width="22" Height="22" Source="/WpfApplication1;component/Images/attachment_s.ico"  Margin="0,-5,0,0" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                    <Menu Height="28" Name="menu9" Width="28" Margin="1,0,0,0">
+                        <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" Click="MenuItem_Click_5">
+                            <MenuItem.Icon>
+                                <Image Source="/WpfApplication1;component/Images/tags.ico" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                    <Menu Height="28" Width="28" Name="menu8">
+                        <MenuItem Height="28" Width="28">
+                            <MenuItem.Icon>
+                                <Image Width="22" Height="22" Margin="-3,-5,0,0" Source="/WpfApplication1;component/Images/checked.ico"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </Menu>
+                </ToolBarPanel>
             </StackPanel>
-            <Button BorderThickness="0" Height="26" Margin="52,0,0,0" Name="button1" Width="71" Content="编辑" Background="#FFE69C9C" HorizontalContentAlignment="Center" ToolTip="编辑" Click="button1_Click" />
-            <Menu Height="26" Name="menu7">
-                <MenuItem  Height="26" BorderThickness="0.5" Width="21" Margin="-22,0,0,0" Background="#FFE39D9D">
-                    <MenuItem.Icon>
-                        <Image Source="/WpfApplication1;component/Images/main_bar_button_dropdown.png"></Image>
-                    </MenuItem.Icon>
-                    <MenuItem FontWeight="Normal" Header="编辑" />
-                    <MenuItem Header="查看图片" />
-                    <MenuItem FontWeight="Bold" Header="编辑选项" />
-                </MenuItem>
-            </Menu>
-            <Image Source="/WpfApplication1;component/Images/star2.ico"   Margin="-118,0,0,0" Height="26" Name="image3" Stretch="Fill"  Width="24" />
-            <ToolBarPanel Height="26" Name="toolBarPanel1" Width="84" Orientation="Horizontal" Margin="30,0,0,0">
-                <Menu Height="28" Name="menu10" Width="28">
-                    <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
-                        <MenuItem.Icon>
-                            <Image Width="22" Height="22" Source="/WpfApplication1;component/Images/attachment_s.ico"  Margin="0,-5,0,0" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </Menu>
-                <Menu Height="28" Name="menu9" Width="28" Margin="1,0,0,0">
-                    <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" Click="MenuItem_Click_5">
-                        <MenuItem.Icon>
-                            <Image Source="/WpfApplication1;component/Images/tags.ico" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </Menu>
-                <Menu Height="28" Width="28" Name="menu8">
-                    <MenuItem Height="28" Width="28">
-                        <MenuItem.Icon>
-                            <Image Width="22" Height="22" Margin="-3,-5,0,0" Source="/WpfApplication1;component/Images/checked.ico"></Image>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </Menu>
-            </ToolBarPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
