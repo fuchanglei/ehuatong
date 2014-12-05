@@ -41,7 +41,6 @@ namespace WpfApplication1.Code
            resultss = resultss.Substring(1);
            mytable.Rows.Remove(mytable.Rows[0]);
            string result = JsonConvert.SerializeObject(mytable, new DataTableConverter());
- 
            sw.Write(result);
            sw.Close();
            sw.Dispose();

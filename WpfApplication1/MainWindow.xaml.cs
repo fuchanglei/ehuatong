@@ -97,7 +97,8 @@ namespace WpfApplication1
             this.listViewTag.ItemsSource = _listviewItems;
             Window_Tag www = new Window_Tag();
             this.treeView1.ItemsSource = www.Init_tree;
-            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+       //file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html
+            this.webBrowser1.Navigate("http://www.baidu.com");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
             
@@ -1117,6 +1118,8 @@ namespace WpfApplication1
         }
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+
+            this.tree2.ItemContainerStyle = (Style)this.FindResource("ContainerStyle");
             if (tree6_sel != null)
             {
                 istree6select = false;
@@ -1135,7 +1138,6 @@ namespace WpfApplication1
                     }
                     this.tree5.ContextMenu = this.iddmenu;
                     issave = false;
-                   // web_show = true;
                     listView1.Visibility = Visibility.Hidden;
                     this.tree6.Visibility = Visibility.Visible;
                     this.listView_data_article.Visibility = Visibility.Hidden;
@@ -1170,11 +1172,6 @@ namespace WpfApplication1
                 }
                 
                 }
-               // MessageBox.Show(tree5_sel.Refer[0].Context.ToString());
-                //doc_style = new XmlDocument();
-               // doc_style.Load(MainWindow.idd_href + "/idis.xml");
-               // root_style = doc_style.DocumentElement;
-              
         }
         private void listView2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -1234,7 +1231,11 @@ namespace WpfApplication1
             if (tree6_sel != null&&tree6_sel.type!=outlinetype.empty)
                 savexml((object)tree6_sel);
         }
-
+        private void Main_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+            
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
             Environment.Exit(0);

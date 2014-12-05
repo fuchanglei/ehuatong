@@ -25,7 +25,7 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox Margin="72,0,0,0" Tag="{Binding Path=id}" IsChecked="{Binding Path=ischeck}" Click="CheckBox_Click"></CheckBox>
+                                        <CheckBox Margin="72,0,0,0" Tag="{Binding Path=id}" IsChecked="{Binding Path=ischeck}" Click="CheckBox_Click" MouseEnter="CheckBox_MouseEnter"></CheckBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

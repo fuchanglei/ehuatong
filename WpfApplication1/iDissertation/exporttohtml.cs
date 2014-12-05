@@ -248,9 +248,7 @@ namespace WpfApplication1
                        createhtml(outl, todire + "\\center");
                       // create_leftnode(outl);
 
-                   }
-                   
-                      
+                   } 
                }
                else
                {
