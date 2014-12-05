@@ -198,4 +198,3 @@ D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\ShowRefer.baml
 D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\ShowRefer.g.cs
 D:\程序\ehuatong\ehuatong\WpfApplication1\bin\Debug\Newtonsoft.Json.pdb
 D:\程序\ehuatong\ehuatong\WpfApplication1\bin\Debug\Newtonsoft.Json.xml
-D:\程序\ehuatong\ehuatong\WpfApplication1\obj\x86\Debug\App.baml

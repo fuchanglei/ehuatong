@@ -186,11 +186,6 @@ namespace WpfApplication1
             datatype = datatype.Substring(1);
             this.listView1.ItemsSource = Row_data;
             sheet_name = this.comboBox2.SelectedItem.ToString();
-        }
-
-        private void CheckBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-
         }  
     }
 }

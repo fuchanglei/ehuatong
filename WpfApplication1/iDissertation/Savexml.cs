@@ -54,11 +54,10 @@ namespace WpfApplication1
         }
         public void savexml(object a)  //保存更改后的信息
         {
-            try
+            if ((bool)a == false)
             {
-                if ((bool)a == false)
+                
                 {
-
                     XmlNodeList ccwww = root_context.SelectNodes(type);
                     foreach (XmlNode ccd in ccwww)
                     {
@@ -68,27 +67,23 @@ namespace WpfApplication1
                             doc_context.Save(@xml_context);
                             //ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
                             break;
-                        } //if
-                    } //for
-                }
-                else
-                {
-                    XmlNodeList ccwww = root_context.SelectNodes(type);
-                    foreach (XmlNode ccd in ccwww)
-                    {
-                        if (((XmlElement)ccd).GetAttribute("id") == _id)
-                        {
-                            ccd.InnerXml = context_html.Replace("&", "&amp;");
-                            doc_context.Save(@xml_context);
-                            ThreadPool.QueueUserWorkItem(status => savetem(ccd));
-                            break;
                         }
                     }
                 }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e.Message.ToString());
+                XmlNodeList ccwww = root_context.SelectNodes(type);
+                foreach (XmlNode ccd in ccwww)
+                {
+                    if (((XmlElement)ccd).GetAttribute("id") == _id)
+                    {
+                        ccd.InnerXml = context_html.Replace("&", "&amp;");
+                        doc_context.Save(@xml_context);
+                        ThreadPool.QueueUserWorkItem(status => savetem(ccd));
+                        break;
+                    }
+                }
             }
         }
         private bool ishasRichmedie(XmlNode paragraph)
