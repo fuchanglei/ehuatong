@@ -49,20 +49,26 @@ namespace WpfApplication1
                         ((XmlElement)xm).SetAttribute("id", cou.ToString());
                         xm.FirstChild.InnerText = "图" + chapter.secid.ToString() + "-" + cou.ToString() + " ";
                         XmlNode xms = xm.PreviousSibling.FirstChild.FirstChild.SelectSingleNode("img");
-                        if (xms == null)
+                        XmlNode xmt = xm.PreviousSibling.FirstChild.FirstChild;
+                        if (xms == null && xmt == null)
+                        {
                             newone = new Picture_ChartInfo()
                             {
                                 ownsection = ch.secid,
                                 title = xm.InnerText,
                                 path = ""
                             };
+                        }
                         else
+                        {
+                          xms=(xms == null?xmt:xms);
                             newone = new Picture_ChartInfo()
                             {
                                 ownsection = ch.secid,
                                 title = xm.InnerText,
-                                path = ((XmlElement)xms).GetAttribute("src").Replace("\\", "/")
+                                path = ((XmlElement)xms).GetAttribute("src")
                             };
+                        }
                         chapter.CatalogFig.Add(newone);
                     }
                 }

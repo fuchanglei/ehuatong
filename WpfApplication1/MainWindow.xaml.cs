@@ -31,7 +31,6 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-       // static AutoResetEvent autoEvent=new AutoResetEvent(true);
         public static string item_Directory = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\iDissertation";  //当前idss文件所在目录
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
         public outline_Data select_tree5;
@@ -46,7 +45,7 @@ namespace WpfApplication1
         private string newname=string.Empty;
         private int count;   //当前目录组下笔记的数目
         public title cc = new title();
-        public static outline tree6_sel =new outline();  //2014-10-10
+        public static outline tree6_sel =null;  //2014-10-10
         public string savecontext;
         //public bool issave;
         private int last;
@@ -100,9 +99,7 @@ namespace WpfApplication1
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             textBox2.DataContext = tree6_sel;
-            
         }
-       
       private ContextMenu cireateMenu1()
        {
             ContextMenu con1 = new ContextMenu();
@@ -184,8 +181,6 @@ namespace WpfApplication1
             m7.Header = "粘贴内容";
             MenuItem m5 = new MenuItem();
             m5.Header = "插入章节或小节";
-            
-           // m4.Click += remove_item;
             con1.Items.Add(m1);
             con1.Items.Add(m2);
             con1.Items.Add(m5);
@@ -229,6 +224,7 @@ namespace WpfApplication1
               
           }
           ThreadPool.QueueUserWorkItem(new WaitCallback(savexml), (object)tree6_sel);
+
       }   //生成目录
         private void MenuItem_confArticleDire(object sender, RoutedEventArgs e)  //新增的内容,配置目录
         {
@@ -313,7 +309,9 @@ namespace WpfApplication1
             outline_Data delet_outline = new outline_Data();
             delet_outline.outline_node_delet(tree6_sel);
             issave = false;
+            
             this.tree6.ItemsSource = delet_outline.TreeViewItems1;
+            tree5_sel.outlines = this.tree6.ItemsSource as ObservableCollection<outline>;
             
         }
         private void m_window5_outline_modify(object sender, Window5.textEventArgs e)  
@@ -345,7 +343,6 @@ namespace WpfApplication1
             //获取事件传递过来的数据
             newname = e.textbox;
             outline_Data add_section = new outline_Data();
-
             outline sel = (outline)tree6.SelectedItem;
             int c = getindex(sel);
             outline aa=add_section.outline_chapter_add(sel, newname);

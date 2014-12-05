@@ -32,21 +32,35 @@ namespace WpfApplication1
            XmlNode ccwww = doc.DocumentElement;
            string html = string.Empty;
            string htmlfilename = string.Empty;
-           if (type == 1)
-           {
-               XmlNodeList ccs = ccwww.SelectNodes("CatalogSection");
-               foreach (XmlNode i in ccs)
-               {
+           switch (type)
+           { 
+               case 1:
+                   XmlNodeList ccs = ccwww.SelectNodes("CatalogSection");
+                   foreach (XmlNode i in ccs)
+                   {
                    p = i.SelectSingleNode("p");
                    htmlfilename = ((XmlElement)p).GetAttribute("html_filePath");
                    ((XmlElement)p).SetAttribute("onclick", "javascript:change(\"" + htmlfilename + "\")");
-               }
-
-              
-           }
-           if (type == 4)
-           {
-               XmlNode xml = doc.DocumentElement.FirstChild;
+                   }
+               break;
+               case 2:   //图表
+               break;
+               case 3:   //图片
+                   XmlNode cc_image = ccwww.SelectSingleNode("catalogsection");
+                   foreach (XmlNode i in cc_image.ChildNodes)
+                   {
+                   p= i.SelectSingleNode("a");
+                   htmlfilename = ((XmlElement)p).GetAttribute("image_path");
+                   ((XmlElement)p).SetAttribute("onmouseover", "javascript:Tip(\"<img src='"+htmlfilename+"' width='100' heigth='100'>'\")");
+                   ((XmlElement)p).SetAttribute("onmouseout", "javascript:UnTip()");
+                   ((XmlElement)p).RemoveAttribute("ondblclick");
+                   p = p.NextSibling;
+                   htmlfilename = "section" + p.InnerText.ToString() + ".html";
+                   ((XmlElement)p).SetAttribute("onclick", "javascript:change(\"" + htmlfilename + "\")");
+                   }
+               break;
+               case 4:
+                   XmlNode xml = doc.DocumentElement.FirstChild;
                do
                {
                    XmlNodeList sups = xml.SelectNodes("span/span/sup");
@@ -63,11 +77,13 @@ namespace WpfApplication1
                                ((XmlElement)cc).SetAttribute("onmouseover", "javascript:Tip('" + refer_context + "')");
                                ((XmlElement)cc).SetAttribute("onmouseout", "javascript:UnTip()");
                                ((XmlElement)cc).RemoveAttribute("onClick");
+                               ((XmlElement)cc).RemoveAttribute("onclick");
                            }
                        }
                    }
                    xml = xml.NextSibling;
                } while (xml != null);
+               break;
            }
            html = doc.InnerXml.ToString();
            return html;
@@ -91,13 +107,17 @@ namespace WpfApplication1
                    sw.WriteLine("<head>");
                    sw.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"/>");
                    sw.WriteLine("<script type=\"text/javascript\" src=\"change.js\"></script>");
-                   sw.WriteLine("<script type=\"text/javascript\" src=\"wz_tooltip.js\"></script>");
                    //sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
                    sw.WriteLine("</head>");
                    sw.WriteLine("<body>");
+                   sw.WriteLine("<script type=\"text/javascript\" src=\"wz_tooltip.js\"></script>");
                    if (outline.nodename == "CatalogOutline")
                    {
                        sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext_comm(),1)));
+                   }
+                   else if (outline.nodename == "CatalogFig")
+                   {
+                       sw.WriteLine(gethtmlcode(updateEVENT_WPFTOJS(dd.getcontext_comm(), 3)));
                    }
                    else
                    {
@@ -168,7 +188,8 @@ namespace WpfApplication1
        }
        private static string gethtmlcode(string xmlcode)
        {
-           string html = xmlcode.Replace(MainWindow.idd_href + "\\", "");
+           string cc = MainWindow.idd_href + "\\";
+           string html = xmlcode.Replace(cc, "");
            html = html.Replace("dialogs\\video\\", "");
            html = html.Replace("&amp;", "&");
            return html;
@@ -248,9 +269,7 @@ namespace WpfApplication1
                        createhtml(outl, todire + "\\center");
                       // create_leftnode(outl);
 
-                   }
-                   
-                      
+                   }  
                }
                else
                {

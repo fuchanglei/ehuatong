@@ -123,7 +123,7 @@ namespace WpfApplication1
        private static XmlNode root;
        static idisser_data()
        {
-          doc.Load("iDissertation.xml");
+           doc.Load(Environment.CurrentDirectory+"\\"+"iDissertation.xml");
            root = doc.DocumentElement;
        }
        public static ObservableCollection<title> getiDissertations(string dirinfo)
@@ -320,13 +320,13 @@ namespace WpfApplication1
            xe1.SetAttribute("name", newtitle.Name);//设置该节点name属性
            xe1.SetAttribute("type", ((int)newtitle.nodetype).ToString());//设置该节点type属性
            xe1.SetAttribute("href", newtitle.href);//设置节点的href
-           xe1.SetAttribute("toolsDir", "D:\\tools");
+           xe1.SetAttribute("toolsDir", "");
            xe1.AppendChild(xe_data);
            // xe1.AppendChild(xe_article);
            root.AppendChild(xe1);
            doc.Save("iDissertation.xml");
            newtitle.article = null;
-           newtitle.tools = getiDissertations("D:\\tools");
+           //newtitle.tools = getiDissertations("D:\\tools");
        }
        
        

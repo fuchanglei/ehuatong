@@ -22,28 +22,46 @@ function getParam(name) {
 	{
 	 for(var name in HeadName)
 		{
-		 document.write("<th data-options=\"field:'"+HeadName[name]+"',width:80,title:'"+HeadName[name]+"',editor:'text'\"></th>");
+		 document.write("<th data-options=\"field:'"+HeadName[name]+"',width:80,title:'"+HeadName[name]+"',sortable:true,editor:'text'\"></th>");
 
 		}
 	}
 </script>
-	<table id="dg" class="easyui-datagrid" title="Cell Editing in DataGrid" style="width:500px;height:300px;"
+	<table id="dg" class="easyui-datagrid" title="DataGrid" style="width:500px;height:300px;"
 			data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,collapsible:true,
 				method:'get',
-				onClickCell: onClickCell,
+				toolbar:'#tb',
+				onDblClickCell: onClickCell,
+				onClickRow:onClickRow,
+				rownumbers:true,
 				multiSort:true,remoteSort:false
 			">
 		<thead>
 			<tr>
 			<script type="text/javascript">
+			  this.document.getElementById("dg").title=filename;
               WriteHead(HeadName);
 			</script>
 			</tr>
 		</thead>
 	</table>
-
+<div id="tb" style="padding:5px;height:auto">
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加一行</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除一行</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">撤销修改</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a>
+		&nbsp;&nbsp;&nbsp;
+		<select id="savesfilestype" class="easyui-combobox" panelHeight="auto" style="width:100px">
+				<option value="ppt">PPT</option>
+				<option value="csv">CSV</option>
+				<option value="txt">TXT</option>
+				<option value="xls">EXCEL</option>
+			</select>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="saveas()">转存</a>
+</body>
+</div>
 	<script type="text/javascript">
 	$('#dg').datagrid({url:filename});
 		$.extend($.fn.datagrid.methods, {
@@ -66,8 +84,50 @@ function getParam(name) {
 				});
 			}
 		});
-		
+		$('#dg').datagrid({onHeaderContextMenu: function(e, field){
+					e.preventDefault();
+					if (!cmenu){
+						createColumnMenu();
+					}
+					cmenu.menu('show', {
+						left:e.pageX,
+						top:e.pageY
+					});
+				}
+			});
+			var cmenu;
+		function createColumnMenu(){
+			cmenu = $('<div/>').appendTo('body');
+			cmenu.menu({
+				onClick: function(item){
+					if (item.iconCls == 'icon-ok'){
+						$('#dg').datagrid('hideColumn', item.name);
+						cmenu.menu('setIcon', {
+							target: item.target,
+							iconCls: 'icon-empty'
+						});
+					} else {
+						$('#dg').datagrid('showColumn', item.name);
+						cmenu.menu('setIcon', {
+							target: item.target,
+							iconCls: 'icon-ok'
+						});
+					}
+				}
+			});
+			var fields = $('#dg').datagrid('getColumnFields');
+			for(var i=0; i<fields.length; i++){
+				var field = fields[i];
+				var col = $('#dg').datagrid('getColumnOption', field);
+				cmenu.menu('appendItem', {
+					text: col.title,
+					name: field,
+					iconCls: 'icon-ok'
+				});
+			}
+		}
 		var editIndex = undefined;
+		var mydata;
 		function endEditing(){
 			if (editIndex == undefined){return true}
 			if ($('#dg').datagrid('validateRow', editIndex)){
@@ -85,6 +145,68 @@ function getParam(name) {
 				editIndex = index;
 			}
 		}
+		function onClickRow(index)
+		{
+		 if(endEditing()){
+         editIndex = index;
+		 }
+		 else
+		   $('#dg').datagrid('selectRow',editIndex);
+		}
+		function append(){
+			var selrow=$('#dg').datagrid('getSelected');
+			if(selrow == null)
+			{
+			if (endEditing()){
+				$('#dg').datagrid('appendRow',{});
+				editIndex = $('#dg').datagrid('getRows').length-1;
+				$('#dg').datagrid('selectRow', editIndex)
+						.datagrid('beginEdit', editIndex);
+			}
+			}
+			else
+				{
+                 var c=editIndex+1;
+				 if(endEditing()){
+				 $('#dg').datagrid('insertRow',{index:c,row:{}});
+				 editIndex=c;
+				 $('#dg').datagrid('selectRow',c)
+						.datagrid('beginEdit', c);
+						//endEditing();
+				 }
+				}
+		}
+		function removeit(){
+			if (editIndex == undefined){return}
+			$('#dg').datagrid('cancelEdit', editIndex)
+					.datagrid('deleteRow', editIndex);
+			editIndex = undefined;
+		}
+		function accept(){
+			if (endEditing()){
+				$('#dg').datagrid('acceptChanges');
+				$('#dg').datagrid('selectRow', editIndex);
+				mydata=$('#dg').datagrid('getData');
+				window.parent.top.UE.getEditor('editor').fireEvent('show',JSON.stringify(mydata)+"#@#file_name#@#"+filename);
+			}
+		}
+		function reject(){
+			$('#dg').datagrid('rejectChanges');
+			editIndex = undefined;
+		}	
+		function saveas()
+		{
+			var cc=$('#savesfilestype').combobox('getValue');
+			if(endEditing())
+			{
+			$('#dg').datagrid('acceptChanges');
+			if(mydata==null)
+				{
+				mydata=$('#dg').datagrid('getData');
+				}
+				window.parent.top.UE.getEditor('editor').fireEvent('saveas',JSON.stringify(mydata)+"#@#file_type#@#"+cc);
+				
+			}
+		}
 	</script>
-</body>
 </html>
